@@ -4,15 +4,16 @@ import dao.Community;
 import dao.Forum;
 import data.Admin;
 import data.Post;
+import data.Status;
 import data.User;
 
 public class ForumApp {
     public static void main(String[] args) {
 
-        User person01 = new User("Oscar", 30);
-        User person02 = new User ("Oliver", 35);
-        User person03 = new User ("Nicole", 32);
-        User person04 = new Admin("Mark", 27);
+        User person01 = new User("Oscar", 30, Status.USER);
+        User person02 = new User ("Oliver", 35, Status.USER);
+        User person03 = new User ("Nicole", 32, Status.USER);
+        User person04 = new Admin("Mark", 27, Status.ADMIN, "=!user");
 
         Community people = new Community (100);
         people.addMember(person01);

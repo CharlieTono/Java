@@ -6,10 +6,20 @@ public class User {
 
     private String name;
     private int age;
+    private Status status;
 
-    public User(String name, int age) {
+    public User(String name, int age, Status status) {
         this.name = name;
         this.age = age;
+        this.status = status;
+    }
+
+    public Status getStatus() {
+        return status;
+    }
+
+    public void setStatus(Status status) {
+        this.status = status;
     }
 
     public String getName() {
@@ -31,12 +41,13 @@ public class User {
         if (!(o instanceof User)) return false;
         User user = (User) o;
         return age == user.age &&
-                Objects.equals(name, user.name);
+                Objects.equals(name, user.name) &&
+                status == user.status;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(name, age);
+        return Objects.hash(name, age, status);
     }
 
     public String getPassword() {

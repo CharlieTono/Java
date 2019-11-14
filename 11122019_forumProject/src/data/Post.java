@@ -19,6 +19,14 @@ public class Post {
         this.content = content;
     }
 
+    public Community getAllMembers() {
+        return allMembers;
+    }
+
+    public void setAllMembers(Community allMembers) {
+        this.allMembers = allMembers;
+    }
+
     public User getAuthor() {
         return author;
     }
@@ -41,14 +49,6 @@ public class Post {
 
     public void setContent(String content) {
         this.content = content;
-    }
-
-    public Community getAllMembers() {
-        return allMembers;
-    }
-
-    public void setAllMembers(Community allMembers) {
-        this.allMembers = allMembers;
     }
 
     @Override

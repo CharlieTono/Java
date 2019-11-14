@@ -6,7 +6,6 @@ import java.util.Scanner;
 
 public class Forum {
 
-   // Community [] allMembers;
     Post[] posts;
     int size;
 
@@ -48,6 +47,7 @@ public class Forum {
         for (int i = 0; i < size; i++) {
             if (posts[i].getId() == id && !posts[i].getContent().equalsIgnoreCase(content)) {
                 if (posts[i].getAllMembers().isAdmin(userName)) {
+                 // Admin correctAdmin = (Admin)posts[i].getAuthor();
                     System.out.println("Please enter a password:");
                     Scanner scanner = new Scanner (System.in);
                     String input = scanner.nextLine();
