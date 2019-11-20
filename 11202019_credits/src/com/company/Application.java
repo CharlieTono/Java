@@ -38,14 +38,14 @@ public class Application {
 
             if (i % 2 != 0) {
                 pCreditsPerMonth = pCreditsPerMonth + PERFORMANCE;
-                totalNumberOfCredits = totalNumberOfCredits + pCreditsPerMonth + PERFORMANCE;
+                totalNumberOfCredits = totalNumberOfCredits + pCreditsPerMonth;
             } else {
                 totalNumberOfCredits = totalNumberOfCredits + pCreditsPerMonth;
             }
 
             if (i < MONTH_BORDER) {
                 vCreditsPerMonth = vCreditsPerMonth - PERFORMANCE;
-                totalNumberOfCredits = totalNumberOfCredits + vCreditsPerMonth - PERFORMANCE;
+                totalNumberOfCredits = totalNumberOfCredits + vCreditsPerMonth;
             } else {
                 totalNumberOfCredits = totalNumberOfCredits + vFirstPerformance;
             }
