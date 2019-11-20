@@ -29,13 +29,14 @@ public class Application {
     private static int toCountCredits(int numberOfMonths, int mCreditsPerMonth, int pCreditsPerMonth, int vCreditsPerMonth) {
 
         int totalNumberOfCredits = mCreditsPerMonth+pCreditsPerMonth+vCreditsPerMonth;
+        int vFirstPerformance = vCreditsPerMonth;
 
         for (int i = 1; i < numberOfMonths; i++) {
 
             mCreditsPerMonth = mCreditsPerMonth + PERFORMANCE;
             totalNumberOfCredits = totalNumberOfCredits + mCreditsPerMonth;
 
-            if (i % 2 == 1) {
+            if (i % 2 != 0) {
                 pCreditsPerMonth = pCreditsPerMonth + PERFORMANCE;
                 totalNumberOfCredits = totalNumberOfCredits + pCreditsPerMonth + PERFORMANCE;
             } else {
@@ -43,11 +44,10 @@ public class Application {
             }
 
             if (i < MONTH_BORDER) {
-                vCreditsPerMonth = vCreditsPerMonth + PERFORMANCE;
+                vCreditsPerMonth = vCreditsPerMonth - PERFORMANCE;
                 totalNumberOfCredits = totalNumberOfCredits + vCreditsPerMonth - PERFORMANCE;
             } else {
-                vCreditsPerMonth = vCreditsPerMonth + PERFORMANCE;
-                totalNumberOfCredits = totalNumberOfCredits + vCreditsPerMonth;
+                totalNumberOfCredits = totalNumberOfCredits + vFirstPerformance;
             }
         }
 
