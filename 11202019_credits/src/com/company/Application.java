@@ -1,5 +1,7 @@
 package com.company;
 
+import java.time.Period;
+
 public class Application {
 
     private static double M_VEL = 1;
@@ -16,7 +18,7 @@ public class Application {
         boolean planOnTime = isPlanOnTime(1150, 480);
         System.out.println(planOnTime);
 
-        int counterOfMonths = toCountMonths (2100, 50);
+        int counterOfMonths = countMonths (2100, 50);
         System.out.println(counterOfMonths);
 
         int counterOfCredits = toCountCredits (18, 50, 40, 50);
@@ -30,17 +32,21 @@ public class Application {
 
         for (int i = 1; i < numberOfMonths; i++) {
 
-            totalNumberOfCredits = totalNumberOfCredits + mCreditsPerMonth + PERFORMANCE;
+            mCreditsPerMonth = mCreditsPerMonth + PERFORMANCE;
+            totalNumberOfCredits = totalNumberOfCredits + mCreditsPerMonth;
 
-            if (i % 2 == 0) {
+            if (i % 2 == 1) {
+                pCreditsPerMonth = pCreditsPerMonth + PERFORMANCE;
                 totalNumberOfCredits = totalNumberOfCredits + pCreditsPerMonth + PERFORMANCE;
             } else {
                 totalNumberOfCredits = totalNumberOfCredits + pCreditsPerMonth;
             }
 
             if (i < MONTH_BORDER) {
+                vCreditsPerMonth = vCreditsPerMonth + PERFORMANCE;
                 totalNumberOfCredits = totalNumberOfCredits + vCreditsPerMonth - PERFORMANCE;
             } else {
+                vCreditsPerMonth = vCreditsPerMonth + PERFORMANCE;
                 totalNumberOfCredits = totalNumberOfCredits + vCreditsPerMonth;
             }
         }
@@ -48,7 +54,7 @@ public class Application {
         return totalNumberOfCredits;
     }
 
-    private static int toCountMonths(int totalCredits, int mCreditsPerMonth) {
+    private static int countMonths(int totalCredits, int mCreditsPerMonth) {
 
         int firstNumberOfCreditsPerMonth = (int) (mCreditsPerMonth + mCreditsPerMonth * P_VEL + mCreditsPerMonth * V_LAZY_VEL);
         int firstNumberOfMonths = CREDITS_BORDER / firstNumberOfCreditsPerMonth;
