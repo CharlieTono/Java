@@ -21,12 +21,12 @@ public class Application {
         int counterOfMonths = countMonths (2100, 50);
         System.out.println(counterOfMonths);
 
-        int counterOfCredits = toCountCredits (18, 50, 40, 50);
+        int counterOfCredits = countCredits (18, 50, 40, 50);
         System.out.println(counterOfCredits);
 
     }
 
-    private static int toCountCredits(int numberOfMonths, int mCreditsPerMonth, int pCreditsPerMonth, int vCreditsPerMonth) {
+    private static int countCredits(int numberOfMonths, int mCreditsPerMonth, int pCreditsPerMonth, int vCreditsPerMonth) {
 
         int totalNumberOfCredits = mCreditsPerMonth+pCreditsPerMonth+vCreditsPerMonth;
         int vFirstPerformance = vCreditsPerMonth;
@@ -36,7 +36,7 @@ public class Application {
             mCreditsPerMonth = mCreditsPerMonth + PERFORMANCE;
             totalNumberOfCredits = totalNumberOfCredits + mCreditsPerMonth;
 
-            if (i % 2 != 0) {
+            if (i % 2 == 0) {
                 pCreditsPerMonth = pCreditsPerMonth + PERFORMANCE;
                 totalNumberOfCredits = totalNumberOfCredits + pCreditsPerMonth;
             } else {
