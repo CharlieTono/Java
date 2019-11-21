@@ -113,13 +113,17 @@ public class Application {
 
     public static int fibonacciNumbers (int n) {
 
-        if (n <= 2) {
-            return 1;
-        }
-
         int left = 0;
         int right = 1;
         int fibonacci = 0;
+
+        if (n <= 2) {
+            if (n == 0) {
+                return left;
+            }
+            return right;
+        }
+
         for (int i = 2; i < n; i++) {
             fibonacci = left + right;
             left = right;
