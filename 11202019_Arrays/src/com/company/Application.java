@@ -6,10 +6,13 @@ public class Application {
 
     public static void main(String[] args) {
 
-        printArray();
-        System.out.println();
-        System.out.println(countArithmeticProgression());
-        System.out.println(countMod3());
+        printRangeDown(100,10,10);
+
+        int resultA = countArithmeticProgressionUp(1,87,1);
+        System.out.println(resultA);
+
+        int resultB = countArithmeticProgressionUp(5, 86, 3);
+        System.out.println(resultB);
 
         int [] array = {1,2,3,4,5,6,7,8,9,10};
         reverseArray(array);
@@ -17,39 +20,34 @@ public class Application {
 
     }
 
-    public static void printArray () {
-        for (int i = 100; i > 1; i=i-10) {
-            System.out.print(i + " ");
+    public static void printRangeDown (int first, int last, int step) {
+
+        int number = first;
+        while (number >= last) {
+            System.out.print(number + " ");
+            number -= step;
         }
+        System.out.println();
     }
 
-    public static int countArithmeticProgression () {
-        int result = 0;
+    public static int countArithmeticProgressionUp (int first, int last, int step) {
 
-        for (int i = 1; i < 88; i++) {
-            result += i;
+        int sum = 0;
+        int number = first;
+
+        while (number <= last) {
+            sum += number;
+            number += step;
         }
-
-        return result;
+        return sum;
     }
 
-    public static int countMod3 () {
-        int result = 0;
-
-        for (int i = 2; i < 87; i=i+3) {
-            result += i;
-        }
-
-        return result;
-    }
-
-    public static int [] reverseArray (int [] array) {
+    public static void reverseArray (int [] array) {
 
         for (int i = 0; i < array.length/2; i++) {
             int temp = array [i];
             array[i] = array [array.length-i-1];
             array[array.length-i-1] = temp;
         }
-        return array;
     }
 }
