@@ -14,13 +14,20 @@ public class Application {
         int resultB = countArithmeticProgressionUp(5, 86, 3);
         System.out.println(resultB);
 
-        int[] array = {1, 2, 3, 4, -5};
+        int[] array = {1, 2, 3, 4, 5, 6, 7, 8};
         reverseArray(array);
         System.out.println(Arrays.toString(array));
         System.out.println(sumEvenNumbers(array));
         System.out.println(containsOdd(array));
         System.out.println(Arrays.toString(countPositiveNumber(array)));
         printNumbers();
+        System.out.println();
+
+        int [] array02 = {0,2,4,5,6,7,10};
+        int result01 = sumNumbersBeforeN(array02, 7);
+        System.out.println(result01);
+        int result02 = fibonacciNumbers(9);
+        System.out.println(result02);
     }
 
     public static void printRangeDown(int first, int last, int step) {
@@ -92,6 +99,34 @@ public class Application {
                 System.out.print(i + " ");
             }
         }
+    }
+
+    public static int sumNumbersBeforeN (int array [], int n) {
+        int sum = 0;
+        for (int i = 0; i < array.length; i++) {
+            if (array[i] % 2 == 1 && array [i] <= n) {
+                sum += array [i];
+            }
+        }
+        return sum;
+    }
+
+    public static int fibonacciNumbers (int n) {
+
+        if (n <= 2) {
+            return 1;
+        }
+
+        int left = 0;
+        int right = 1;
+        int fibonacci = 0;
+        for (int i = 2; i < n; i++) {
+            fibonacci = left + right;
+            left = right;
+            right = fibonacci;
+
+        }
+        return fibonacci;
     }
 
 
