@@ -26,7 +26,7 @@ public class Application {
         int [] array02 = {0,2,4,5,6,7,10};
         int result01 = sumNumbersBeforeN(array02, 7);
         System.out.println(result01);
-        int result02 = fibonacciNumbers(9);
+        int result02 = fibonacciNumbers(5);
         System.out.println(result02);
     }
 
@@ -113,25 +113,33 @@ public class Application {
 
     public static int fibonacciNumbers (int n) {
 
-        int left = 0;
+        int left = 1;
         int right = 1;
         int fibonacci = 0;
 
-        if (n <= 2) {
-            if (n == 0) {
-                return left;
-            }
-            return right;
+        if (n < 2) {
+          return n;
         }
 
         for (int i = 2; i < n; i++) {
             fibonacci = left + right;
             left = right;
             right = fibonacci;
-
         }
-        return fibonacci;
+        return right;
     }
 
-
+    public static int fibArray (int n) {
+        if (n < 1) {
+            return 0;
+        }
+        int [] array = new int [n + 1];
+        array[1] = 1;
+        for (int i = 0; i < array.length; i++) {
+            array [i] = array [i - 1] + array [i -2];
+        }
+        return array [n];
+    }
 }
+
+
