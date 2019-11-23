@@ -11,15 +11,15 @@ public class Application {
 
         for (int i = 1; i <= creditNumber; i++) {
             if (i%13 != 0 && i != 13) {
-                if (creditNumber % 3 == 0) {
+                if (i % 3 == 0 ) {
                     System.out.println("The credit # " + i + " is related to Mary");
                     counter++;
                 }
-                if (creditNumber % 3 == 1) {
+                if (i % 3 == 1) {
                     System.out.println("The credit # " + i + " is related to Petr");
                     counter++;
                 }
-                if (creditNumber % 3 == 2) {
+                if (i % 3 == 2) {
                     System.out.println("The credit # " + i + " is related to Vasily");
                     counter++;
                 }
