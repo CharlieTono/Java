@@ -83,6 +83,7 @@ public class Application {
             for (int j = 0; j < array.length; j++) {
                 if (array[i][j] <= 0) {
                     flag = false;
+                    break;
                 }
             }
             if (flag) {
