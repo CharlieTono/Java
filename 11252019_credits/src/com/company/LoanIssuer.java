@@ -22,7 +22,7 @@ public class LoanIssuer {
                 return true;
             }
         } else {
-            if (consumer.getAge() < 50) {
+            if (consumer.getSalary() >= 20000 && consumer.getAge() < 50) {
                 return true;
             }
         }
