@@ -39,8 +39,7 @@ public class Application {
         int array[][] = new int[10][10];
         for (int i = 0; i < array.length; i++) {
             for (int j = 0; j < array.length; j++) {
-                array[i][j] = counter;
-                counter++;
+                array[i][j] = counter++; //array[i][j] == 10 * i + j;
             }
             System.out.println(Arrays.toString(array[i]));
         }
@@ -50,9 +49,9 @@ public class Application {
     public static int[][] fillArray2() {
         int array[][] = new int[10][10];
 
-        for (int i = array.length-1; i >= 0; i--) {
+        for (int i = array.length - 1; i >= 0; i--) {
             for (int j = 0; j < array.length; j++) {
-                array[i][array.length - j - 1] = i * 10 + j;
+                array[i][array.length - j - 1] = i * 10 + j; //array[i][j] == 10 * (9 - i) + (9 - j);
             }
             System.out.println(Arrays.toString(array[i]));
         }
@@ -64,7 +63,7 @@ public class Application {
         int array[][] = new int[8][8];
         for (int i = 0; i < array.length; i++) {
             for (int j = 0; j < array.length; j++) {
-                if ((i+j)%2 ==0 ) {
+                if ((i + j) % 2 == 0) { // array[i][j] = (i + j) % 2 == 0 ? 0 : 1;
                     array[i][j] = 0;
                 } else {
                     array[i][j] = 1;
@@ -75,20 +74,18 @@ public class Application {
         return array;
     }
 
-    public static int countPositiveArrayOnly(int [][] array) {
+    public static int countPositiveArrayOnly(int[][] array) {
         int counter = 0;
 
+        BEGINNING:
         for (int i = 0; i < array.length; i++) {
-            boolean flag = true;
-            for (int j = 0; j < array.length; j++) {
+            // boolean flag = false;
+            for (int j = 0; j < array[i].length; j++) {
                 if (array[i][j] <= 0) {
-                    flag = false;
-                    break;
+                    continue BEGINNING; // flag = true; break;
                 }
             }
-            if (flag) {
-                counter++;
-            }
+            counter++; // if (!FLAG) {counter++;}
         }
         return counter;
     }
