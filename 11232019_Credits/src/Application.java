@@ -10,7 +10,7 @@ public class Application {
         int counter = 0;
 
         for (int i = 1; i <= creditNumber; i++) {
-            if (i%13 != 0 && i != 13) {
+            if (i%13 != 0) {
                 if (i % 3 == 0 ) {
                     System.out.println("The credit # " + i + " is related to Mary");
                     counter++;
