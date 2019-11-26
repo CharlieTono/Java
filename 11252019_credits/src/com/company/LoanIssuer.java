@@ -11,6 +11,18 @@ public class LoanIssuer {
         this.isKind = isKind;
     }
 
+    public String getName() {
+        return name;
+    }
+
+    public boolean isLazy() {
+        return isLazy;
+    }
+
+    public boolean isKind() {
+        return isKind;
+    }
+
     public boolean toIssue (LoanConsumer consumer) {
 
         if (this.isLazy) {
@@ -28,4 +40,6 @@ public class LoanIssuer {
         }
         return false;
     }
+
+
 }
