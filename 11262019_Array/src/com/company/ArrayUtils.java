@@ -31,6 +31,7 @@ public class ArrayUtils {
 
         int left = 0;
         int right = array.length - 1;
+        boolean flag = true;
 
         do {
             int mid = (left + right) / 2;
@@ -38,12 +39,17 @@ public class ArrayUtils {
                 right = mid - 1;
             } else if (array[mid] < number){
                 left = mid + 1;
+                flag = false;
             } else {
                 return mid;
             }
         } while (left <= right);
 
-        return -1;
+        if (flag) {
+            return -(right+1);
+        } else {
+            return -(left+1);
+        }
     }
 
     public static int[] append(int[] array, int value) {  // return copy of array with a new element in the end
