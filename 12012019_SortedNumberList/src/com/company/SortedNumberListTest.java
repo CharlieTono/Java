@@ -2,8 +2,6 @@ package com.company;
 
 import org.junit.Test;
 
-import java.net.PortUnreachableException;
-
 import static org.junit.Assert.*;
 
 public class SortedNumberListTest {
@@ -113,8 +111,8 @@ public class SortedNumberListTest {
         SortedNumberList ourArray1 = new SortedNumberList(new int[]{1, 2, 3});
         SortedNumberList ourArray2 = new SortedNumberList(new int[]{1, 4, 5});
         SortedNumberList ourArray3 = ourArray1.intersection(ourArray2);
-        assertEquals(6, ourArray3.size());
-        int[] expected = {1, 1, 2, 3, 4, 5};
+        assertEquals(2, ourArray3.size());
+        int[] expected = {1, 1};
         for (int i = 0; i < ourArray3.size(); i++) {
             assertEquals(expected[i], ourArray3.get(i));
         }

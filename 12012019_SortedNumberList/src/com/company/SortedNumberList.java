@@ -52,11 +52,12 @@ public class SortedNumberList {
     }
 
     public boolean remove(int value) {
-        for (int i = 0; i < source.length; i++) {
-            if (this.source[i] == value) {
-                removeById(i);
-                return true;
-            }
+
+        int number = ArrayUtils.binarySearch(source, value);
+
+        if (number >= 0) {
+            removeById(number);
+            return true;
         }
         return false;
     }
@@ -64,6 +65,7 @@ public class SortedNumberList {
     public void removeRepeated() {
 
         for (int i = 0; i < source.length - 1; i++) {
+
             if (source[i] == source[i + 1]) {
                 removeById(i);
                 i--;
@@ -73,11 +75,13 @@ public class SortedNumberList {
 
     public SortedNumberList intersection(SortedNumberList array) {
 
-        int[] newArray = ArrayUtils.copyArray(source);
-        SortedNumberList sortedNewArray = new SortedNumberList(newArray);
+        SortedNumberList sortedNewArray = new SortedNumberList();
 
         for (int i = 0; i < array.size(); i++) {
-            sortedNewArray.add(array.get(i));
+            if (ArrayUtils.binarySearch(source, array.get(i)) >= 0) {
+                sortedNewArray.add(array.get(i));
+                sortedNewArray.add(array.get(i));
+            }
         }
 
         return sortedNewArray;
@@ -85,7 +89,12 @@ public class SortedNumberList {
 
     public SortedNumberList union(SortedNumberList array) {
 
-        SortedNumberList sortedNewArray = intersection(array);
+        int[] newArray = ArrayUtils.copyArray(source);
+        SortedNumberList sortedNewArray = new SortedNumberList(newArray);
+
+        for (int i = 0; i < array.size(); i++) {
+            sortedNewArray.add(array.get(i));
+        }
         sortedNewArray.removeRepeated();
         return sortedNewArray;
     }

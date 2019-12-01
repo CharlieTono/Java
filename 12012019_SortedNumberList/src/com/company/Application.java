@@ -11,8 +11,6 @@ public class Application {
         SortedNumberList list01 = new SortedNumberList(array01);
         SortedNumberList list02 = new SortedNumberList(array02);
         SortedNumberList list03 = new SortedNumberList(array03);
-        SortedNumberList list04 = list01.intersection(list02);
-        System.out.println(list04.printArray());
 
     }
 }
