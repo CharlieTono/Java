@@ -30,12 +30,11 @@ public class SortedNumberList {
 
     /**
      * remove element by index
-     *
      * @param index of the element to remove
      * @return removed element
      */
 
-    public int removeById(int index) { //to move to ArrayUtils as option
+    public int removeById(int index) {
 
         int[] newArray = new int[source.length - 1];
 
@@ -92,14 +91,25 @@ public class SortedNumberList {
 
     public SortedNumberList intersection(SortedNumberList array) {
 
-        SortedNumberList sortedNewArray = new SortedNumberList();
+        int counter = 0;
 
         for (int i = 0; i < array.size(); i++) {
             if (ArrayUtils.binarySearch(source, array.get(i)) >= 0) {
-                sortedNewArray.add(array.get(i));
-                sortedNewArray.add(array.get(i));
+                counter++;
             }
         }
+
+        int [] newArray = new int [counter + 1];
+        int index = 0;
+
+        for (int i = 0; i < array.size(); i++) {
+            if (ArrayUtils.binarySearch(source, array.get(i)) >= 0) {
+                newArray[index++] = source[i];
+                newArray[index++] = source[i];
+            }
+        }
+
+        SortedNumberList sortedNewArray = new SortedNumberList(newArray);
         return sortedNewArray;
     }
 

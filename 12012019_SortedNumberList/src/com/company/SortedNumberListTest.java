@@ -52,7 +52,7 @@ public class SortedNumberListTest {
     }
 
     @Test
-    public void testAdd_EmptyObject_addsElementToMiddle() { //better use two testMethods
+    public void testAdd_emptyObject_addsElementToMiddle() { //better use two testMethods
         SortedNumberList ourArray = new SortedNumberList();
         ourArray.add(2);
         assertEquals(2, ourArray.get(0));
@@ -84,7 +84,7 @@ public class SortedNumberListTest {
     }
 
     @Test
-    public void testRemoveById_nonEmptyObject_RemoveFirstIndex() {
+    public void testRemoveById_nonEmptyObject_removeFirstIndex() {
         int[] source = {1, 2, 3};
         SortedNumberList ourArray = new SortedNumberList(source);
         assertEquals(1, ourArray.removeById(0));
@@ -96,7 +96,7 @@ public class SortedNumberListTest {
     }
 
     @Test
-    public void testRemoveById_nonEmptyObject_RemoveMiddleIndex() {
+    public void testRemoveById_nonEmptyObject_removeMiddleIndex() {
         int[] source = {1, 2, 3};
         SortedNumberList ourArray = new SortedNumberList(source);
         assertEquals(2, ourArray.removeById(1));
@@ -108,7 +108,7 @@ public class SortedNumberListTest {
     }
 
     @Test
-    public void testRemoveById_nonEmptyObject_RemoveLastIndex() {
+    public void testRemoveById_nonEmptyObject_removeLastIndex() {
         int[] source = {1, 2, 3};
         SortedNumberList ourArray = new SortedNumberList(source);
         assertEquals(3, ourArray.removeById(2));
@@ -119,25 +119,46 @@ public class SortedNumberListTest {
         assertEquals(2, ourArray.size());
     }
 
-    @Test  // write 3 methods for each element
-    public void testRemove_nonEmptyObject_AllElementsMatchAndNewSize() {
-        SortedNumberList ourArray = new SortedNumberList(new int[]{1, 2, 3});
-        ourArray.remove(1);
+    @Test
+    public void testRemove_nonEmptyObject_RemoveFirstIndex() {
+        int[] source = {1, 2, 3};
+        SortedNumberList ourArray = new SortedNumberList(source);
+        assertTrue(ourArray.remove(1));
         int[] expected = {2, 3};
         for (int i = 0; i < ourArray.size(); i++) {
             assertEquals(expected[i], ourArray.get(i));
         }
+        assertEquals(2, ourArray.size());
     }
 
     @Test
-    public void testRemove_nonEmptyObject_returnTrue() {
-        SortedNumberList ourArray = new SortedNumberList(new int[]{1, 2, 3});
-        assertTrue(ourArray.remove(1));
+    public void testRemove_nonEmptyObject_RemoveMiddleIndex() {
+        int[] source = {1, 2, 3};
+        SortedNumberList ourArray = new SortedNumberList(source);
+        assertTrue(ourArray.remove(2));
+        int[] expected = {1, 3};
+        for (int i = 0; i < ourArray.size(); i++) {
+            assertEquals(expected[i], ourArray.get(i));
+        }
+        assertEquals(2, ourArray.size());
     }
 
     @Test
-    public void testRemoveRepeated_NonEmptyObject_RemoveAllRepeatedElement() {
-        SortedNumberList ourArray = new SortedNumberList(new int[]{1, 1, 2, 3, 3});
+    public void testRemove_nonEmptyObject_RemoveLastIndex() {
+        int[] source = {1, 2, 3};
+        SortedNumberList ourArray = new SortedNumberList(source);
+        assertTrue(ourArray.remove(3));
+        int[] expected = {1, 2};
+        for (int i = 0; i < ourArray.size(); i++) {
+            assertEquals(expected[i], ourArray.get(i));
+        }
+        assertEquals(2, ourArray.size());
+    }
+
+    @Test
+    public void testRemoveRepeated_nonEmptyObject_removeAllRepeatedElement() {
+        int[] source = {1, 1, 2, 3, 3};
+        SortedNumberList ourArray = new SortedNumberList(source);
         ourArray.removeRepeated();
         int[] expected = {1, 2, 3};
         for (int i = 0; i < ourArray.size(); i++) {
@@ -148,26 +169,30 @@ public class SortedNumberListTest {
 
     @Test
     public void testIntersection_NonEmptyObject_AllNewElementsMatch() {
-        SortedNumberList ourArray1 = new SortedNumberList(new int[]{1, 2, 3});
-        SortedNumberList ourArray2 = new SortedNumberList(new int[]{1, 4, 5});
+        int [] array01 = {1,2,3};
+        int [] array02 = {1,4,5};
+        SortedNumberList ourArray1 = new SortedNumberList(array01);
+        SortedNumberList ourArray2 = new SortedNumberList(array02);
         SortedNumberList ourArray3 = ourArray1.intersection(ourArray2);
-        assertEquals(2, ourArray3.size());
         int[] expected = {1, 1};
         for (int i = 0; i < ourArray3.size(); i++) {
             assertEquals(expected[i], ourArray3.get(i));
         }
+        assertEquals(2, ourArray3.size());
     }
 
     @Test
-    public void testUnion_NonEmptyObject_AllNewElementsMatchAndNonEquals() {
-        SortedNumberList ourArray1 = new SortedNumberList(new int[]{1, 2, 3});
-        SortedNumberList ourArray2 = new SortedNumberList(new int[]{1, 4, 5});
+    public void testUnion_nonEmptyObject_allNewElementsMatchAndNonEquals() {
+        int [] array01 = {1,2,3};
+        int [] array02 = {1,4,5};
+        SortedNumberList ourArray1 = new SortedNumberList(array01);
+        SortedNumberList ourArray2 = new SortedNumberList(array02);
         SortedNumberList ourArray3 = ourArray1.union(ourArray2);
-        assertEquals(5, ourArray3.size());
         int[] expected = {1, 2, 3, 4, 5};
         for (int i = 0; i < ourArray3.size(); i++) {
             assertEquals(expected[i], ourArray3.get(i));
         }
+        assertEquals(5, ourArray3.size());
     }
 
 }
