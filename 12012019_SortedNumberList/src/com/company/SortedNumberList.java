@@ -99,12 +99,11 @@ public class SortedNumberList {
             }
         }
 
-        int [] newArray = new int [counter + 1];
+        int [] newArray = new int [counter];
         int index = 0;
 
         for (int i = 0; i < array.size(); i++) {
             if (ArrayUtils.binarySearch(source, array.get(i)) >= 0) {
-                newArray[index++] = source[i];
                 newArray[index++] = source[i];
             }
         }

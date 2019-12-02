@@ -174,11 +174,11 @@ public class SortedNumberListTest {
         SortedNumberList ourArray1 = new SortedNumberList(array01);
         SortedNumberList ourArray2 = new SortedNumberList(array02);
         SortedNumberList ourArray3 = ourArray1.intersection(ourArray2);
-        int[] expected = {1, 1};
+        int[] expected = {1};
         for (int i = 0; i < ourArray3.size(); i++) {
             assertEquals(expected[i], ourArray3.get(i));
         }
-        assertEquals(2, ourArray3.size());
+        assertEquals(1, ourArray3.size());
     }
 
     @Test
