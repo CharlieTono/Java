@@ -105,13 +105,18 @@ public class SortedNumberList {
 
     public SortedNumberList union(SortedNumberList array) {
 
-        int[] newArray = ArrayUtils.copyArray(source);
-        SortedNumberList sortedNewArray = new SortedNumberList(newArray);
+        int[] newArray = new int[this.source.length + array.size()];
 
-        for (int i = 0; i < array.size(); i++) {
-            sortedNewArray.add(array.get(i));
+        for (int i = 0; i < this.source.length; i++) {
+            newArray[i] = source[i];
         }
+        for (int i = 0; i < array.size(); i++) {
+            newArray[i + source.length] = array.source[i];
+        }
+
+        SortedNumberList sortedNewArray = new SortedNumberList(newArray);
         sortedNewArray.removeRepeated();
+
         return sortedNewArray;
     }
 
