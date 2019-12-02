@@ -4,7 +4,7 @@ import java.util.Arrays;
 
 public class SortedNumberList {
 
-    int[] source;
+    private int[] source;
 
     public SortedNumberList() {
         this.source = new int[0];
@@ -12,20 +12,12 @@ public class SortedNumberList {
 
     public SortedNumberList(int[] array) {
         this.source = ArrayUtils.copyArray(array);
+        ArrayUtils.selectionSort(source);
     }
 
-    public void add(int value) { // add in accordance with sorted list
-        boolean flag = false;
-        for (int i = 0; i < source.length; i++) {
-            if (source[i] >= value) {
-                this.source = ArrayUtils.insert(this.source, i, value);
-                flag = true;
-                break;
-            }
-        }
-        if (!flag) {
-            this.source = ArrayUtils.insert(this.source, this.source.length, value);
-        }
+    public void add(int value) {
+        this.source = ArrayUtils.append(source, value);
+        ArrayUtils.selectionSort(source);
     }
 
     public int get(int index) {
@@ -36,7 +28,14 @@ public class SortedNumberList {
         return this.source.length;
     }
 
-    public void removeById(int index) {
+    /**
+     * remove element by index
+     *
+     * @param index of the element to remove
+     * @return removed element
+     */
+
+    public int removeById(int index) { //to move to ArrayUtils as option
 
         int[] newArray = new int[source.length - 1];
 
@@ -48,7 +47,10 @@ public class SortedNumberList {
             newArray[i - 1] = source[i];
         }
 
+        int result = this.source[index];
         this.source = newArray;
+
+        return result;
     }
 
     public boolean remove(int value) {
@@ -64,13 +66,28 @@ public class SortedNumberList {
 
     public void removeRepeated() {
 
-        for (int i = 0; i < source.length - 1; i++) {
+        if (this.source.length == 0) {
+            return;
+        }
 
-            if (source[i] == source[i + 1]) {
-                removeById(i);
-                i--;
+        int counter = 1;
+        for (int i = 1; i < source.length; i++) {
+            if (source[i] != source[i - 1]) {
+                counter++;
             }
         }
+
+        int[] newArray = new int[counter];
+        newArray[0] = this.source[0];
+        int index = 1;
+
+        for (int i = 1; i < source.length; i++) {
+            if (source[i] != source[i - 1]) {
+                newArray[index] = source[i];
+                index++;
+            }
+        }
+        this.source = newArray;
     }
 
     public SortedNumberList intersection(SortedNumberList array) {
@@ -83,7 +100,6 @@ public class SortedNumberList {
                 sortedNewArray.add(array.get(i));
             }
         }
-
         return sortedNewArray;
     }
 
@@ -97,10 +113,6 @@ public class SortedNumberList {
         }
         sortedNewArray.removeRepeated();
         return sortedNewArray;
-    }
-
-    public String printArray() {
-        return Arrays.toString(source);
     }
 
 }
