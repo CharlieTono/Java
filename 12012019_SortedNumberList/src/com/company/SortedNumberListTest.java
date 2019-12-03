@@ -168,9 +168,19 @@ public class SortedNumberListTest {
     }
 
     @Test
-    public void testIntersection_NonEmptyObject_AllNewElementsMatch() {
-        int [] array01 = {1,2,3};
-        int [] array02 = {1,4,5};
+    public void testIntersection_nonEmptyObject_withoutIntersection() {
+        int[] array01 = {1, 2, 3};
+        int[] array02 = {0, 4, 5};
+        SortedNumberList ourArray1 = new SortedNumberList(array01);
+        SortedNumberList ourArray2 = new SortedNumberList(array02);
+        SortedNumberList ourArray3 = ourArray1.intersection(ourArray2);
+        assertEquals(0, ourArray3.size());
+    }
+
+    @Test
+    public void testIntersection_nonEmptyObject_withIntersection() {
+        int[] array01 = {1, 2, 3};
+        int[] array02 = {1, 4, 5};
         SortedNumberList ourArray1 = new SortedNumberList(array01);
         SortedNumberList ourArray2 = new SortedNumberList(array02);
         SortedNumberList ourArray3 = ourArray1.intersection(ourArray2);
@@ -182,9 +192,74 @@ public class SortedNumberListTest {
     }
 
     @Test
-    public void testUnion_nonEmptyObject_allNewElementsMatchAndNonEquals() {
-        int [] array01 = {1,2,3};
-        int [] array02 = {1,4,5};
+    public void testIntersection_nonEmptyObject_withIntersectionAndDublicatedElements() {
+        int[] array02 = {1, 1, 5, 5};
+        int[] array01 = {2, 2, 5};
+        SortedNumberList ourArray1 = new SortedNumberList(array01);
+        SortedNumberList ourArray2 = new SortedNumberList(array02);
+        SortedNumberList ourArray3 = ourArray1.intersection(ourArray2);
+        int[] expected = {5};
+        for (int i = 0; i < ourArray3.size(); i++) {
+            assertEquals(expected[i], ourArray3.get(i));
+        }
+        assertEquals(1, ourArray3.size());
+    }
+
+    @Test
+    public void testIntersection_emptyObjectAndNonEmptyObject_withIntersection() {
+        int[] array01 = {};
+        int[] array02 = {1, 2, 5, 5};
+        SortedNumberList ourArray1 = new SortedNumberList(array01);
+        SortedNumberList ourArray2 = new SortedNumberList(array02);
+        SortedNumberList ourArray3 = ourArray1.intersection(ourArray2);
+        assertEquals(0, ourArray3.size());
+    }
+
+    @Test
+    public void testIntersection_nonEmptyObjectAndEmptyObject_withIntersection() {
+        int[] array01 = {};
+        int[] array02 = {1, 2, 5, 5};
+        SortedNumberList ourArray1 = new SortedNumberList(array01);
+        SortedNumberList ourArray2 = new SortedNumberList(array02);
+        SortedNumberList ourArray3 = ourArray2.intersection(ourArray1);
+        assertEquals(0, ourArray3.size());
+    }
+
+    @Test
+    public void testUnion_emptyObjectAndEmptyObject_yieldsEmptyObject() {
+        SortedNumberList ourArray1 = new SortedNumberList();
+        SortedNumberList ourArray2 = new SortedNumberList();
+        assertEquals(0, ourArray1.union(ourArray2).size());
+    }
+
+    @Test
+    public void testUnion_emptyObjectAndNonEmptyObject_yieldsAnotherObject() {
+        int[] source = new int[]{1, 2, 3};
+        SortedNumberList ourArray1 = new SortedNumberList();
+        SortedNumberList ourArray2 = new SortedNumberList(source);
+        SortedNumberList newArray1 = ourArray1.union(ourArray2);
+        for (int i = 0; i < source.length; i++) {
+            assertEquals(source[i], newArray1.get(i));
+        }
+        assertEquals(3, newArray1.size());
+    }
+
+    @Test
+    public void testUnion_nonEmptyObjectAndEmptyObject_yieldsAnotherObject() {
+        int[] source = new int[]{1, 2, 3};
+        SortedNumberList ourArray1 = new SortedNumberList();
+        SortedNumberList ourArray2 = new SortedNumberList(source);
+        SortedNumberList newArray1 = ourArray2.union(ourArray1);
+        for (int i = 0; i < source.length; i++) {
+            assertEquals(source[i], newArray1.get(i));
+        }
+        assertEquals(3, newArray1.size());
+    }
+
+    @Test
+    public void testUnion_nonEmptyObject_withIntersection() {
+        int[] array01 = {1, 2, 3};
+        int[] array02 = {1, 4, 5};
         SortedNumberList ourArray1 = new SortedNumberList(array01);
         SortedNumberList ourArray2 = new SortedNumberList(array02);
         SortedNumberList ourArray3 = ourArray1.union(ourArray2);
@@ -193,6 +268,38 @@ public class SortedNumberListTest {
             assertEquals(expected[i], ourArray3.get(i));
         }
         assertEquals(5, ourArray3.size());
+    }
+
+    @Test
+    public void testUnion_nonEmptyObject_withoutIntersection() {
+        int[] array01 = {0, 2, 3};
+        int[] array02 = {1, 4, 5};
+        SortedNumberList ourArray1 = new SortedNumberList(array01);
+        SortedNumberList ourArray2 = new SortedNumberList(array02);
+        SortedNumberList ourArray3 = ourArray1.union(ourArray2);
+        int[] expected = {0, 1, 2, 3, 4, 5};
+        for (int i = 0; i < ourArray3.size(); i++) {
+            assertEquals(expected[i], ourArray3.get(i));
+        }
+        assertEquals(6, ourArray3.size());
+    }
+
+    @Test
+    public void testContains_nonEmptyObject_containsFirstMiddleLastElements() {
+        int[] source = {1, 2, 3};
+        SortedNumberList list = new SortedNumberList(source);
+        assertTrue(list.contains(1));
+        assertTrue(list.contains(2));
+        assertTrue(list.contains(3));
+    }
+
+    @Test
+    public void testContains_nonEmptyObject_notContainsFirstMiddleLastElements() {
+        int[] source = {1, 2, 3};
+        SortedNumberList list = new SortedNumberList(source);
+        assertFalse(list.contains(4));
+        assertFalse(list.contains(5));
+        assertFalse(list.contains(6));
     }
 
 }

@@ -91,24 +91,23 @@ public class SortedNumberList {
 
     public SortedNumberList intersection(SortedNumberList array) {
 
-        int counter = 0;
+        int newSize = 0;   //Option#2 with method contains
 
-        for (int i = 0; i < array.size(); i++) {
-            if (ArrayUtils.binarySearch(source, array.get(i)) >= 0) {
-                counter++;
+        for (int i = 0; i < this.source.length; i++) {
+            if (array.contains(source[i])) {
+                newSize++;
             }
         }
 
-        int [] newArray = new int [counter];
+        int [] newArray = new int [newSize];
         int index = 0;
-
-        for (int i = 0; i < array.size(); i++) {
-            if (ArrayUtils.binarySearch(source, array.get(i)) >= 0) {
+        for (int i = 0; i < source.length; i++) {
+            if (array.contains(source[i])) {
                 newArray[index++] = source[i];
             }
         }
-
         SortedNumberList sortedNewArray = new SortedNumberList(newArray);
+        sortedNewArray.removeRepeated();
         return sortedNewArray;
     }
 
@@ -127,6 +126,11 @@ public class SortedNumberList {
         sortedNewArray.removeRepeated();
 
         return sortedNewArray;
+    }
+
+    public boolean contains (int number) {
+        int index = ArrayUtils.binarySearch(this.source, number);
+        return index >= 0;
     }
 
 }
