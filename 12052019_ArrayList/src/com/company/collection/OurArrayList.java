@@ -9,8 +9,12 @@ public class OurArrayList extends List {
     private static final int DEFAULT_CAPACITY = 16;
     private int size;
 
-    OurArrayList() {
+    public OurArrayList() {
         source = new Object[DEFAULT_CAPACITY];
+    }
+
+    public OurArrayList(Object [] o) {
+        source = new Object[o.length*2];
     }
 
     @Override
@@ -23,28 +27,22 @@ public class OurArrayList extends List {
         if (size < source.length) {
             source[size] = o;
             size++;
+        } else {
+            OurArrayList newList = new OurArrayList(source);
+            newList.set(o, size);
+            source = newList.source;
+            size++;
         }
     }
 
     @Override
     public Object get(int index) {
-
-        for (int i = 0; i < size; i++) {
-            if (i == index) {
-                return source[i];
-            }
-        }
-        return null;
+        return source[index];
     }
 
     @Override
     public void set(Object o, int index) {
-
-        for (int i = 0; i < size; i++) {
-            if (i == index) {
-                source[i] = o;
-            }
-        }
+        source[index] = o;
     }
 
     @Override
@@ -90,4 +88,6 @@ public class OurArrayList extends List {
         result = 31 * result + Arrays.hashCode(source);
         return result;
     }
+
+
 }

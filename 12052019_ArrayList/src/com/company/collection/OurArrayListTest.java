@@ -90,6 +90,16 @@ public class OurArrayListTest {
     }
 
     @Test
+    public void testAppend_fullObject_increasesObjectCapacity() {
+        Object first = new Object();
+        OurArrayList list = new OurArrayList();
+        while (list.size() <= 16) {
+            list.append(first);
+        }
+        assertEquals(17, list.size());
+    }
+
+    @Test
     public void testRemoveById_nonEmptyObject_removeFirstIndex() {
         Object first = new Object();
         Object second = new Object();
