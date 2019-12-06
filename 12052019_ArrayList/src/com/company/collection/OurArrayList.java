@@ -13,10 +13,6 @@ public class OurArrayList extends List {
         source = new Object[DEFAULT_CAPACITY];
     }
 
-    public OurArrayList(Object [] o) {
-        source = new Object[o.length*2];
-    }
-
     @Override
     public int size() {
         return size;
@@ -24,15 +20,15 @@ public class OurArrayList extends List {
 
     @Override
     public void append(Object o) {
-        if (size < source.length) {
-            source[size] = o;
-            size++;
-        } else {
-            OurArrayList newList = new OurArrayList(source);
-            newList.set(o, size);
-            source = newList.source;
-            size++;
+
+        if (size == source.length) {
+            Object[] newSource = new Object[size * 2];
+            System.arraycopy(source, 0, newSource, 0, size);
+            source = newSource;
         }
+        source[size] = o;
+        size++;
+
     }
 
     @Override
@@ -88,6 +84,5 @@ public class OurArrayList extends List {
         result = 31 * result + Arrays.hashCode(source);
         return result;
     }
-
-
+    
 }
