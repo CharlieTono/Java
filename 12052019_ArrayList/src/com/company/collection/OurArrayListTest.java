@@ -34,6 +34,19 @@ public class OurArrayListTest {
     }
 
     @Test
+    public void testSet_nonEmptyObject_ChangeElementFromTheMiddle() {
+        int[] source = {1, 4, 2};
+        OurArrayList list = new OurArrayList();
+
+        for (int i : source) {
+            list.append(i);
+        }
+
+        list.set(5, 1);
+        assertEquals(5, list.get(1));
+    }
+
+    @Test
     public void testSet_nonEmptyObject_setsFirstElement() {
         Object first = new Object();
         Object second = new Object();
@@ -97,6 +110,25 @@ public class OurArrayListTest {
             list.append(first);
         }
         assertEquals(17, list.size());
+    }
+
+    @Test
+    public void testRemoveById_nonEmptyObject_removeElementsFromTheEnd() {
+        int[] source = {1, 4, 2};
+        OurArrayList list = new OurArrayList();
+
+        for (int i : source) {
+            list.append(i);
+        }
+
+        Object deleted = list.removeById(2);
+        assertEquals(2, deleted);
+
+        int[] expected = {1, 4};
+        for (int i = 0; i < expected.length; i++) {
+            assertEquals(expected[i], list.get(i));
+        }
+        assertEquals(2, list.size());
     }
 
     @Test
