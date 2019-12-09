@@ -1,12 +1,19 @@
 package com.company.collection;
 
-public abstract class List {
+public interface List {
 
-    public abstract int size();
-    public abstract void append(Object o);
-    public abstract Object get (int index);
-    public abstract void set (Object o, int index);
-    public abstract Object removeById (int index);
-    public abstract boolean remove (Object o);
+    int size();
+
+    void append(Object o);
+
+    Object get(int index);
+
+    void set(Object o, int index);
+
+    Object removeById(int index);
+
+    boolean remove(Object o);
+
+    boolean contains(Object o);
 
 }

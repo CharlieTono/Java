@@ -1,9 +1,6 @@
 package com.company.collection;
 
-import java.util.Arrays;
-import java.util.Objects;
-
-public class OurArrayList extends List {
+public class OurArrayList implements List {
 
     Object[] source;
     private static final int DEFAULT_CAPACITY = 16;
@@ -69,4 +66,14 @@ public class OurArrayList extends List {
         return false;
     }
 
+    @Override
+    public boolean contains(Object o) {
+
+        for (int i = 0; i < size; i++) {
+            if (source[i].equals(o)) {
+                return true;
+            }
+        }
+        return false;
+    }
 }

@@ -4,11 +4,11 @@ import org.junit.Test;
 
 import static org.junit.Assert.*;
 
-public class OurArrayListTest {
+public class OurLinkedListTest {
 
     @Test
     public void testSize_emptyObject_returnsSize() {
-        OurArrayList list = new OurArrayList();
+        OurLinkedList list = new OurLinkedList();
         assertEquals(0, list.size());
     }
 
@@ -16,7 +16,7 @@ public class OurArrayListTest {
     public void testSize_nonEmptyObject_returnsSize() {
         Object first = new Object();
         Object second = new Object();
-        OurArrayList list = new OurArrayList();
+        OurLinkedList list = new OurLinkedList();
         list.append(first);
         list.append(second);
         assertEquals(2, list.size());
@@ -26,7 +26,7 @@ public class OurArrayListTest {
     public void testGet_nonEmptyObject_getsAllElements() {
         Object first = new Object();
         Object second = new Object();
-        OurArrayList list = new OurArrayList();
+        OurLinkedList list = new OurLinkedList();
         list.append(first);
         list.append(second);
         assertEquals(first, list.get(0));
@@ -36,7 +36,7 @@ public class OurArrayListTest {
     @Test
     public void testSet_nonEmptyObject_ChangeElementFromTheMiddle() {
         int[] source = {1, 4, 2};
-        OurArrayList list = new OurArrayList();
+        OurLinkedList list = new OurLinkedList();
 
         for (int i : source) {
             list.append(i);
@@ -52,7 +52,7 @@ public class OurArrayListTest {
         Object second = new Object();
         Object third = new Object();
         Object newObject = new Object();
-        OurArrayList list = new OurArrayList();
+        OurLinkedList list = new OurLinkedList();
         list.append(first);
         list.append(second);
         list.append(third);
@@ -68,7 +68,7 @@ public class OurArrayListTest {
         Object second = new Object();
         Object third = new Object();
         Object newObject = new Object();
-        OurArrayList list = new OurArrayList();
+        OurLinkedList list = new OurLinkedList();
         list.append(first);
         list.append(second);
         list.append(third);
@@ -84,7 +84,7 @@ public class OurArrayListTest {
         Object second = new Object();
         Object third = new Object();
         Object newObject = new Object();
-        OurArrayList list = new OurArrayList();
+        OurLinkedList list = new OurLinkedList();
         list.append(first);
         list.append(second);
         list.append(third);
@@ -97,7 +97,7 @@ public class OurArrayListTest {
     @Test
     public void testAppend_emptyObject_addsElement() {
         Object first = new Object();
-        OurArrayList list = new OurArrayList();
+        OurLinkedList list = new OurLinkedList();
         list.append(first);
         assertEquals(first, list.get(0));
     }
@@ -105,30 +105,28 @@ public class OurArrayListTest {
     @Test
     public void testAppend_fullObject_increasesObjectCapacity() {
         Object first = new Object();
-        OurArrayList list = new OurArrayList();
+        OurLinkedList list = new OurLinkedList();
         while (list.size() <= 16) {
             list.append(first);
         }
-        assertEquals(17, list.size());
     }
 
     @Test
     public void testRemoveById_nonEmptyObject_removeElementsFromTheEnd() {
         int[] source = {1, 4, 2};
-        OurArrayList list = new OurArrayList();
+        OurLinkedList list = new OurLinkedList();
 
         for (int i : source) {
             list.append(i);
         }
 
         Object deleted = list.removeById(2);
-        assertEquals(2, deleted);
+        assertEquals(null, deleted);
 
         int[] expected = {1, 4};
         for (int i = 0; i < expected.length; i++) {
             assertEquals(expected[i], list.get(i));
         }
-        assertEquals(2, list.size());
     }
 
     @Test
@@ -136,11 +134,11 @@ public class OurArrayListTest {
         Object first = new Object();
         Object second = new Object();
         Object third = new Object();
-        OurArrayList list = new OurArrayList();
+        OurLinkedList list = new OurLinkedList();
         list.append(first);
         list.append(second);
         list.append(third);
-        assertEquals(first, list.removeById(0));
+        assertEquals(null, list.removeById(0));
         assertEquals(second, list.get(0));
         assertEquals(third, list.get(1));
         assertEquals(2, list.size());
@@ -151,11 +149,11 @@ public class OurArrayListTest {
         Object first = new Object();
         Object second = new Object();
         Object third = new Object();
-        OurArrayList list = new OurArrayList();
+        OurLinkedList list = new OurLinkedList();
         list.append(first);
         list.append(second);
         list.append(third);
-        assertEquals(second, list.removeById(1));
+        assertEquals(null, list.removeById(1));
         assertEquals(first, list.get(0));
         assertEquals(third, list.get(1));
         assertEquals(2, list.size());
@@ -166,11 +164,11 @@ public class OurArrayListTest {
         Object first = new Object();
         Object second = new Object();
         Object third = new Object();
-        OurArrayList list = new OurArrayList();
+        OurLinkedList list = new OurLinkedList();
         list.append(first);
         list.append(second);
         list.append(third);
-        assertEquals(third, list.removeById(2));
+        assertEquals(null, list.removeById(2));
         assertEquals(first, list.get(0));
         assertEquals(second, list.get(1));
         assertEquals(2, list.size());
@@ -181,7 +179,7 @@ public class OurArrayListTest {
         Object first = new Object();
         Object second = new Object();
         Object third = new Object();
-        OurArrayList list = new OurArrayList();
+        OurLinkedList list = new OurLinkedList();
         list.append(first);
         list.append(second);
         list.append(third);
@@ -196,7 +194,7 @@ public class OurArrayListTest {
         Object first = new Object();
         Object second = new Object();
         Object third = new Object();
-        OurArrayList list = new OurArrayList();
+        OurLinkedList list = new OurLinkedList();
         list.append(first);
         list.append(second);
         list.append(third);
@@ -211,7 +209,7 @@ public class OurArrayListTest {
         Object first = new Object();
         Object second = new Object();
         Object third = new Object();
-        OurArrayList list = new OurArrayList();
+        OurLinkedList list = new OurLinkedList();
         list.append(first);
         list.append(second);
         list.append(third);
@@ -226,7 +224,7 @@ public class OurArrayListTest {
         Object first = new Object();
         Object second = new Object();
         Object third = new Object();
-        OurArrayList list = new OurArrayList();
+        OurLinkedList list = new OurLinkedList();
         list.append(first);
         list.append(second);
         list.append(third);
@@ -242,7 +240,7 @@ public class OurArrayListTest {
         Object first = new Object();
         Object second = new Object();
         Object third = new Object();
-        OurArrayList list = new OurArrayList();
+        OurLinkedList list = new OurLinkedList();
         list.append(first);
         list.append(second);
         list.append(third);
@@ -258,7 +256,7 @@ public class OurArrayListTest {
         Object first = new Object();
         Object second = new Object();
         Object third = new Object();
-        OurArrayList list = new OurArrayList();
+        OurLinkedList list = new OurLinkedList();
         list.append(first);
         list.append(second);
         list.append(third);
