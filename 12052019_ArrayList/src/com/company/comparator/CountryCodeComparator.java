@@ -16,9 +16,4 @@ public class CountryCodeComparator implements OurComparator {
         }
         return 0;
     }
-
-    @Override
-    public void sortOut(Object [] array) {
-
-    }
 }
