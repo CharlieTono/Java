@@ -1,5 +1,9 @@
 package com.company.collection;
 
+import com.company.comparator.OurComparator;
+
+import javax.crypto.spec.PSource;
+
 public class OurLinkedList implements List {
 
     private Node first;
@@ -30,11 +34,10 @@ public class OurLinkedList implements List {
         if (index >= size || index < 0) {
             throw new IndexOutOfBoundsException();
         }
-        Node currentNode = first;
-        for (int i = 0; i < index; i++) {
-            currentNode = currentNode.next;
-        }
-        return currentNode.value;
+
+        Node needle = getNode(index);
+
+        return needle.value;
     }
 
     @Override
@@ -42,11 +45,19 @@ public class OurLinkedList implements List {
         if (index >= size || index < 0) {
             throw new IndexOutOfBoundsException();
         }
-        Node currentNode = first;
+
+        Node needle = getNode(index);
+
+        needle.value = o;
+    }
+
+    private Node getNode(int index) {
+
+        Node needle = first;
         for (int i = 0; i < index; i++) {
-            currentNode = currentNode.next;
+            needle = needle.next;
         }
-        currentNode.value = o;
+        return needle;
     }
 
     @Override
@@ -56,38 +67,60 @@ public class OurLinkedList implements List {
             throw new IndexOutOfBoundsException();
         }
 
-        Node deletedNode = first;
-        Object res = deletedNode.value;
+        Node nodeToRemove = getNode(index);
+        Node left = nodeToRemove.prev;
+        Node right = nodeToRemove.next;
+        Object value = nodeToRemove.value;
 
-        Node right;
-        Node left;
-        if (index == 0) {
-            right = deletedNode.next;
-            deletedNode.value = null;
-            deletedNode.next=null;
-            right.prev = null;
-            first = right;
-        } else if (index == size - 1) {
-            res = last.value;
-            deletedNode = last;
-            left = deletedNode.prev;
-            deletedNode.value = null;
-            deletedNode.prev = null;
-            left.next = null;
-            last = left;
-        } else {
-            for (int i = 0; i < index; i++) {
-                deletedNode = deletedNode.next;
-            }
-            res = deletedNode.value;
-            right = deletedNode.next;
-            left = deletedNode.prev;
+        nodeToRemove.prev = null;
+        nodeToRemove.next = null;
+        nodeToRemove.value = null;
+
+        if (index > 0 && index < size - 1) {
             left.next = right;
             right.prev = left;
-            deletedNode.value = null;
+        } else if (index == 0) {
+            right.prev = null;
+            first = right;
+        } else {
+            left.next = null;
+            last = left;
         }
         size--;
-        return res;
+        return value;
+
+//        Node deletedNode = first;
+//        Object res = deletedNode.value;
+//
+//        Node right;
+//        Node left;
+//        if (index == 0) {
+//            right = deletedNode.next;
+//            deletedNode.value = null;
+//            deletedNode.next=null;
+//            right.prev = null;
+//            first = right;
+//        } else if (index == size - 1) {
+//            res = last.value;
+//            deletedNode = last;
+//            left = deletedNode.prev;
+//            deletedNode.value = null;
+//            deletedNode.prev = null;
+//            left.next = null;
+//            last = left;
+//        } else {
+//            for (int i = 0; i < index; i++) {
+//                deletedNode = deletedNode.next;
+//            }
+//            res = deletedNode.value;
+//            right = deletedNode.next;
+//            left = deletedNode.prev;
+//            left.next = right;
+//            right.prev = left;
+//            deletedNode.value = null;
+//        }
+//        size--;
+//        return res;
     }
 
     @Override
@@ -106,6 +139,7 @@ public class OurLinkedList implements List {
 
     @Override
     public boolean contains(Object o) {
+
         Node currentNode = first;
         for (int i = 0; i < size; i++) {
             if (currentNode.value.equals(o)) {
@@ -116,7 +150,23 @@ public class OurLinkedList implements List {
         return false;
     }
 
+    @Override
+    public Object max(OurComparator comparator) {
+        return null;
+    }
+
+    @Override
+    public Object min(OurComparator comparator) {
+        return null;
+    }
+
+    @Override
+    public void sort(OurComparator comparator) {
+
+    }
+
     private static class Node {
+
         Node next;
         Node prev;
         Object value;

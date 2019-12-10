@@ -1,5 +1,7 @@
 package com.company.collection;
 
+import com.company.comparator.OurComparator;
+
 public class OurArrayList implements List {
 
     Object[] source;
@@ -29,6 +31,7 @@ public class OurArrayList implements List {
 
     @Override
     public Object get(int index) {
+
         if (index >= size || index < 0) {
             throw new IndexOutOfBoundsException();
         }
@@ -37,6 +40,7 @@ public class OurArrayList implements List {
 
     @Override
     public void set(Object o, int index) {
+
         if (index >= size || index < 0) {
             throw new IndexOutOfBoundsException();
         }
@@ -45,6 +49,7 @@ public class OurArrayList implements List {
 
     @Override
     public Object removeById(int index) {
+
         if (index >= size || index < 0) {
             throw new IndexOutOfBoundsException();
         }
@@ -75,5 +80,32 @@ public class OurArrayList implements List {
             }
         }
         return false;
+    }
+
+    @Override
+    public Object max(OurComparator comparator) {
+        Object max = source[0];
+        for (int i = 1; i < size; i++) {
+            if (comparator.compare(max, source[i]) < 0) {
+                max = source[i];
+            }
+        }
+        return max;
+    }
+
+    @Override
+    public Object min(OurComparator comparator) {
+        Object min = source[0];
+        for (int i = 1; i < size; i++) {
+            if (comparator.compare(min, source[i]) > 0) {
+                min = source[i];
+            }
+        }
+        return min;
+    }
+
+    @Override
+    public void sort(OurComparator comparator) {
+
     }
 }

@@ -1,5 +1,7 @@
 package com.company.collection;
 
+import com.company.comparator.OurComparator;
+
 public interface List {
 
     int size();
@@ -15,5 +17,11 @@ public interface List {
     boolean remove(Object o);
 
     boolean contains(Object o);
+
+    Object max(OurComparator comparator);
+
+    Object min(OurComparator comparator);
+
+    void sort(OurComparator comparator);
 
 }
