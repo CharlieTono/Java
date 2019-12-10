@@ -291,4 +291,23 @@ public class OurArrayListTest {
         assertEquals(1, list.min(intComparator));
     }
 
+    @Test
+    public void testSort_nonEmptyIntegerListUnsorted_sortedList() {
+        int[] source = {2, 9, 1};
+
+        OurArrayList list = new OurArrayList();
+        for (int i : source) {
+            list.append(i);
+        }
+
+        OurComparator intComparator = new IntComparator();
+        list.sort(intComparator);
+
+        int[] expected = {1, 2, 9};
+        for (int i = 0; i < expected.length; i++) {
+            assertEquals(expected[i], list.get(i));
+        }
+        assertEquals(3, list.size());
+    }
+
 }

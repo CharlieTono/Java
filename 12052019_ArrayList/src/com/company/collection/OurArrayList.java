@@ -106,6 +106,6 @@ public class OurArrayList implements List {
 
     @Override
     public void sort(OurComparator comparator) {
-
+        comparator.sortOut(source);
     }
 }

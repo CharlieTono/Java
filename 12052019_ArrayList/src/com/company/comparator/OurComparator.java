@@ -10,4 +10,5 @@ public interface OurComparator {
      */
     int compare(Object o1, Object o2);
 
+    void sortOut(Object [] array);
 }
