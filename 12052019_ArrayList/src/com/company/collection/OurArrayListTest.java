@@ -268,4 +268,5 @@ public class OurArrayListTest {
         assertEquals(third, list.get(2));
         assertEquals(3, list.size());
     }
+
 }

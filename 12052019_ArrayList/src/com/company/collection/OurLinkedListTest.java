@@ -121,7 +121,7 @@ public class OurLinkedListTest {
         }
 
         Object deleted = list.removeById(2);
-        assertEquals(null, deleted);
+        assertEquals(2, deleted);
 
         int[] expected = {1, 4};
         for (int i = 0; i < expected.length; i++) {
@@ -138,7 +138,7 @@ public class OurLinkedListTest {
         list.append(first);
         list.append(second);
         list.append(third);
-        assertEquals(null, list.removeById(0));
+        assertEquals(first, list.removeById(0));
         assertEquals(second, list.get(0));
         assertEquals(third, list.get(1));
         assertEquals(2, list.size());
@@ -153,7 +153,7 @@ public class OurLinkedListTest {
         list.append(first);
         list.append(second);
         list.append(third);
-        assertEquals(null, list.removeById(1));
+        assertEquals(second, list.removeById(1));
         assertEquals(first, list.get(0));
         assertEquals(third, list.get(1));
         assertEquals(2, list.size());
@@ -168,7 +168,7 @@ public class OurLinkedListTest {
         list.append(first);
         list.append(second);
         list.append(third);
-        assertEquals(null, list.removeById(2));
+        assertEquals(third, list.removeById(2));
         assertEquals(first, list.get(0));
         assertEquals(second, list.get(1));
         assertEquals(2, list.size());

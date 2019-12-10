@@ -57,38 +57,37 @@ public class OurLinkedList implements List {
         }
 
         Node deletedNode = first;
+        Object res = deletedNode.value;
+
         Node right;
         Node left;
-
-        if (index == 0 || index == size - 1) {
-            if (index == 0) {
-                right = deletedNode.next;
-                deletedNode.value = null;
-                right.prev = null;
-                first = right;
-                size--;
-                return deletedNode.value;
-            } else {
-                deletedNode = last;
-                left = deletedNode.prev;
-                deletedNode.value = null;
-                left.next = null;
-                last = left;
-                size--;
-                return deletedNode.value;
+        if (index == 0) {
+            right = deletedNode.next;
+            deletedNode.value = null;
+            deletedNode.next=null;
+            right.prev = null;
+            first = right;
+        } else if (index == size - 1) {
+            res = last.value;
+            deletedNode = last;
+            left = deletedNode.prev;
+            deletedNode.value = null;
+            deletedNode.prev = null;
+            left.next = null;
+            last = left;
+        } else {
+            for (int i = 0; i < index; i++) {
+                deletedNode = deletedNode.next;
             }
+            res = deletedNode.value;
+            right = deletedNode.next;
+            left = deletedNode.prev;
+            left.next = right;
+            right.prev = left;
+            deletedNode.value = null;
         }
-
-        for (int i = 0; i < index; i++) {
-            deletedNode = deletedNode.next;
-        }
-        right = deletedNode.next;
-        left = deletedNode.prev;
-        left.next = right; 
-        right.prev = left;
-        deletedNode.value = null;
         size--;
-        return deletedNode.value;
+        return res;
     }
 
     @Override
