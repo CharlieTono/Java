@@ -279,6 +279,13 @@ public class OurArrayListTest {
         assertEquals(9, list.max(intComparator));
     }
 
+    @Test(expected = EmptyListException.class)
+    public void testMax_emptyIntegerList_exception() {
+        OurArrayList list = new OurArrayList();
+        OurComparator intComparator = new IntComparator();
+        list.max(intComparator);
+    }
+
     @Test
     public void testMin_nonEmptyIntegerList_findsMaxInteger() {
         int[] source = {2, 9, 1};
@@ -289,6 +296,13 @@ public class OurArrayListTest {
         }
         OurComparator intComparator = new IntComparator();
         assertEquals(1, list.min(intComparator));
+    }
+
+    @Test(expected = EmptyListException.class)
+    public void testMin_emptyIntegerList_exception() {
+        OurArrayList list = new OurArrayList();
+        OurComparator intComparator = new IntComparator();
+        list.min(intComparator);
     }
 
     @Test

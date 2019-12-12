@@ -18,6 +18,14 @@ public interface List {
 
     boolean contains(Object o);
 
+    /**
+     * finds max element in the list according to the comparator
+     *
+     * @param comparator an object comparing the elements of the list
+     * @return max element according to comparator
+     * @throws EmptyListException in case if list is empty
+     */
+
     Object max(OurComparator comparator);
 
     Object min(OurComparator comparator);

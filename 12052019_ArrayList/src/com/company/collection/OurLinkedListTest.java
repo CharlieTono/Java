@@ -1,5 +1,7 @@
 package com.company.collection;
 
+import com.company.comparator.IntComparator;
+import com.company.comparator.OurComparator;
 import org.junit.Test;
 
 import static org.junit.Assert.*;
@@ -259,6 +261,49 @@ public class OurLinkedListTest {
 
         int[] expected = {2, 9, 1};
 
+        for (int i = 0; i < expected.length; i++) {
+            assertEquals(expected[i], list.get(i));
+        }
+        assertEquals(3, list.size());
+    }
+
+    @Test
+    public void testMax_nonEmptyIntegerList_findsMaxInteger() {
+        int[] source = {2, 9, 1};
+
+        OurLinkedList list = new OurLinkedList();
+        for (int i : source) {
+            list.append(i);
+        }
+        OurComparator intComparator = new IntComparator();
+        assertEquals(9, list.max(intComparator));
+    }
+
+    @Test
+    public void testMin_nonEmptyIntegerList_findsMaxInteger() {
+        int[] source = {2, 9, 1};
+
+        OurLinkedList list = new OurLinkedList();
+        for (int i : source) {
+            list.append(i);
+        }
+        OurComparator intComparator = new IntComparator();
+        assertEquals(1, list.min(intComparator));
+    }
+
+    @Test
+    public void testSort_nonEmptyIntegerListUnsorted_sortedList() {
+        int[] source = {2, 9, 1};
+
+        OurLinkedList list = new OurLinkedList();
+        for (int i : source) {
+            list.append(i);
+        }
+
+        OurComparator intComparator = new IntComparator();
+        list.sort(intComparator);
+
+        int[] expected = {1, 2, 9};
         for (int i = 0; i < expected.length; i++) {
             assertEquals(expected[i], list.get(i));
         }

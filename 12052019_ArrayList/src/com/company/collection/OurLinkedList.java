@@ -152,17 +152,50 @@ public class OurLinkedList implements List {
 
     @Override
     public Object max(OurComparator comparator) {
-        return null;
+
+        Node max = first;
+        Node currentNode = first.next;
+
+        for (int i = 1; i < size; i++) {
+            if (comparator.compare(max, currentNode) < 0) {
+                max = currentNode;
+            }
+            currentNode = currentNode.next;
+        }
+        return max;
     }
 
     @Override
     public Object min(OurComparator comparator) {
-        return null;
+
+        Node min = first;
+        Node currentNode = first.next;
+
+        for (int i = 1; i < size; i++) {
+            if (comparator.compare(min, currentNode) > 0) {
+                min = currentNode;
+            }
+            currentNode = currentNode.next;
+        }
+        return min;
     }
 
     @Override
     public void sort(OurComparator comparator) {
 
+        Node left = first;
+        Node right = first.next;
+        Node temp;
+
+        for (int i = 0; i < size; i++) {
+            for (int j = 0; j < size - i - 1; j++) {
+                if (comparator.compare(left, right) > 0) {
+                    temp = left;
+                    left = right;
+                    right = temp;
+                }
+            }
+        }
     }
 
     private static class Node {
