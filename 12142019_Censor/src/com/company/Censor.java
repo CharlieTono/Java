@@ -6,6 +6,8 @@ public class Censor {
 
     public Censor(String[] vocabulary) {
         this.vocabulary = vocabulary;
+        vocabulary.toString().substring(0);
+
     }
 
     public boolean isLegal(String text) {
