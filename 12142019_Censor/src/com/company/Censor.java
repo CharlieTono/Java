@@ -1,23 +1,23 @@
 package com.company;
 
+import java.util.Arrays;
+
 public class Censor {
 
     private String[] vocabulary;
 
     public Censor(String[] vocabulary) {
-        this.vocabulary = vocabulary;
-        vocabulary.toString().substring(0);
-
+        this.vocabulary = Arrays.copyOf(vocabulary, vocabulary.length);
     }
 
     public boolean isLegal(String text) {
 
-        for (int i = 0; i < vocabulary.length; i++) {
+        text = text.toLowerCase();
 
-            if (vocabulary[i].equalsIgnoreCase(text)) {
+        for (int i = 0; i < vocabulary.length; i++) {
+            if (text.contains(vocabulary[i].toLowerCase())) {
                 return false;
             }
-
         }
         return true;
     }

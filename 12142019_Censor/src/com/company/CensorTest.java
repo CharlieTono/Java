@@ -9,7 +9,7 @@ public class CensorTest {
 
         String[] array = {"Astrology", "Horoscope"};
         Censor person = new Censor(array);
-        String word = "Horoscope";
+        String word = "Horoscope is a science";
         assertFalse(person.isLegal(word));
     }
 
@@ -18,7 +18,7 @@ public class CensorTest {
 
         String[] array = {"Astrology", "Horoscope"};
         Censor person = new Censor(array);
-        String word = "Physics";
+        String word = "Physics is a science";
         assertTrue(person.isLegal(word));
     }
 
