@@ -187,7 +187,7 @@ public class OurLinkedList implements List {
 
         for (int i = 0; i < size; i++) {
             for (int j = 0; j < size - i - 1; j++) {
-                if (comparator.compare(left, right) > 0) {
+                if (comparator.compare(left.value, right.value) > 0) {
                     temp = left;
                     left = right;
                     right = temp;
