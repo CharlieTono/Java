@@ -29,14 +29,12 @@ public class Application {
         int i = 0;
         int counter = 0;
 
-        while (i >= 0) {
+        str = str.toLowerCase();
+        str2 = str2.toLowerCase();
 
-            i = str.indexOf(str2, i);
-            if (i > 0) {
-                counter++;
-                i = str.indexOf(str2, i + 1);
-            }
-
+        while ((i = str.indexOf(str2, i)) >= 0) {
+            i++;
+            counter++;
         }
         return counter;
     }
