@@ -2,8 +2,6 @@ package com.company.collection;
 
 import com.company.comparator.OurComparator;
 
-import javax.crypto.spec.PSource;
-
 public class OurLinkedList implements List {
 
     private Node first;
@@ -157,12 +155,12 @@ public class OurLinkedList implements List {
         Node currentNode = first.next;
 
         for (int i = 1; i < size; i++) {
-            if (comparator.compare(max, currentNode) < 0) {
+            if (comparator.compare(max.value, currentNode.value) < 0) {
                 max = currentNode;
             }
             currentNode = currentNode.next;
         }
-        return max;
+        return max.value;
     }
 
     @Override
@@ -172,12 +170,12 @@ public class OurLinkedList implements List {
         Node currentNode = first.next;
 
         for (int i = 1; i < size; i++) {
-            if (comparator.compare(min, currentNode) > 0) {
+            if (comparator.compare(min.value, currentNode.value) > 0) {
                 min = currentNode;
             }
             currentNode = currentNode.next;
         }
-        return min;
+        return min.value;
     }
 
     @Override
