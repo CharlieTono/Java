@@ -304,8 +304,10 @@ public class OurLinkedListTest {
         list.sort(intComparator);
 
         int[] expected = {1, 2, 9};
+
         for (int i = 0; i < expected.length; i++) {
             assertEquals(expected[i], list.get(i));
+
         }
         assertEquals(3, list.size());
     }
