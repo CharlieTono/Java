@@ -307,7 +307,6 @@ public class OurLinkedListTest {
 
         for (int i = 0; i < expected.length; i++) {
             assertEquals(expected[i], list.get(i));
-
         }
         assertEquals(3, list.size());
     }
