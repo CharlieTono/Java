@@ -2,6 +2,8 @@ package com.company.collection;
 
 import com.company.comparator.OurComparator;
 
+import java.util.Arrays;
+
 public class OurLinkedList implements List {
 
     private Node first;
@@ -181,19 +183,19 @@ public class OurLinkedList implements List {
     @Override
     public void sort(OurComparator comparator) {
 
-        Node left = first;
-        Node right = first.next;
-        Node temp;
-
-        for (int i = 0; i < size; i++) {
-            for (int j = 0; j < size - i - 1; j++) {
-                if (comparator.compare(left.value, right.value) < 0) {
-                    temp = left;
-                    left = right;
-                    right = temp;
-                }
-            }
-        }
+//        Node left = first;
+//        Node right = first.next;
+//        Node temp;
+//
+//        for (int i = 0; i < size; i++) {
+//            for (int j = 0; j < size - i - 1; j++) {
+//                if (comparator.compare(left.value, right.value) < 0) {
+//                    temp = left;
+//                    left = right;
+//                    right = temp;
+//                }
+//            }
+//        }
     }
 
     private static class Node {

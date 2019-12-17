@@ -4,6 +4,9 @@ import com.company.collection.List;
 import com.company.collection.OurArrayList;
 import com.company.comparator.CountryCodeComparator;
 import com.company.comparator.OurComparator;
+import com.company.performance_tester.ArrayPerformanceTester;
+import com.company.performance_tester.LinkedListPerformanceTester;
+import com.company.performance_tester.PerformanceTester;
 
 public class Application {
 
@@ -22,6 +25,11 @@ public class Application {
         for (int i = 0; i < countryCodes.size(); i++) {
             System.out.println(countryCodes.get(i));
         }
+
+        PerformanceTester arrayTester = new ArrayPerformanceTester();
+        PerformanceTester linkedArrayTester = new LinkedListPerformanceTester();
+        System.out.println(arrayTester.testAppend(1000000));
+        System.out.println(linkedArrayTester.testAppend(1000000));
 
     }
 
