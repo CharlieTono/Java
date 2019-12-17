@@ -28,8 +28,12 @@ public class Application {
 
         PerformanceTester arrayTester = new ArrayPerformanceTester();
         PerformanceTester linkedArrayTester = new LinkedListPerformanceTester();
-        System.out.println(arrayTester.testAppend(1000000));
-        System.out.println(linkedArrayTester.testAppend(1000000));
+        System.out.println(arrayTester.testAppend(100000));
+        System.out.println(linkedArrayTester.testAppend(100000));
+        System.out.println(arrayTester.testGet(10000,10000));
+        System.out.println(linkedArrayTester.testGet(10000,10000));
+        System.out.println(arrayTester.testRemoveFirst(10000,100000));
+        System.out.println(linkedArrayTester.testRemoveFirst(10000,100000));
 
     }
 

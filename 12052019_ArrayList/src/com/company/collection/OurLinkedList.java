@@ -67,6 +67,15 @@ public class OurLinkedList implements List {
             throw new IndexOutOfBoundsException();
         }
 
+        if (size == 1) {
+            Object value = first.value;
+            first.value = null;
+            first = null;
+            last = null;
+            size--;
+            return value;
+        }
+
         Node nodeToRemove = getNode(index);
         Node left = nodeToRemove.prev;
         Node right = nodeToRemove.next;
