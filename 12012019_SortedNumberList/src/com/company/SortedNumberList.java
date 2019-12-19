@@ -1,7 +1,5 @@
 package com.company;
 
-import java.util.Arrays;
-
 public class SortedNumberList {
 
     private int[] source;
@@ -30,6 +28,7 @@ public class SortedNumberList {
 
     /**
      * remove element by index
+     *
      * @param index of the element to remove
      * @return removed element
      */
@@ -99,7 +98,7 @@ public class SortedNumberList {
             }
         }
 
-        int [] newArray = new int [newSize];
+        int[] newArray = new int[newSize];
         int index = 0;
         for (int i = 0; i < source.length; i++) {
             if (array.contains(source[i])) {
@@ -128,7 +127,7 @@ public class SortedNumberList {
         return sortedNewArray;
     }
 
-    public boolean contains (int number) {
+    public boolean contains(int number) {
         int index = ArrayUtils.binarySearch(this.source, number);
         return index >= 0;
     }
