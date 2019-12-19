@@ -2,9 +2,7 @@ package com.company.collection;
 
 import com.company.comparator.OurComparator;
 
-import java.util.Arrays;
-
-public class OurLinkedList implements List {
+public class OurLinkedList<E> implements List<E> {
 
     private Node first;
     private Node last;
@@ -16,7 +14,7 @@ public class OurLinkedList implements List {
     }
 
     @Override
-    public void append(Object o) {
+    public void append(E o) {
         if (size > 0) {
             Node newNode = new Node(null, last, o);
             last.next = newNode;
@@ -30,18 +28,18 @@ public class OurLinkedList implements List {
     }
 
     @Override
-    public Object get(int index) {
+    public E get(int index) {
         if (index >= size || index < 0) {
             throw new IndexOutOfBoundsException();
         }
 
         Node needle = getNode(index);
 
-        return needle.value;
+        return (E) needle.value;
     }
 
     @Override
-    public void set(Object o, int index) {
+    public void set(E o, int index) {
         if (index >= size || index < 0) {
             throw new IndexOutOfBoundsException();
         }
@@ -61,7 +59,7 @@ public class OurLinkedList implements List {
     }
 
     @Override
-    public Object removeById(int index) {
+    public E removeById(int index) {
 
         if (index >= size || index < 0) {
             throw new IndexOutOfBoundsException();
@@ -73,7 +71,7 @@ public class OurLinkedList implements List {
             first = null;
             last = null;
             size--;
-            return value;
+            return (E) value;
         }
 
         Node nodeToRemove = getNode(index);
@@ -96,7 +94,7 @@ public class OurLinkedList implements List {
             last = left;
         }
         size--;
-        return value;
+        return (E) value;
 
 //        Node deletedNode = first;
 //        Object res = deletedNode.value;
@@ -133,7 +131,7 @@ public class OurLinkedList implements List {
     }
 
     @Override
-    public boolean remove(Object o) {
+    public boolean remove(E o) {
 
         Node currentNode = first;
         for (int i = 0; i < size; i++) {
@@ -147,7 +145,7 @@ public class OurLinkedList implements List {
     }
 
     @Override
-    public boolean contains(Object o) {
+    public boolean contains(E o) {
 
         Node currentNode = first;
         for (int i = 0; i < size; i++) {
@@ -160,37 +158,37 @@ public class OurLinkedList implements List {
     }
 
     @Override
-    public Object max(OurComparator comparator) {
+    public E max(OurComparator <E> comparator) {
 
         Node max = first;
         Node currentNode = first.next;
 
         for (int i = 1; i < size; i++) {
-            if (comparator.compare(max.value, currentNode.value) < 0) {
+            if (comparator.compare((E)max.value, (E)currentNode.value) < 0) {
                 max = currentNode;
             }
             currentNode = currentNode.next;
         }
-        return max.value;
+        return (E)max.value;
     }
 
     @Override
-    public Object min(OurComparator comparator) {
+    public E min(OurComparator <E>comparator) {
 
         Node min = first;
         Node currentNode = first.next;
 
         for (int i = 1; i < size; i++) {
-            if (comparator.compare(min.value, currentNode.value) > 0) {
+            if (comparator.compare((E)min.value, (E)currentNode.value) > 0) {
                 min = currentNode;
             }
             currentNode = currentNode.next;
         }
-        return min.value;
+        return (E)min.value;
     }
 
     @Override
-    public void sort(OurComparator comparator) {
+    public void sort(OurComparator <E> comparator) {
 
 //        Node left = first;
 //        Node right = first.next;
