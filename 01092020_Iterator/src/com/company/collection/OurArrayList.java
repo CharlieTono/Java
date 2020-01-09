@@ -110,15 +110,6 @@ public class OurArrayList<E> implements List<E>, Iterable<E> {
             }
         }
         return min;
-
-//        return max(new OurComparator() {
-//            @Override
-//            public int compare(Object o1, Object o2) {
-//                return -comparator.compare(o1, o2);
-//            }
-//        });
-
-//        return max((o1, o2) -> -comparator.compare(o1, o2));
     }
 
     @Override

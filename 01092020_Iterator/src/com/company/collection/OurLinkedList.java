@@ -1,9 +1,11 @@
 package com.company.collection;
 
-public class OurLinkedList implements List {
+import java.util.Iterator;
 
-    private Node first;
-    private Node last;
+public class OurLinkedList<E> implements List<E>, Iterable<E> {
+
+    private Node<E> first;
+    private Node<E> last;
     private int size;
 
     @Override
@@ -12,13 +14,13 @@ public class OurLinkedList implements List {
     }
 
     @Override
-    public void append(Object o) {
+    public void append(E o) {
         if (size > 0) {
-            Node newNode = new Node(null, last, o);
+            Node<E> newNode = new Node<>(null, last, o);
             last.next = newNode;
             last = newNode;
         } else {
-            Node newNode = new Node(null, null, o);
+            Node<E> newNode = new Node<>(null, null, o);
             first = newNode;
             last = newNode;
         }
@@ -26,30 +28,30 @@ public class OurLinkedList implements List {
     }
 
     @Override
-    public Object get(int index) {
+    public E get(int index) {
         if (index >= size || index < 0) {
             throw new IndexOutOfBoundsException();
         }
 
-        Node needle = getNode(index);
+        Node<E> needle = getNode(index);
 
         return needle.value;
     }
 
     @Override
-    public void set(Object o, int index) {
+    public void set(E o, int index) {
         if (index >= size || index < 0) {
             throw new IndexOutOfBoundsException();
         }
 
-        Node needle = getNode(index);
+        Node<E> needle = getNode(index);
 
         needle.value = o;
     }
 
-    private Node getNode(int index) {
+    private Node<E> getNode(int index) {
 
-        Node needle = first;
+        Node<E> needle = first;
         for (int i = 0; i < index; i++) {
             needle = needle.next;
         }
@@ -57,16 +59,16 @@ public class OurLinkedList implements List {
     }
 
     @Override
-    public Object removeById(int index) {
+    public E removeById(int index) {
 
         if (index >= size || index < 0) {
             throw new IndexOutOfBoundsException();
         }
 
-        Node nodeToRemove = getNode(index);
-        Node left = nodeToRemove.prev;
-        Node right = nodeToRemove.next;
-        Object value = nodeToRemove.value;
+        Node<E> nodeToRemove = getNode(index);
+        Node<E> left = nodeToRemove.prev;
+        Node<E> right = nodeToRemove.next;
+        E value = nodeToRemove.value;
 
         nodeToRemove.prev = null;
         nodeToRemove.next = null;
@@ -84,45 +86,12 @@ public class OurLinkedList implements List {
         }
         size--;
         return value;
-
-//        Node deletedNode = first;
-//        Object res = deletedNode.value;
-//
-//        Node right;
-//        Node left;
-//        if (index == 0) {
-//            right = deletedNode.next;
-//            deletedNode.value = null;
-//            deletedNode.next=null;
-//            right.prev = null;
-//            first = right;
-//        } else if (index == size - 1) {
-//            res = last.value;
-//            deletedNode = last;
-//            left = deletedNode.prev;
-//            deletedNode.value = null;
-//            deletedNode.prev = null;
-//            left.next = null;
-//            last = left;
-//        } else {
-//            for (int i = 0; i < index; i++) {
-//                deletedNode = deletedNode.next;
-//            }
-//            res = deletedNode.value;
-//            right = deletedNode.next;
-//            left = deletedNode.prev;
-//            left.next = right;
-//            right.prev = left;
-//            deletedNode.value = null;
-//        }
-//        size--;
-//        return res;
     }
 
     @Override
-    public boolean remove(Object o) {
+    public boolean remove(E o) {
 
-        Node currentNode = first;
+        Node<E> currentNode = first;
         for (int i = 0; i < size; i++) {
             if (currentNode.value.equals(o)) {
                 removeById(i);
@@ -134,9 +103,9 @@ public class OurLinkedList implements List {
     }
 
     @Override
-    public boolean contains(Object o) {
+    public boolean contains(E o) {
 
-        Node currentNode = first;
+        Node<E> currentNode = first;
         for (int i = 0; i < size; i++) {
             if (currentNode.value.equals(o)) {
                 return true;
@@ -147,60 +116,68 @@ public class OurLinkedList implements List {
     }
 
     @Override
-    public Object max(OurComparator comparator) {
+    public E max(OurComparator<E> comparator) {
 
-        Node max = first;
-        Node currentNode = first.next;
+        Node<E> max = first;
+        Node<E> currentNode = first.next;
 
         for (int i = 1; i < size; i++) {
-            if (comparator.compare(max, currentNode) < 0) {
+            if (comparator.compare((E)max, (E)currentNode) < 0) {
                 max = currentNode;
             }
             currentNode = currentNode.next;
         }
-        return max;
+        return (E)max;
     }
 
     @Override
-    public Object min(OurComparator comparator) {
+    public E min(OurComparator<E> comparator) {
 
-        Node min = first;
-        Node currentNode = first.next;
+        Node<E> min = first;
+        Node<E> currentNode = first.next;
 
         for (int i = 1; i < size; i++) {
-            if (comparator.compare(min, currentNode) > 0) {
+            if (comparator.compare((E)min, (E)currentNode) > 0) {
                 min = currentNode;
             }
             currentNode = currentNode.next;
         }
-        return min;
+        return (E)min;
     }
 
     @Override
-    public void sort(OurComparator comparator) {
+    public void sort(OurComparator<E> comparator) {
+    }
 
-        Node left = first;
-        Node right = first.next;
-        Node temp;
+    @Override
+    public Iterator<E> iterator() {
+        return new OurLinkedListIterator();
+    }
 
-        for (int i = 0; i < size; i++) {
-            for (int j = 0; j < size - i - 1; j++) {
-                if (comparator.compare(left, right) > 0) {
-                    temp = left;
-                    left = right;
-                    right = temp;
-                }
-            }
+    class OurLinkedListIterator implements Iterator<E> {
+
+        Node<E> currentNode = first;
+
+        @Override
+        public boolean hasNext() {
+            return currentNode != null;
+        }
+
+        @Override
+        public E next() {
+            E res = currentNode.value;
+            currentNode = currentNode.next;
+            return res;
         }
     }
 
-    private static class Node {
+    private static class Node<E> {
 
-        Node next;
-        Node prev;
-        Object value;
+        Node<E> next;
+        Node<E> prev;
+        E value;
 
-        public Node(Node next, Node prev, Object value) {
+        public Node(Node next, Node prev, E value) {
             this.next = next;
             this.prev = prev;
             this.value = value;
