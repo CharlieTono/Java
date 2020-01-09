@@ -1,6 +1,8 @@
 package com.company.collection;
 
-public class OurArrayList<E> implements List<E> {
+import java.util.Iterator;
+
+public class OurArrayList<E> implements List<E>, Iterable<E> {
 
     private Object[] source;
     private static final int DEFAULT_CAPACITY = 16;
@@ -133,5 +135,10 @@ public class OurArrayList<E> implements List<E> {
                 }
             }
         }
+    }
+
+    @Override
+    public Iterator<E> iterator() {
+        return new OurArrayListIterator<>(this);
     }
 }

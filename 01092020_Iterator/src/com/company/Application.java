@@ -15,9 +15,17 @@ public class Application {
         ints.append(4);
         ints.append(5);
 
-        Iterator <Integer> iterator = new OurArrayListIterator<>(ints);
-        while (iterator.hasNext()){
+        //Iterator <Integer> iterator = new OurArrayListIterator<>(ints);
+        Iterator<Integer> iterator = ints.iterator();
+
+        while (iterator.hasNext()) {
             System.out.println(iterator.next());
+        }
+
+        // the same with for each
+
+        for (Integer num : ints) {
+            System.out.println(num);
         }
     }
 }
