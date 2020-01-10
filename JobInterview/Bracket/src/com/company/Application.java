@@ -7,7 +7,7 @@ public class Application {
 
     public static void main(String[] args) {
 
-        String text = "({H})";
+        String text = "({H}){[]";
         Deque<Character> brackets = new ArrayDeque<>();
         System.out.println(checkBracket(brackets, text));
     }
@@ -15,23 +15,31 @@ public class Application {
     public static int checkBracket(Deque<Character> myQueue, String text) {
 
         char[] newArray = text.toCharArray();
-        int indexResult = -1;
+        int indexError = -1; // in case of non error
+        myQueue.addLast('N'); // in case to avoid NoSuchElementException
         for (int i = 0; i < newArray.length; i++) {
             if (newArray[i] == '(' || newArray[i] == '{' || newArray[i] == '[') {
                 myQueue.addLast(newArray[i]);
-                indexResult = i;
+                indexError = 1; // in case of error
             } else if (newArray[i] == ')' || newArray[i] == '}' || newArray[i] == ']') {
-                indexResult = i;
-                if (newArray[i] == ')' && myQueue.offerLast('{')) {
+                if (newArray[i] == ')' && myQueue.getLast() == '(') {
                     myQueue.removeLast();
-                    indexResult = i - indexResult;
-                } else if (newArray[i] == '}' && myQueue.offerLast('{')) {
+                    indexError = -1;
+                } else if (newArray[i] == '}' && myQueue.getLast() == '{') {
                     myQueue.removeLast();
-                } else if (newArray[i] == ']' && myQueue.offerLast('[')) {
+                    indexError = -1;
+                } else if (newArray[i] == ']' && myQueue.getLast() == '[') {
                     myQueue.removeLast();
+                    indexError = -1;
+                } else {
+                    indexError = 1;
+                    return indexError;
                 }
             }
         }
-        return indexResult;
+        if (myQueue.size() != 1) { // in case if some open bracket stays in the queue
+            indexError = 1;
+        }
+        return indexError;
     }
 }
