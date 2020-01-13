@@ -2,7 +2,7 @@ package com.company.collection;
 
 import java.util.Iterator;
 
-public class OurLinkedList<E> implements List<E>, Iterable<E> {
+public class OurLinkedOurList<E> implements OurList<E>, Iterable<E> {
 
     private Node<E> first;
     private Node<E> last;

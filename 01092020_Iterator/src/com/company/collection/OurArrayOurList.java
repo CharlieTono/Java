@@ -2,13 +2,13 @@ package com.company.collection;
 
 import java.util.Iterator;
 
-public class OurArrayList<E> implements List<E>, Iterable<E> {
+public class OurArrayOurList<E> implements OurList<E>, Iterable<E> {
 
     private Object[] source;
     private static final int DEFAULT_CAPACITY = 16;
     private int size;
 
-    public OurArrayList() {
+    public OurArrayOurList() {
         source = new Object[DEFAULT_CAPACITY];
     }
 
