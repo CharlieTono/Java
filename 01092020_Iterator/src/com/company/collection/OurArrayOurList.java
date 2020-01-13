@@ -2,13 +2,13 @@ package com.company.collection;
 
 import java.util.Iterator;
 
-public class OurArrayList<E> implements List<E>, Iterable<E> {
+public class OurArrayOurList<E> implements OurList<E>, Iterable<E> {
 
     private Object[] source;
     private static final int DEFAULT_CAPACITY = 16;
     private int size;
 
-    public OurArrayList() {
+    public OurArrayOurList() {
         source = new Object[DEFAULT_CAPACITY];
     }
 
@@ -110,15 +110,6 @@ public class OurArrayList<E> implements List<E>, Iterable<E> {
             }
         }
         return min;
-
-//        return max(new OurComparator() {
-//            @Override
-//            public int compare(Object o1, Object o2) {
-//                return -comparator.compare(o1, o2);
-//            }
-//        });
-
-//        return max((o1, o2) -> -comparator.compare(o1, o2));
     }
 
     @Override

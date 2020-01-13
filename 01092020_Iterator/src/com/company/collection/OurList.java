@@ -1,6 +1,6 @@
 package com.company.collection;
 
-public interface List<E> {
+public interface OurList<E> {
 
     int size();
 

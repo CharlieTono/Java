@@ -1,5 +1,7 @@
 package com.company.collection;
 
+import java.util.Iterator;
+
 import static org.junit.Assert.*;
 
 public class ArrayQueueTest {
@@ -33,11 +35,35 @@ public class ArrayQueueTest {
         assertEquals(2, queue.size());
     }
 
-    @org.junit.Test (expected = QueueEmptyException.class)
+    @org.junit.Test(expected = QueueEmptyException.class)
     public void testRelease_EmptyQueue_RemoveElementFromTheBeginning() {
 
         ArrayQueue<Integer> queue = new ArrayQueue<>(10);
         queue.release();
 
     }
+
+    @org.junit.Test
+    public void testIterator_NonEmptyQueue_Current() {
+
+        ArrayQueue<Integer> queue = new ArrayQueue<>(10);
+        queue.add(5);
+        queue.add(10);
+        queue.add(15);
+
+        assertEquals(3, queue.size());
+
+        int[] expected = {5, 10, 15};
+
+        Iterator<Integer> iterator = queue.iterator();
+
+        for (int i = 0; i < expected.length; i++) {
+            assertTrue(iterator.hasNext());
+            assertEquals(expected[i], (long) iterator.next());
+        }
+
+        assertFalse(iterator.hasNext());
+    }
+
+
 }

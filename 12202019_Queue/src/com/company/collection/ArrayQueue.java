@@ -1,6 +1,8 @@
 package com.company.collection;
 
-public class ArrayQueue<E> implements Queue<E> {
+import java.util.Iterator;
+
+public class ArrayQueue<E> implements Queue<E>, Iterable<E> {
 
     private int size;
     private int capacity;
@@ -45,4 +47,32 @@ public class ArrayQueue<E> implements Queue<E> {
     public int capacity() {
         return capacity;
     }
+
+    @Override
+    public Iterator<E> iterator() {
+        return new OurArrayQueueIterator();
+    }
+
+    class OurArrayQueueIterator implements Iterator<E> {
+        int currentId = 0;
+
+        @Override
+        public boolean hasNext() {
+            if (currentId < size) {
+                return true;
+            } else {
+                return false;
+            }
+        }
+
+        @Override
+        public E next() {
+            int index = (first + currentId) % capacity;
+            E result = (E) source[index];
+            currentId++;
+            return result;
+        }
+    }
 }
+
+
