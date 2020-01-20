@@ -10,7 +10,8 @@ public class Application {
 
     public static void main(String[] args) throws IOException {
 
-        List<Integer> list = new ArrayList<>() {};
+        List<Integer> list = new ArrayList<>() {
+        };
         list.add(1);
         list.add(8);
         list.add(239);
@@ -53,8 +54,7 @@ public class Application {
 
         List<Integer> list = new ArrayList<>();
 
-        for (int i = 0; i < newText.length; i++) {
-            String newString = newText[i];
+        for (String newString : newText) {
             list.add(Integer.valueOf(newString));
         }
         return list;
