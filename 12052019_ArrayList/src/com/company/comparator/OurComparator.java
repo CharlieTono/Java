@@ -1,6 +1,6 @@
 package com.company.comparator;
 
-public interface OurComparator {
+public interface OurComparator<E> {
     /**
      * Compare two objects
      *
@@ -8,6 +8,6 @@ public interface OurComparator {
      * @param o2 second object to compare
      * @return -1 if first is fewer, 0 if equals, 1 if larger
      */
-    int compare(Object o1, Object o2);
+    int compare(E o1, E o2);
 
 }
