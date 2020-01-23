@@ -24,36 +24,51 @@ public abstract class Action {
 
     private List<String> fileToList() throws IOException {
 
-        FileInputStream fis = new FileInputStream(fileName);
-        int length = fis.available();
-        byte[] bytes = new byte[length];
-        fis.read(bytes);
-        fis.close();
-
-        List<String> list = new ArrayList<>();
-        String text = new String(bytes);
-        String[] newText = text.split(" ");
-
-        for (String newString : newText) {
-            list.add(String.valueOf(newString + " "));
+        try (BufferedReader br = new BufferedReader(new FileReader(fileName))) {
+            List<String> list = new ArrayList<>();
+            String line;
+            while ((line = br.readLine()) != null) {
+                list.add(line);
+            }
+            return list;
         }
 
-        return list;
+//        FileInputStream fis = new FileInputStream(fileName);
+//        int length = fis.available();
+//        byte[] bytes = new byte[length];
+//        fis.read(bytes);
+//        fis.close();
+//
+//        List<String> list = new ArrayList<>();
+//        String text = new String(bytes);
+//        String[] newText = text.split(" ");
+//
+//        for (String newString : newText) {
+//            list.add(String.valueOf(newString + " "));
+//        }
+//
+//        return list;
     }
 
-    private void listToFile(List<String> content) throws IOException {
+    private void listToFile(List<String> content) throws FileNotFoundException {
 
-        StringBuilder text = new StringBuilder();
-
-        for (String current : content) {
-            text.append(current);
+        try (PrintWriter pw = new PrintWriter(outputFileName)) {
+            for (String line : content) {
+                pw.println(line);
+            }
         }
 
-        String newText = text.toString();
-
-        FileOutputStream fos = new FileOutputStream(outputFileName);
-        fos.write(newText.getBytes());
-        fos.close();
+//        StringBuilder text = new StringBuilder();
+//
+//        for (String current : content) {
+//            text.append(current);
+//        }
+//
+//        String newText = text.toString();
+//
+//        FileOutputStream fos = new FileOutputStream(outputFileName);
+//        fos.write(newText.getBytes());
+//        fos.close();
 
     }
 }

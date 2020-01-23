@@ -5,7 +5,6 @@ import java.util.List;
 
 public class ToUpperCaseAction extends Action {
 
-
     public ToUpperCaseAction(String fileName, String outputFileName) {
         super(fileName, outputFileName);
     }

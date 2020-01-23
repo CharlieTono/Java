@@ -12,13 +12,27 @@ public class Application {
     public static void main(String[] args) throws IOException {
 
         Action reverse = new ReverseAction("text.txt", "reverseText.txt");
-        reverse.performAction();
+        try {
+            reverse.performAction();
+        } catch (IOException e) {
+            System.out.println("Error");
+            e.printStackTrace();
+        }
 
         Action sort = new SortAction("text.txt", "sortText.txt");
-        sort.performAction();
+        try {
+            sort.performAction();
+        } catch (IOException e) {
+            System.out.println("Error");
+            e.printStackTrace();
+        }
 
         Action toUpper = new ToUpperCaseAction("text.txt", "toUpperText.txt");
-        toUpper.performAction();
-
+        try {
+            toUpper.performAction();
+        } catch (IOException e) {
+            System.out.println("Error");
+            e.printStackTrace();
+        }
     }
 }
