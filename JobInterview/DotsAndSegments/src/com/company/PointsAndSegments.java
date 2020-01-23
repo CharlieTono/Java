@@ -57,7 +57,7 @@ public class PointsAndSegments {
             } else {
                 return Integer.compare(this.kind, other.kind);
             }
-            
+
 //            if (this.value < other.value) {
 //                return -1;
 //            }
