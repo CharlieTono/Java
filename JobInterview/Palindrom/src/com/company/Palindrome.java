@@ -2,7 +2,7 @@ package com.company;
 
 public class Palindrome {
 
-    public boolean checkPalindrome (String text) {
+    public boolean checkPalindromeFirst (String text) {
 
         text = text.replace(" ", "");
 
@@ -16,4 +16,17 @@ public class Palindrome {
             return false;
         }
     }
+
+    public boolean checkPalindromeSecond (String text) {
+
+        String str = text.toLowerCase();
+        int length = str.length();
+        for (int i = 0; i < length / 2; i++) {
+            if (str.charAt(i) != str.charAt(length - i - 1)) {
+                return false;
+            }
+        }
+        return true;
+    }
+
 }
