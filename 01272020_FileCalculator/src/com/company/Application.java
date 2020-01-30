@@ -14,38 +14,24 @@ public class Application {
     public static final String INPUT_FILENAME = "input.txt";
     public static final String OUTPUT_FILENAME = "output.txt";
 
+    /**
+     * @param args args[0] input filename if present, args[1] output filename if present
+     * @throws FileNotFoundException if output filename is not legal
+     */
+
     public static void main(String[] args) throws FileNotFoundException {
+
+        List<String> content;
+        String inputFile = args.length > 0 ? args[0] : INPUT_FILENAME;
+        String outfile = args.length > 1 ? args[1] : OUTPUT_FILENAME;
 
         FileOperations fo = new FileOperations();
 
-        List<String> content;
-        String inputFile;
-        String outFile;
-
-        if (args[0].length() != 0 || args[1].length() != 0) {
-            if (args[0].length() != 0) {
-                inputFile = args[0];
-                try {
-                    content = fo.fileToList(inputFile);
-                } catch (IOException e) {
-                    List<String> errorList = Arrays.asList("No file " + inputFile + " found");
-                    if (args[1].length() != 0) {
-                        outFile = args[1];
-                        fo.listToFile(errorList, OUTPUT_FILENAME);
-                        e.printStackTrace();
-                        return;
-                    }
-                    fo.listToFile(errorList, OUTPUT_FILENAME);
-                    e.printStackTrace();
-                    return;
-                }
-            }
-        }
         try {
-            content = fo.fileToList(INPUT_FILENAME);
+            content = fo.fileToList(inputFile);
         } catch (IOException e) {
-            List<String> errorList = Arrays.asList("No file " + INPUT_FILENAME + " found");
-            fo.listToFile(errorList, OUTPUT_FILENAME);
+            List<String> errorList = Arrays.asList("No file " + inputFile + " found");
+            fo.listToFile(errorList, outfile);
             e.printStackTrace(); // print error`s info in console
             return; // stop main programme in case of this error
         }
@@ -54,7 +40,7 @@ public class Application {
         OperationProcessor processor = new OperationProcessor(calculator);
         List<String> outputContentSecond = processor.processStrings(content);
 
-        fo.listToFile(outputContentSecond, OUTPUT_FILENAME);
+        fo.listToFile(outputContentSecond, outfile);
     }
 }
 
