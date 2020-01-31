@@ -17,7 +17,7 @@ public class CharCalculator implements Calculator {
         }
     }
 
-    private String getClassName(char operand) {
+    protected String getClassName(char operand) {
 
         String result = "Operation_" + (int) operand;
 

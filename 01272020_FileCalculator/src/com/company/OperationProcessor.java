@@ -8,9 +8,9 @@ import java.util.List;
 
 public class OperationProcessor {
 
-    private static final String WRONG_OPERAND = "The operand is not supported";
-    private static final String WRONG_NUMBER_TYPE = "Incorrect number type";
-    private static final String WRONG_QTY = "The input line is incorrect";
+    static final String WRONG_OPERAND = "The operand is not supported";
+    static final String WRONG_NUMBER_TYPE = "Incorrect number type";
+    static final String WRONG_QTY = "The input line is incorrect";
 
     private Calculator calculator;
 

@@ -1,13 +1,17 @@
 package com.company;
 
 import com.company.calculator.Calculator;
-import com.company.calculator.CharCalculator;
+import com.company.calculator.ModernCalculator;
+import com.company.calculator.OperationManager;
 import com.company.util.FileOperations;
 
 import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Properties;
 
 public class Application {
 
@@ -19,7 +23,7 @@ public class Application {
      * @throws FileNotFoundException if output filename is not legal
      */
 
-    public static void main(String[] args) throws FileNotFoundException {
+    public static void main(String[] args) throws IOException {
 
         List<String> content;
         String inputFile = args.length > 0 ? args[0] : INPUT_FILENAME;
@@ -36,7 +40,18 @@ public class Application {
             return; // stop main programme in case of this error
         }
 
-        Calculator calculator = new CharCalculator();
+        Properties props = new Properties();
+        props.load(new FileReader(("config/config.props")));
+        String pack = props.getProperty("operation_package");
+        String operation_string = props.getProperty("operations");
+        String[] operations = operation_string.split(",");
+        List<String> operationPaths = new ArrayList<>();
+        for (String operation : operations) {
+            operationPaths.add(operation);
+        }
+
+        OperationManager om = new OperationManager(operationPaths);
+        Calculator calculator = new ModernCalculator(om);
         OperationProcessor processor = new OperationProcessor(calculator);
         List<String> outputContentSecond = processor.processStrings(content);
 
