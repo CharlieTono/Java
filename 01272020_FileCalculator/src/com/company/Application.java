@@ -47,7 +47,7 @@ public class Application {
         String[] operations = operation_string.split(",");
         List<String> operationPaths = new ArrayList<>();
         for (String operation : operations) {
-            operationPaths.add(operation);
+            operationPaths.add(pack + "." + operation);
         }
 
         OperationManager om = new OperationManager(operationPaths);

@@ -11,6 +11,6 @@ public class CharCalculatorTest {
     @Test
     public void getClassName() {
 
-        assertEquals("Operation_43", charCalculator.getClassName('+') );
+        assertEquals("Operation_43", charCalculator.getClassName('+'));
     }
 }

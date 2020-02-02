@@ -29,10 +29,18 @@ public class OperationProcessorTest {
     }
 
     @Test
-    public void testProcessString_legalLineWrongOperation_returnThrowsWrongOperandException() throws WrongOperandException {
+    public void testProcessString_illegalLineWrongOperation_returnThrowsWrongOperandException() throws WrongOperandException {
         String line = "2.5,*,2";
         when(calculator.calculate(2.5, 2, '*')).thenThrow(WrongOperandException.class);
         String expected = OperationProcessor.WRONG_OPERAND;
         assertEquals(expected, op.processString(line));
     }
+
+    @Test
+    public void testProcessString_illegalLineWrongTypeNumber_returnWrongNumberType() {
+        String line = "a,*,2";
+        String expected = OperationProcessor.WRONG_NUMBER_TYPE;
+        assertEquals(expected, op.processString(line));
+    }
+
 }
