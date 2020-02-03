@@ -51,6 +51,7 @@ public class Application {
         }
 
         OperationManager om = new OperationManager(operationPaths);
+        om.init();
         Calculator calculator = new ModernCalculator(om);
         OperationProcessor processor = new OperationProcessor(calculator);
         List<String> outputContentSecond = processor.processStrings(content);

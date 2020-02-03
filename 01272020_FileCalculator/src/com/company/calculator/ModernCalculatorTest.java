@@ -1,6 +1,5 @@
 package com.company.calculator;
 
-import com.company.OperationProcessor;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -29,11 +28,8 @@ public class ModernCalculatorTest {
         assertEquals(expected, modernCalculator.calculate(4, 5, '+'), 0.0001);
     }
 
-    @Test
-    public void testCalculate_illegalOperation() throws WrongOperandException {
-        when(om.get('-')).thenReturn(null);
-        when(operation.apply(4, 5)).thenThrow(WrongOperandException.class);
-        when(modernCalculator.calculate(2.5, 2, '*')).thenThrow(WrongOperandException.class);
-        OperationProcessor op = new OperationProcessor(modernCalculator);
+    @Test(expected = WrongOperandException.class)
+    public void testCalculate_illegalOperation_throwsWrongOperandException() throws WrongOperandException {
+        when(modernCalculator.calculate(2.5, 2, '-')).thenThrow(WrongOperandException.class);
     }
 }

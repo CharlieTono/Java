@@ -1,6 +1,7 @@
 package com.company.calculator;
 
 import java.lang.reflect.InvocationTargetException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -8,12 +9,13 @@ import java.util.Map;
 public class OperationManager {
 
     Map<Character, Operation> operationBySymbol = new HashMap<>();
+    List<String> operationPaths;
 
     public OperationManager(List<String> operationPaths) throws OperationNotFoundException {
-        init(operationPaths);
+        this.operationPaths = new ArrayList<>(operationPaths);
     }
 
-    private void init(List<String> operationPaths) throws OperationNotFoundException{
+    public void init() throws OperationNotFoundException {
         for (String path : operationPaths) {
             try {
                 ModernOperations operation = (ModernOperations) Class.forName(path).getDeclaredConstructor().newInstance();

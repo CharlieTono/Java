@@ -5,6 +5,9 @@ import com.company.calculator.WrongOperandException;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.util.Arrays;
+import java.util.List;
+
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
@@ -43,4 +46,20 @@ public class OperationProcessorTest {
         assertEquals(expected, op.processString(line));
     }
 
+    @Test
+    public void testProcessStrings_oneLegalLineOneIllegalLine() throws WrongOperandException {
+
+        String line1 = "2,+,2";
+        String line2 = "a,+,2";
+
+        List<String> lines = Arrays.asList(line1, line2);
+        when(calculator.calculate(2., 2., '+')).thenReturn(4.);
+        List<String> result = op.processStrings(lines);
+        List<String> expected = Arrays.asList(
+                line1 + ",4.0",
+                OperationProcessor.WRONG_NUMBER_TYPE
+        );
+
+        assertEquals(expected, result);
+    }
 }
