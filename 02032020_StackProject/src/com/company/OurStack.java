@@ -1,63 +1,66 @@
 package com.company;
 
-import java.util.ArrayList;
+import java.util.ArrayDeque;
 import java.util.Comparator;
-import java.util.List;
+import java.util.Deque;
 
-public class OurStack<E> implements Comparator<E> {
+public class OurStack<E> {
 
-    public OurStack(List<E> source, List<E> sourceMax) {
-        this.source = source;
-        this.sourceMax = sourceMax;
+    private Deque<E> source;
+    private Deque<E> sourceMax;
+    private Comparator<E> comparator;
+
+    public OurStack(Comparator<E> comparator) {
+        source = new ArrayDeque<>();
+        sourceMax = new ArrayDeque<>();
+        this.comparator = comparator;
     }
 
-    List<E> source = new ArrayList<>();
-    List<E> sourceMax = new ArrayList<>();
-    Comparator<E> comparator;
+    public OurStack() {
+        source = new ArrayDeque<>();
+        sourceMax = new ArrayDeque<>();
+        this.comparator = new ComparatorComparable<>();
+    }
 
-    private int getSize() {
+    public int getSize() {
         return source.size();
     }
 
-    private void addLast(E element) {
+    public void addLast(E element) {
 
-        source.add(element);
-        if (sourceMax.size() == 0 || comparator.compare(element, getMax()) < 0) {
-            sourceMax.add(element);
+        source.addLast(element);
+        if (sourceMax.size() == 0 || comparator.compare(element, sourceMax.getLast()) > 0) {
+            sourceMax.addLast(element);
         } else {
-            sourceMax.add(sourceMax.get(sourceMax.size() - 1));
+            sourceMax.addLast(sourceMax.getLast());
         }
     }
 
-    private E removeLast() {
-        E element = source.remove(source.size() - 1);
-        sourceMax.remove(source.size() - 1);
+    public E removeLast() {
+        E element = source.removeLast();
+        sourceMax.removeLast();
         return element;
     }
 
-    private E getLast() {
-        E element = source.get(getSize() - 1);
+    public E getLast() {
+        E element = source.getLast();
         return (E) element;
-    }
-
-    @Override
-    public int compare(E o1, E o2) {
-
-        Integer left = (Integer) o1;
-        Integer right = (Integer) o2;
-
-        if (left < right) {
-            return -1;
-        }
-        if (left > right) {
-            return 1;
-        }
-        return 0;
     }
 
     public E getMax() {
 
-        E element = sourceMax.get(sourceMax.size() - 1);
+        E element = sourceMax.getLast();
         return element;
     }
+
+    class ComparatorComparable<E> implements Comparator<E> {
+
+        @Override
+        public int compare(E o1, E o2) {
+            Comparable o1comparable = (Comparable) o1;
+            return o1comparable.compareTo(o2);
+        }
+    }
 }
+
+
