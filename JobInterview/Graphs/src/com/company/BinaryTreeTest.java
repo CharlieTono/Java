@@ -47,5 +47,5 @@ public class BinaryTreeTest {
 
         assertEquals(2, ourBinaryTree.getTreeHeight(root05));
     }
-    
+
 }
