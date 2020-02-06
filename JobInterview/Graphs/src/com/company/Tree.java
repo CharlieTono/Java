@@ -27,7 +27,8 @@ public class Tree {
         int max = 0;
 
         for (Node child : currentRoot.children) {
-            if (max < child.children.size()) {
+            max++;
+            if (child.children.size() != 0) {
                 max += rHeight(child);
             }
         }

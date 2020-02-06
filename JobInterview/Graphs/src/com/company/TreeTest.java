@@ -25,16 +25,30 @@ public class TreeTest {
     }
 
     @Test
-    public void testHeight_OneNodeWithChild_TwoVertex() {
+    public void testHeight_TwoNodesWithOneChildAndTwoChildren_ThreeVertex() {
 
         Node vertex01 = new Node();
         Node vertex02 = new Node();
+        Node vertex03 = new Node();
+        Node vertex04 = new Node();
+        vertex01.children = Arrays.asList(vertex02);
+        vertex03.children = Arrays.asList(vertex04, vertex01);
+
+        ourTree.root = vertex03;
+
+        assertEquals(3, ourTree.height());
+    }
+
+    @Test
+    public void testHeight_OneNodeWithChild_OneVertex() {
+
+        Node vertex01 = new Node();
+        Node vertex02 = new Node();
+
         vertex01.children = Arrays.asList(vertex02);
 
         ourTree.root = vertex01;
 
-        assertEquals(2, ourTree.height());
-
+        assertEquals(1, ourTree.height());
     }
-
 }
