@@ -27,13 +27,14 @@ public class Tree {
         int max = 1;
 
         for (Node child : currentRoot.children) {
-            max++;
             if (currentRoot.children.size() != 0) {
-                if (max < rHeight(child)) {
-                    max += rHeight(child);
+                max += rHeight(child);
+                if (root != null) {
+                    return max++;
                 }
             }
         }
         return max;
     }
+
 }

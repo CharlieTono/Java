@@ -25,7 +25,7 @@ public class TreeTest {
     }
 
     @Test
-    public void testHeight_TwoNodesWithOneChildAndTwoChildren_ThreeVertex() {
+    public void testHeight_TwoNodesWithOneChildAndThreeChildren_ThreeVertex() {
 
         Node vertex01 = new Node();
         Node vertex02 = new Node();
@@ -33,7 +33,7 @@ public class TreeTest {
         Node vertex04 = new Node();
         Node vertex05 = new Node();
         vertex01.children = Arrays.asList(vertex02);
-        vertex03.children = Arrays.asList(vertex04, vertex01);
+        vertex03.children = Arrays.asList(vertex01, vertex04, vertex05);
 
         ourTree.root = vertex03;
 
