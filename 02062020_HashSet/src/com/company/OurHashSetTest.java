@@ -128,4 +128,21 @@ public class OurHashSetTest {
         assertEquals(2, ourHashSet.size());
 
     }
+
+    @org.junit.Test
+    public void retainAll_NonEmptySetsWithNoElements_SetContainsZeroElementsOnly() {
+
+        Object sample01 = 5;
+        Object sample02 = 10;
+        Object sample03 = 15;
+        ourHashSet.add(sample01);
+        ourHashSet.add(sample02);
+        OurHashSet testSet = new OurHashSet();
+        testSet.add(sample01);
+        testSet.add(sample02);
+        testSet.add(sample03);
+        assertFalse(ourHashSet.retainAll(testSet));
+        assertEquals(2, ourHashSet.size());
+
+    }
 }

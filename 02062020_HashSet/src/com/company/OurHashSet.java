@@ -1,7 +1,7 @@
 package com.company;
 
 import java.util.HashMap;
-import java.util.HashSet;
+import java.util.Iterator;
 import java.util.Map;
 
 public class OurHashSet<E> implements OurSet<E> {
@@ -35,10 +35,10 @@ public class OurHashSet<E> implements OurSet<E> {
 
     @Override
     public boolean addAll(OurSet<E> other) {
-        OurHashSet<E> narrowedOther = (OurHashSet<E>) other;
+
         boolean res = false;
 
-        for (E elt : narrowedOther.source.keySet()) {
+        for (E elt : other) {
             res |= this.add(elt); //res = this.add(elt) | res
         }
         return res;
@@ -46,10 +46,10 @@ public class OurHashSet<E> implements OurSet<E> {
 
     @Override
     public boolean removeAll(OurSet<E> other) {
-        OurHashSet<E> narrowedOther = (OurHashSet<E>) other;
+
         boolean res = false;
 
-        for (E elt : narrowedOther.source.keySet()) {
+        for (E elt : other) {
             res |= this.remove(elt);
 
         }
@@ -58,23 +58,32 @@ public class OurHashSet<E> implements OurSet<E> {
 
     @Override
     public boolean retainAll(OurSet<E> other) {
-        OurHashSet<E> narrowedOther = (OurHashSet<E>) other;
-        OurHashSet<E> narrowedOtherCopy = new OurHashSet<>();
+
+        Iterator<E> iterator = this.iterator();
 
         boolean res = false;
 
-        for (E elt : narrowedOther.source.keySet()) {
-            if (this.contains(elt)) {
-                res |= narrowedOtherCopy.add(elt) | res;
-            }
-        }
-
-        for (E elt : source.keySet()) {
-            if (!narrowedOtherCopy.contains(elt)) {
-                res |= this.remove(elt) | res;
+        while (iterator.hasNext()) {
+            E elt = iterator.next();
+            if (!other.contains(elt)) {
+                iterator.remove();
+                res = true;
             }
         }
         return res;
 
+//        OurSet<E> thisSubtractedOther = new OurHashSet<>();
+//        for (E elt : this) {
+//            if (!other.contains(elt)) {
+//                thisSubtractedOther.add(elt)
+//            }
+//            return this.removeAll(thisSubtractedOther);
+//        }
+    }
+
+    @Override
+    public Iterator<E> iterator() {
+        return source.keySet().iterator();
     }
 }
+
