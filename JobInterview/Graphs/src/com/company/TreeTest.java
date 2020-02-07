@@ -31,6 +31,7 @@ public class TreeTest {
         Node vertex02 = new Node();
         Node vertex03 = new Node();
         Node vertex04 = new Node();
+        Node vertex05 = new Node();
         vertex01.children = Arrays.asList(vertex02);
         vertex03.children = Arrays.asList(vertex04, vertex01);
 
@@ -49,6 +50,6 @@ public class TreeTest {
 
         ourTree.root = vertex01;
 
-        assertEquals(1, ourTree.height());
+        assertEquals(2, ourTree.height());
     }
 }

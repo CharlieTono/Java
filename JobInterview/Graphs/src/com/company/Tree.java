@@ -24,12 +24,14 @@ public class Tree {
 
     public int rHeight(Node currentRoot) {
 
-        int max = 0;
+        int max = 1;
 
         for (Node child : currentRoot.children) {
             max++;
-            if (child.children.size() != 0) {
-                max += rHeight(child);
+            if (currentRoot.children.size() != 0) {
+                if (max < rHeight(child)) {
+                    max += rHeight(child);
+                }
             }
         }
         return max;
