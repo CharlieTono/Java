@@ -74,6 +74,7 @@ public class OurSetTree<E> implements OurSet<E> {
     public boolean remove(E elt) {
 
         TreeNode<E> nodeToRemove = getNode(elt);
+
         if (nodeToRemove == null) {
             return false;
         }
@@ -83,38 +84,43 @@ public class OurSetTree<E> implements OurSet<E> {
         } else {
             removeBySecondCase(nodeToRemove);
         }
-
-
-        TreeNode<E> nodeToDelete = root;
-        TreeNode<E> nodeToDeleteParent = root;
-
-        while (nodeToDelete != null && comparator.compare(nodeToDelete.weight, elt) == 0) {
-            nodeToDeleteParent = nodeToDelete;
-            nodeToDelete = comparator.compare(elt, nodeToDelete.weight) < 0 ? nodeToDelete.left : nodeToDelete.right;
-        }
-
-        if (nodeToDelete != null) {
-            return false;
-        }
-
-        TreeNode<E> parent = nodeToDeleteParent.parent;
-        TreeNode<E> current = nodeToDelete.left;
-
-        if (nodeToDelete.left != null && nodeToDelete.right != null) {
-            while (current != null) {
-                parent = current;
-                current = current.left;
-            }
-        }
-
-        nodeToDelete.weight = current.weight;
-        current.parent = current.right;
-        current.left = null;
-        current.right = null;
-        current.weight = null;
-        current = null;
         size--;
         return true;
+    }
+
+    private void removeByFirstCase(TreeNode<E> nodeToRemove) {
+
+        TreeNode<E> parent = nodeToRemove.parent;
+
+        if (nodeToRemove.left == null && nodeToRemove.right == null) {
+//            nodeToRemove.parent = null;
+//            nodeToRemove.weight = null;
+        } else if (nodeToRemove.left == null) {
+            TreeNode<E> rightChild = nodeToRemove.right;
+            parent.right = rightChild;
+            rightChild.parent = parent;
+//            nodeToRemove.weight = null;
+//            nodeToRemove.right = null;
+            nodeToRemove.parent = null;
+        } else {
+            TreeNode<E> leftChild = nodeToRemove.left;
+            parent.right = leftChild;
+            leftChild.parent = parent;
+            nodeToRemove.parent = null;
+            //nodeToRemove.left = null;
+            //nodeToRemove.weight = null;
+        }
+    }
+
+    private void removeBySecondCase(TreeNode<E> nodeToRemove) {
+        TreeNode<E> lastNode = nodeToRemove.right;
+
+        while (lastNode != null) {
+            lastNode = lastNode.left;
+        }
+
+        nodeToRemove.weight = lastNode.weight;
+        removeByFirstCase(lastNode);
 
     }
 

@@ -53,10 +53,10 @@ public class OurSetTreeTest {
     }
 
     @org.junit.Test
-    public void testRemove_SetTreeElementsWithoutBothChildrenRemoveLastElement_TwoElements() {
-        Object sample01 = 5;
-        Object sample02 = 1;
-        Object sample03 = 2;
+    public void testRemove_SetThreeElementsWithoutBothChildrenRemoveLastElement_TwoElements() {
+        Object sample01 = 10;
+        Object sample02 = 18;
+        Object sample03 = 19;
         ourSetTree.add(sample01);
         ourSetTree.add(sample02);
         ourSetTree.add(sample03);
@@ -66,10 +66,10 @@ public class OurSetTreeTest {
     }
 
     @org.junit.Test
-    public void testRemove_SetTreeElementsWithoutBothChildrenRemoveMiddleElement_TwoElements() {
-        Object sample01 = 5;
-        Object sample02 = 1;
-        Object sample03 = 2;
+    public void testRemove_SetThreeElementsWithoutBothChildrenRemoveMiddleElement_TwoElements() {
+        Object sample01 = 10;
+        Object sample02 = 18;
+        Object sample03 = 19;
         ourSetTree.add(sample01);
         ourSetTree.add(sample02);
         ourSetTree.add(sample03);
@@ -79,15 +79,60 @@ public class OurSetTreeTest {
     }
 
     @org.junit.Test
-    public void testRemove_SetTreeElementsWithoutBothChildrenRemoveFirstElement_TwoElements() {
-        Object sample01 = 5;
-        Object sample02 = 1;
-        Object sample03 = 2;
+    public void testRemove_SetThreeElementsWithoutBothChildrenRemoveFirstElement_TwoElements() {
+        Object sample01 = 10;
+        Object sample02 = 18;
+        Object sample03 = 19;
         ourSetTree.add(sample01);
         ourSetTree.add(sample02);
         ourSetTree.add(sample03);
         ourSetTree.remove(sample01);
         assertEquals(2, ourSetTree.size());
+        assertFalse(ourSetTree.contains(sample01));
+    }
+
+    @org.junit.Test
+    public void testRemove_SetFourElementsWithBothChildrenRemoveLastElement_ThreeElements() {
+        Object sample01 = 10;
+        Object sample02 = 18;
+        Object sample03 = 19;
+        Object sample04 = 17;
+        ourSetTree.add(sample01);
+        ourSetTree.add(sample02);
+        ourSetTree.add(sample03);
+        ourSetTree.add(sample04);
+        ourSetTree.remove(sample03);
+        assertEquals(3, ourSetTree.size());
+        assertFalse(ourSetTree.contains(sample03));
+    }
+
+    @org.junit.Test
+    public void testRemove_SetFourElementsWithBothChildrenRemoveMiddleElement_ThreeElements() {
+        Object sample01 = 10;
+        Object sample02 = 18;
+        Object sample03 = 19;
+        Object sample04 = 17;
+        ourSetTree.add(sample01);
+        ourSetTree.add(sample02);
+        ourSetTree.add(sample03);
+        ourSetTree.add(sample04);
+        ourSetTree.remove(sample02);
+        assertEquals(3, ourSetTree.size());
+        assertFalse(ourSetTree.contains(sample02));
+    }
+
+    @org.junit.Test
+    public void testRemove_SetFourElementsWithBothChildrenRemoveFirstElement_ThreeElements() {
+        Object sample01 = 10;
+        Object sample02 = 18;
+        Object sample03 = 19;
+        Object sample04 = 17;
+        ourSetTree.add(sample01);
+        ourSetTree.add(sample02);
+        ourSetTree.add(sample03);
+        ourSetTree.add(sample04);
+        ourSetTree.remove(sample01);
+        assertEquals(3, ourSetTree.size());
         assertFalse(ourSetTree.contains(sample01));
     }
 
