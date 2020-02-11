@@ -145,10 +145,10 @@ public class OurSetTree<E> implements OurSet<E> {
 
     @Override
     public Iterator<E> iterator() {
-        return null;
+        return new OurTreeSetIterator<>(this);
     }
 
-    private static class TreeNode<E> {
+    static class TreeNode<E> {
         TreeNode<E> parent;
         TreeNode<E> left;
         TreeNode<E> right;
@@ -162,5 +162,61 @@ class ComparatorComparable<E> implements Comparator<E> {
     public int compare(E o1, E o2) {
         Comparable o1comparable = (Comparable) o1;
         return o1comparable.compareTo(o2);
+    }
+}
+
+class OurTreeSetIterator<E> implements Iterator<E> {
+
+    private OurSetTree<E> treeSet;
+    private OurSetTree.TreeNode<E> current;
+
+    public OurTreeSetIterator(OurSetTree<E> treeSet) {
+        this.treeSet = treeSet;
+        this.current = treeSet.root == null ? null : getLeast(treeSet.root);
+    }
+
+    private OurSetTree.TreeNode getLeast(OurSetTree.TreeNode<E> vertex) {
+
+        while (vertex.left != null) {
+            vertex = vertex.left;
+        }
+        return vertex;
+    }
+
+    @Override
+    public boolean hasNext() {
+        return current != null;
+    }
+
+    @Override
+    public E next() {
+
+        E res = current.weight;
+
+        if (current.right != null) {
+            current = getLeast(current.right);
+        } else {
+            current = firstRightParent(current);
+        }
+
+        return res;
+    }
+
+    /**
+     * the method finds the first parent which is to the right from current
+     *
+     * @param current element
+     * @return next element by order if exists or null, if current is the most right element in the treeSet
+     */
+
+    private OurSetTree.TreeNode<E> firstRightParent(OurSetTree.TreeNode<E> current) {
+        OurSetTree.TreeNode<E> newParent = current.parent;
+        OurSetTree.TreeNode<E> newChild = current;
+        while (newParent.parent != null && newParent.left != newChild) {
+            newParent = newParent.parent;
+            newChild = newChild.parent;
+        }
+        return newParent;
+
     }
 }
