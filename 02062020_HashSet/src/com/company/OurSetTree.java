@@ -80,48 +80,52 @@ public class OurSetTree<E> implements OurSet<E> {
         }
 
         if (nodeToRemove.left == null || nodeToRemove.right == null) {
-            removeByFirstCase(nodeToRemove);
+            linealRemove(nodeToRemove);
         } else {
-            removeBySecondCase(nodeToRemove);
+            junctionRemove(nodeToRemove);
         }
+
         size--;
+
         return true;
     }
 
-    private void removeByFirstCase(TreeNode<E> nodeToRemove) {
+    private void linealRemove(TreeNode<E> nodeToRemove) {
 
         TreeNode<E> parent = nodeToRemove.parent;
+        TreeNode<E> child = nodeToRemove.left == null ? nodeToRemove.right : nodeToRemove.left;
 
-        if (nodeToRemove.left == null && nodeToRemove.right == null) {
-//            nodeToRemove.parent = null;
-//            nodeToRemove.weight = null;
-        } else if (nodeToRemove.left == null) {
-            TreeNode<E> rightChild = nodeToRemove.right;
-            parent.right = rightChild;
-            rightChild.parent = parent;
-//            nodeToRemove.weight = null;
-//            nodeToRemove.right = null;
-            nodeToRemove.parent = null;
+        if (parent == null) {
+            clearNode(nodeToRemove);
+            root = child;
+        } else if (parent.right == nodeToRemove) {
+            parent.right = child;
         } else {
-            TreeNode<E> leftChild = nodeToRemove.left;
-            parent.right = leftChild;
-            leftChild.parent = parent;
-            nodeToRemove.parent = null;
-            //nodeToRemove.left = null;
-            //nodeToRemove.weight = null;
+            parent.left = child;
         }
+
+        if (child != null) {
+            child.parent = parent;
+        }
+        clearNode(nodeToRemove);
     }
 
-    private void removeBySecondCase(TreeNode<E> nodeToRemove) {
+    private void junctionRemove(TreeNode<E> nodeToRemove) {
         TreeNode<E> lastNode = nodeToRemove.right;
 
-        while (lastNode != null) {
+        while (lastNode.left != null) {
             lastNode = lastNode.left;
         }
 
         nodeToRemove.weight = lastNode.weight;
-        removeByFirstCase(lastNode);
+        linealRemove(lastNode);
+    }
 
+    private void clearNode(TreeNode<E> nodeRemove) {
+        nodeRemove.weight = null;
+        nodeRemove.left = null;
+        nodeRemove.right = null;
+        nodeRemove.parent = null;
     }
 
     @Override
