@@ -5,7 +5,7 @@ import java.util.Iterator;
 
 public class OurSetTree<E> implements OurSet<E> {
 
-    int size;
+    private int size;
     TreeNode<E> root;
     private Comparator<E> comparator;
 
@@ -111,6 +111,7 @@ public class OurSetTree<E> implements OurSet<E> {
     }
 
     private void junctionRemove(TreeNode<E> nodeToRemove) {
+
         TreeNode<E> lastNode = nodeToRemove.right;
 
         while (lastNode.left != null) {
@@ -130,17 +131,42 @@ public class OurSetTree<E> implements OurSet<E> {
 
     @Override
     public boolean addAll(OurSet<E> other) {
-        return false;
+        boolean res = false;
+
+        for (E elt : other) {
+            res |= this.add(elt);
+        }
+        return res;
     }
 
     @Override
     public boolean removeAll(OurSet<E> other) {
-        return false;
+
+        boolean res = false;
+
+        for (E elt : other) {
+            res |= this.remove(elt);
+
+        }
+        return res;
     }
 
     @Override
     public boolean retainAll(OurSet<E> other) {
-        return false;
+
+        OurSet<E> thisSubtractedOther = new OurSetTree<>();
+        Iterator<E>iterator = iterator();
+
+        int i = 0;
+
+        while (iterator.hasNext() && i < this.size) {
+            E num = iterator.next();
+            if (!other.contains(num)) {
+                thisSubtractedOther.add(num);
+            }
+            i++;
+        }
+        return this.removeAll(thisSubtractedOther);
     }
 
     @Override

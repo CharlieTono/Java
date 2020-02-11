@@ -4,7 +4,7 @@ import static org.junit.Assert.*;
 
 public class OurHashSetTest {
 
-    OurHashSet ourHashSet = new OurHashSet();
+    private OurHashSet<Integer> ourHashSet = new OurHashSet<>();
 
     @org.junit.Test
     public void testSize_EmptySet_Zero() {
@@ -13,15 +13,15 @@ public class OurHashSetTest {
 
     @org.junit.Test
     public void testAdd_EmptySet_OneElement() {
-        Object sample = 5;
+        Integer sample = 5;
         ourHashSet.add(sample);
         assertEquals(1, ourHashSet.size());
     }
 
     @org.junit.Test
     public void testRemove_NonEmptySet_EmptySet() {
-        Object sample01 = 5;
-        Object sample02 = 10;
+        Integer sample01 = 5;
+        Integer sample02 = 10;
         ourHashSet.add(sample01);
         ourHashSet.add(sample02);
         ourHashSet.remove(sample01);
@@ -31,9 +31,9 @@ public class OurHashSetTest {
 
     @org.junit.Test
     public void testRemove_NonEmptySet_NonEmptySet() {
-        Object sample01 = 5;
-        Object sample02 = 10;
-        Object sample03 = 15;
+        Integer sample01 = 5;
+        Integer sample02 = 10;
+        Integer sample03 = 15;
         ourHashSet.add(sample01);
         ourHashSet.add(sample02);
         ourHashSet.add(sample03);
@@ -43,10 +43,10 @@ public class OurHashSetTest {
     }
 
     @org.junit.Test
-    public void testContains_NonEmptyObject_True() {
-        Object sample01 = 5;
-        Object sample02 = 10;
-        Object sample03 = 15;
+    public void testContains_NonEmptyInteger_True() {
+        Integer sample01 = 5;
+        Integer sample02 = 10;
+        Integer sample03 = 15;
         ourHashSet.add(sample01);
         ourHashSet.add(sample02);
         ourHashSet.add(sample03);
@@ -58,26 +58,26 @@ public class OurHashSetTest {
 
     @org.junit.Test
     public void testAddAll_NonEmptySet_SameElementsWereNotAdded() {
-        Object sample01 = 5;
-        Object sample02 = 10;
-        Object sample03 = 15;
+        Integer sample01 = 5;
+        Integer sample02 = 10;
+        Integer sample03 = 15;
         ourHashSet.add(sample01);
         ourHashSet.add(sample02);
         ourHashSet.add(sample03);
-        OurHashSet testSet = new OurHashSet();
+        OurHashSet<Integer> testSet = new OurHashSet<>();
         testSet.add(sample01);
         assertFalse(ourHashSet.addAll(testSet));
     }
 
     @org.junit.Test
     public void testAddAll_NonEmptySet_NewElementsWereAdded() {
-        Object sample01 = 5;
-        Object sample02 = 10;
-        Object sample03 = 15;
-        Object sample04 = 20;
+        Integer sample01 = 5;
+        Integer sample02 = 10;
+        Integer sample03 = 15;
+        Integer sample04 = 20;
         ourHashSet.add(sample01);
         ourHashSet.add(sample02);
-        OurHashSet testSet = new OurHashSet();
+        OurHashSet<Integer> testSet = new OurHashSet<>();
         testSet.add(sample03);
         testSet.add(sample04);
         assertTrue(ourHashSet.addAll(testSet));
@@ -88,14 +88,14 @@ public class OurHashSetTest {
 
     @org.junit.Test
     public void testRemoveAll_NonEmptySet_AllSameElementsWereRemoved() {
-        Object sample01 = 5;
-        Object sample02 = 10;
-        Object sample03 = 15;
-        Object sample04 = 20;
+        Integer sample01 = 5;
+        Integer sample02 = 10;
+        Integer sample03 = 15;
+        Integer sample04 = 20;
         ourHashSet.add(sample01);
         ourHashSet.add(sample02);
         ourHashSet.add(sample03);
-        OurHashSet testSet = new OurHashSet();
+        OurHashSet<Integer> testSet = new OurHashSet<>();
         testSet.add(sample01);
         testSet.add(sample04);
         assertTrue(ourHashSet.removeAll(testSet));
@@ -109,14 +109,14 @@ public class OurHashSetTest {
     @org.junit.Test
     public void retainAll_NonEmptySetsWithSameElements_SetContainsRetainedElementsOnly() {
 
-        Object sample01 = 5;
-        Object sample02 = 10;
-        Object sample03 = 15;
-        Object sample04 = 20;
+        Integer sample01 = 5;
+        Integer sample02 = 10;
+        Integer sample03 = 15;
+        Integer sample04 = 20;
         ourHashSet.add(sample01);
         ourHashSet.add(sample02);
         ourHashSet.add(sample03);
-        OurHashSet testSet = new OurHashSet();
+        OurHashSet<Integer> testSet = new OurHashSet<>();
         testSet.add(sample01);
         testSet.add(sample02);
         testSet.add(sample04);
@@ -132,12 +132,12 @@ public class OurHashSetTest {
     @org.junit.Test
     public void retainAll_NonEmptySetsWithNoElements_SetContainsZeroElementsOnly() {
 
-        Object sample01 = 5;
-        Object sample02 = 10;
-        Object sample03 = 15;
+        Integer sample01 = 5;
+        Integer sample02 = 10;
+        Integer sample03 = 15;
         ourHashSet.add(sample01);
         ourHashSet.add(sample02);
-        OurHashSet testSet = new OurHashSet();
+        OurHashSet<Integer> testSet = new OurHashSet<>();
         testSet.add(sample01);
         testSet.add(sample02);
         testSet.add(sample03);

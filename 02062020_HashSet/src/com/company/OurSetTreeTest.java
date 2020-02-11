@@ -4,7 +4,7 @@ import static org.junit.Assert.*;
 
 public class OurSetTreeTest {
 
-    OurSetTree <Integer>ourSetTree = new OurSetTree();
+    private OurSetTree <Integer>ourSetTree = new OurSetTree<>();
 
     @org.junit.Test
     public void testSize_EmptySet_Zero() {
@@ -134,6 +134,96 @@ public class OurSetTreeTest {
         ourSetTree.remove(sample01);
         assertEquals(3, ourSetTree.size());
         assertFalse(ourSetTree.contains(sample01));
+    }
+
+    @org.junit.Test
+    public void testAddAll_NonEmptySet_SameElementsWereNotAdded() {
+        Integer sample01 = 5;
+        Integer sample02 = 10;
+        Integer sample03 = 15;
+        ourSetTree.add(sample01);
+        ourSetTree.add(sample02);
+        ourSetTree.add(sample03);
+        OurHashSet<Integer> testSet = new OurHashSet<>();
+        testSet.add(sample01);
+        assertFalse(ourSetTree.addAll(testSet));
+    }
+
+    @org.junit.Test
+    public void testAddAll_NonEmptySet_NewElementsWereAdded() {
+        Integer sample01 = 5;
+        Integer sample02 = 10;
+        Integer sample03 = 15;
+        Integer sample04 = 20;
+        ourSetTree.add(sample01);
+        ourSetTree.add(sample02);
+        OurHashSet <Integer>testSet = new OurHashSet<>();
+        testSet.add(sample03);
+        testSet.add(sample04);
+        assertTrue(ourSetTree.addAll(testSet));
+        assertTrue(ourSetTree.contains(sample03));
+        assertTrue(ourSetTree.contains(sample04));
+        assertEquals(4, ourSetTree.size());
+    }
+
+    @org.junit.Test
+    public void testRemoveAll_NonEmptySet_AllSameElementsWereRemoved() {
+        Integer sample01 = 5;
+        Integer sample02 = 10;
+        Integer sample03 = 15;
+        Integer sample04 = 20;
+        ourSetTree.add(sample01);
+        ourSetTree.add(sample02);
+        ourSetTree.add(sample03);
+        OurHashSet<Integer> testSet = new OurHashSet<>();
+        testSet.add(sample01);
+        testSet.add(sample04);
+        assertTrue(ourSetTree.removeAll(testSet));
+        assertFalse(ourSetTree.contains(sample01));
+        assertTrue(ourSetTree.contains(sample02));
+        assertTrue(ourSetTree.contains(sample03));
+        assertEquals(2, ourSetTree.size());
+
+    }
+
+    @org.junit.Test
+    public void retainAll_NonEmptySetsWithSameElements_SetContainsRetainedElementsOnly() {
+
+        Integer sample01 = 5;
+        Integer sample02 = 10;
+        Integer sample03 = 15;
+        Integer sample04 = 20;
+        ourSetTree.add(sample01);
+        ourSetTree.add(sample02);
+        ourSetTree.add(sample03);
+        OurHashSet <Integer>testSet = new OurHashSet<>();
+        testSet.add(sample01);
+        testSet.add(sample02);
+        testSet.add(sample04);
+        assertTrue(ourSetTree.retainAll(testSet));
+        assertTrue(ourSetTree.contains(sample01));
+        assertTrue(ourSetTree.contains(sample02));
+        assertFalse(ourSetTree.contains(sample03));
+        assertFalse(ourSetTree.contains(sample04));
+        assertEquals(2, ourSetTree.size());
+
+    }
+
+    @org.junit.Test
+    public void retainAll_NonEmptySetsWithNoElements_SetContainsZeroElementsOnly() {
+
+        Integer sample01 = 5;
+        Integer sample02 = 10;
+        Integer sample03 = 15;
+        ourSetTree.add(sample01);
+        ourSetTree.add(sample02);
+        OurHashSet<Integer> testSet = new OurHashSet<>();
+        testSet.add(sample01);
+        testSet.add(sample02);
+        testSet.add(sample03);
+        assertFalse(ourSetTree.retainAll(testSet));
+        assertEquals(2, ourSetTree.size());
+
     }
 
 }
