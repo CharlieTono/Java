@@ -238,9 +238,9 @@ class OurTreeSetIterator<E> implements Iterator<E> {
     private OurSetTree.TreeNode<E> firstRightParent(OurSetTree.TreeNode<E> current) {
         OurSetTree.TreeNode<E> newParent = current.parent;
         OurSetTree.TreeNode<E> newChild = current;
-        while (newParent.parent != null && newParent.left != newChild) {
+        while (newParent != null && newParent.left != newChild) {
+            newChild = newParent;
             newParent = newParent.parent;
-            newChild = newChild.parent;
         }
         return newParent;
 
