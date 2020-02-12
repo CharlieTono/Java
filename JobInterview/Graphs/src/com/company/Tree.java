@@ -24,24 +24,16 @@ public class Tree {
 
     public int rHeight(Node currentRoot) {
 
-        int max = 1;
+        int max = 0;
 
         for (Node child : currentRoot.children) {
-            return Math.max(max, rHeight(child)) + 1;
-
+            int currentHeight = rHeight(child);
+            if (max < currentHeight) {
+                max = currentHeight;
+            }
         }
+        return 1 + max;
 
-        return max;
-//        int max = 1;
-//
-//        for (Node child : currentRoot.children) {
-//            if (currentRoot.children.size() != 0) {
-//                max += rHeight(child);
-//                if (root != null) {
-//                    return max++;
-//                }
-//            }
-//        }
     }
 
     public int getTreeWeight(Node currentRoot) {
