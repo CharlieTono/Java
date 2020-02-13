@@ -3,7 +3,7 @@ package com.company;
 import java.util.Comparator;
 import java.util.Iterator;
 
-public class OurSetTree<E> implements OurSet<E> {
+public class OurSetTree<E> extends OurAbstractSet<E> {
 
     private int size;
     TreeNode<E> root;
@@ -130,46 +130,6 @@ public class OurSetTree<E> implements OurSet<E> {
     }
 
     @Override
-    public boolean addAll(OurSet<E> other) {
-        boolean res = false;
-
-        for (E elt : other) {
-            res |= this.add(elt);
-        }
-        return res;
-    }
-
-    @Override
-    public boolean removeAll(OurSet<E> other) {
-
-        boolean res = false;
-
-        for (E elt : other) {
-            res |= this.remove(elt);
-
-        }
-        return res;
-    }
-
-    @Override
-    public boolean retainAll(OurSet<E> other) {
-
-        OurSet<E> thisSubtractedOther = new OurSetTree<>();
-        Iterator<E>iterator = iterator();
-
-        int i = 0;
-
-        while (iterator.hasNext() && i < this.size) {
-            E num = iterator.next();
-            if (!other.contains(num)) {
-                thisSubtractedOther.add(num);
-            }
-            i++;
-        }
-        return this.removeAll(thisSubtractedOther);
-    }
-
-    @Override
     public Iterator<E> iterator() {
         return new OurTreeSetIterator<>(this);
     }
@@ -203,6 +163,7 @@ class OurTreeSetIterator<E> implements Iterator<E> {
 
     /**
      * finds the node with the least element of the collection
+     *
      * @param vertex - the starting point - root. Must be non-zero
      * @return the node with the least element of the tree
      */

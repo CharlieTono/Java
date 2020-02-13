@@ -4,7 +4,7 @@ import static org.junit.Assert.*;
 
 public class OurSetTreeTest {
 
-    private OurSetTree <Integer>ourSetTree = new OurSetTree<>();
+    private OurSetTree<Integer> ourSetTree = new OurSetTree<>();
 
     @org.junit.Test
     public void testSize_EmptySet_Zero() {
@@ -157,7 +157,7 @@ public class OurSetTreeTest {
         Integer sample04 = 20;
         ourSetTree.add(sample01);
         ourSetTree.add(sample02);
-        OurHashSet <Integer>testSet = new OurHashSet<>();
+        OurHashSet<Integer> testSet = new OurHashSet<>();
         testSet.add(sample03);
         testSet.add(sample04);
         assertTrue(ourSetTree.addAll(testSet));
@@ -196,7 +196,7 @@ public class OurSetTreeTest {
         ourSetTree.add(sample01);
         ourSetTree.add(sample02);
         ourSetTree.add(sample03);
-        OurHashSet <Integer>testSet = new OurHashSet<>();
+        OurHashSet<Integer> testSet = new OurHashSet<>();
         testSet.add(sample01);
         testSet.add(sample02);
         testSet.add(sample04);
