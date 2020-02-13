@@ -201,6 +201,11 @@ class OurTreeSetIterator<E> implements Iterator<E> {
         this.current = treeSet.root == null ? null : getLeast(treeSet.root);
     }
 
+    /**
+     * finds the node with the least element of the collection
+     * @param vertex - the starting point - root. Must be non-zero
+     * @return the node with the least element of the tree
+     */
     private OurSetTree.TreeNode getLeast(OurSetTree.TreeNode<E> vertex) {
 
         while (vertex.left != null) {
@@ -224,7 +229,6 @@ class OurTreeSetIterator<E> implements Iterator<E> {
         } else {
             current = firstRightParent(current);
         }
-
         return res;
     }
 
@@ -244,5 +248,9 @@ class OurTreeSetIterator<E> implements Iterator<E> {
         }
         return newParent;
 
+//        while (current.parent != null && current.parent.left != current) { // second solution
+//            current= current.parent;
+//        }
+//        return current.parent;
     }
 }
