@@ -11,19 +11,18 @@ public class PalindromeTest {
     @Test
     public void testCheckPalindrome_NonPalindrome_False() {
         String text = new String ("Hello");
-        assertFalse(palindrome.checkPalindrome(text));
+        assertFalse(palindrome.checkPalindromeFirst(text));
     }
 
     @Test
     public void testCheckPalindrome_PalindromeOneWord_true() {
         String text = new String ("Anna");
-        assertTrue(palindrome.checkPalindrome(text));
+        assertTrue(palindrome.checkPalindromeFirst(text));
     }
 
     @Test
     public void testCheckPalindrome_PalindromePhrase_true() {
         String text = new String ("Kirill lirik");
-        assertTrue(palindrome.checkPalindrome(text));
+        assertTrue(palindrome.checkPalindromeFirst(text));
     }
-
 }
