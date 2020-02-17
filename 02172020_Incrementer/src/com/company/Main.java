@@ -19,10 +19,16 @@ public class Main {
             threads[i].start();
         }
 
+        long startTime = System.currentTimeMillis();
+
         for (int i = 0; i < THREADS_QTY; i++) {
             threads[i].join();
         }
 
+        long finishTime = System.currentTimeMillis();
+
+        System.out.println(finishTime-startTime);
         System.out.println(incrementer.getCounter());
+        System.out.println(incrementer.getCounter2());
     }
 }

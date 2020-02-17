@@ -14,6 +14,7 @@ public class IncrementingThread  extends Thread{
     public void run() {
         for (int i = 0; i < incrementsNumber; i++) {
             incrementer.increment();
+            incrementer.increment2();
         }
     }
 }
