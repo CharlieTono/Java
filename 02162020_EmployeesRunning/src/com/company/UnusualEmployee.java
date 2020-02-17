@@ -19,13 +19,13 @@ public class UnusualEmployee extends Employee {
         for (int i = 0; i < loan; i++) {
             int timeToSleep;
 
-            if (inspirationCoef == 0 && random.nextInt(100) < INSPIRATION) {
+            if (counter == 0 && random.nextInt(100) < INSPIRATION) {
                 counter = INSPIRATION_TIMES;
             }
 
-            if (inspirationCoef > 0) {
+            if (counter > 0) {
                 timeToSleep = (int) ((min + random.nextInt(max - min)) / inspirationCoef);
-                inspirationCoef--;
+                counter--;
             } else {
                 timeToSleep = min + random.nextInt(max - min);
             }
@@ -36,6 +36,6 @@ public class UnusualEmployee extends Employee {
                 return;
             }
         }
-        long finishTime = System.currentTimeMillis();
+        finishTime = System.currentTimeMillis();
     }
 }

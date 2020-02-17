@@ -1,7 +1,5 @@
 package com.company;
 
-import java.util.Random;
-
 public class UsualEmployee extends Employee {
 
     public UsualEmployee(String name, int loan, int min, int max) {
@@ -19,6 +17,6 @@ public class UsualEmployee extends Employee {
                 return;
             }
         }
-        long finishTime = System.currentTimeMillis();
+        finishTime = System.currentTimeMillis();
     }
 }
