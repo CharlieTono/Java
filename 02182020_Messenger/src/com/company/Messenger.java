@@ -1,10 +1,15 @@
 package com.company;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Messenger {
 
     private final Object mutex = new Object();
 
     private volatile String message;
+
+    List<String> history = new ArrayList<>();
 
     public void addMessage(String message) {
         synchronized (mutex) {
