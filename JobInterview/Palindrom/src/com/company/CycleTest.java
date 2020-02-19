@@ -10,23 +10,23 @@ public class CycleTest {
 
     @Test
     public void testWheelCycle_Equals_true() {
-        String text01 = new String ("test");
-        String text02 = new String ("stte");
+        String text01 = "test";
+        String text02 = "stte";
         assertTrue(cycle.wheelCycle(text01, text02));
     }
 
     @Test
-    public void testPatternCycle_Equals_true() {
-        String text01 = new String ("Hello");
-        String text02 = new String ("Hll");
-        assertTrue(cycle.patternCycle(text01, text02));
+    public void testIsSubsequenceRecursive_Equals_true() {
+        String text01 = "Hello";
+        String text02 = "Hll";
+        assertTrue(cycle.isSubsequence(text01, text02));
     }
 
     @Test
-    public void testPatternCycle_NonEquals_false() {
-        String text01 = new String ("Hello");
-        String text02 = new String ("Hllm");
-        assertFalse(cycle.patternCycle(text01, text02));
+    public void testIsSubsequenceRecursive_NonEquals_false() {
+        String text01 = "Hello";
+        String text02 = "Hllm";
+        assertFalse(cycle.isSubsequence(text01, text02));
     }
 
 }

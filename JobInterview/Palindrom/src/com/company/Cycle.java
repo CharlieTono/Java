@@ -17,27 +17,25 @@ public class Cycle {
         return false;
     }
 
-    public boolean patternCycle(String text, String pattern) {
+    public boolean isSubsequence(String text, String pattern) {
 
-        int length = text.length();
+        return isSubsequenceRecursive(text, pattern, text.length(), pattern.length());
+    }
 
-        if (length == 1) {
+    private boolean isSubsequenceRecursive(String text, String pattern, int textLength, int patternLength) {
+
+        if (patternLength == 0 ) {
             return true;
         }
 
-        if (text.length() < pattern.length()) {
+        if (textLength < patternLength) {
             return false;
         }
-        for (int i = 0; i < length; i++) {
-            if (pattern.charAt(pattern.length() - i - 1) == text.charAt(text.length() - i - 1)) {
-                text = text.substring(i, text.length() - i - 1);
-                pattern = pattern.substring(i, text.length() - i - 1);
-                return patternCycle(text, pattern);
-            } else {
-                text = text.substring(i, text.length() - i - 1);
-                return patternCycle(text, pattern);
-            }
+
+        if (pattern.charAt(patternLength-1) == text.charAt(textLength-1)) {
+            return isSubsequenceRecursive(text, pattern, textLength -1, patternLength -1);
+        } else {
+            return isSubsequenceRecursive(text, pattern, textLength -1, patternLength);
         }
-        return false;
     }
 }
