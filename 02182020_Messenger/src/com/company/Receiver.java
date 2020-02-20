@@ -2,7 +2,7 @@ package com.company;
 
 import java.io.PrintWriter;
 
-public class Receiver extends Thread {
+public abstract class Receiver extends Thread{
 
     private Messenger messenger;
     private final PrintWriter pw;
@@ -12,28 +12,12 @@ public class Receiver extends Thread {
         this.pw = pw;
     }
 
-    @Override
-    public void run() {
-        while (true) {
-            try {
-                String message = messenger.removeMessage();
-                synchronized (Receiver.class) {
-                    pw.println(message + " " + getName());
-                }
-            } catch (InterruptedException e) {
-                return;
-            }
-        }
+    public Messenger getMessenger() {
+        return messenger;
     }
+
+    public PrintWriter getPw() {
+        return pw;
+    }
+
 }
-
-//    public static synchronized void test() {
-//    }
-//    same as :
-//    public static void test() {
-//        synchronized (Receiver.class)
-//    }
-
-
-
-
