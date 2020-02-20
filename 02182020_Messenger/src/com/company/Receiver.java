@@ -1,19 +1,15 @@
 package com.company;
 
-import java.io.FileNotFoundException;
 import java.io.PrintWriter;
-import java.util.List;
 
 public class Receiver extends Thread {
 
-    Messenger messenger;
-    String fileName;
-    PrintWriter pw;
+    private Messenger messenger;
+    private final PrintWriter pw;
 
-    public Receiver(Messenger messenger, String fileName) throws FileNotFoundException {
+    public Receiver(Messenger messenger, PrintWriter pw) {
         this.messenger = messenger;
-        this.fileName = fileName;
-        pw = new PrintWriter(fileName);
+        this.pw = pw;
     }
 
     @Override
@@ -21,16 +17,23 @@ public class Receiver extends Thread {
         while (true) {
             try {
                 String message = messenger.removeMessage();
-                System.out.println(message + " " + getName());
-                messenger.history.add(message);
-                pw.println(messenger.history);
-                pw.flush();
+                synchronized (Receiver.class) {
+                    pw.println(message + " " + getName());
+                }
             } catch (InterruptedException e) {
                 return;
             }
         }
     }
 }
+
+//    public static synchronized void test() {
+//    }
+//    same as :
+//    public static void test() {
+//        synchronized (Receiver.class)
+//    }
+
 
 
 
