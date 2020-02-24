@@ -1,6 +1,5 @@
 package com.company;
 
-import java.io.PrintWriter;
 import java.util.Deque;
 
 public class TextHandler implements Runnable {
@@ -13,12 +12,12 @@ public class TextHandler implements Runnable {
 
     private Deque<String> lines;
 
-    private PrintWriter printWriter;
+    private final FileOperation fileOperation;
 
-    public TextHandler(OperationProvider op, Deque lines, PrintWriter printWriter) {
+    public TextHandler(OperationProvider op, Deque lines, FileOperation fileOperation) {
         this.op = op;
         this.lines = lines;
-        this.printWriter = printWriter;
+        this.fileOperation = fileOperation;
     }
 
     @Override
@@ -30,18 +29,19 @@ public class TextHandler implements Runnable {
             } else {
                 String[] parts = line.split(DELIMITER);
                 String text = parts[0];
+                String result;
                 if (parts.length != 2 || text.length() == 0) {
-                    System.out.println(line + ": " + WRONG_TEXT_TYPE);
+                    result = line + ": " + WRONG_TEXT_TYPE;
                 } else {
                     String operationName = parts[1];
                     Operation operation = op.getByName(operationName);
                     if (operation == null) {
-                        System.out.println(line + ": " + WRONG_OPERATION_TYPE);
+                        result = line + ": " + WRONG_OPERATION_TYPE;
                     } else {
-                        String result = operation.operate(text);
-                        printWriter.println(result);
+                        result = operation.operate(text);
                     }
                 }
+                fileOperation.printLine(result);
             }
         }
     }

@@ -5,7 +5,6 @@ import java.util.Map;
 public class OperationProvider {
 
     private Map<String, Operation> operationByName;
-    Operation operation;
 
     public OperationProvider(Map<String, Operation> operationByName) {
         this.operationByName = operationByName;

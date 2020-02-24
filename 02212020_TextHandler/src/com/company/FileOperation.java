@@ -5,17 +5,28 @@ import java.util.*;
 
 public class FileOperation {
 
-    public Deque<String> fileToDeque(Deque<String> ourDeque, String inputFilename) {
+    private PrintWriter pw;
+
+    public FileOperation(PrintWriter pw) {
+        this.pw = pw;
+    }
+
+    public void fileToDeque(Collection<String> collection, String inputFilename) {
 
         try (BufferedReader fr = new BufferedReader(new FileReader(inputFilename))) {
             String line;
             while ((line = fr.readLine()) != null) {
-                ourDeque.add(line);
+                collection.add(line);
             }
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return ourDeque;
     }
 
+
+    public void printLine(String result) {
+        synchronized (this) {
+            pw.println(result);
+        }
+    }
 }

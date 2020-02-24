@@ -12,11 +12,15 @@ import java.util.concurrent.ConcurrentLinkedDeque;
 
 public class Main {
 
-    public static void main(String[] args) throws FileNotFoundException {
-        Deque<String> deque = new ConcurrentLinkedDeque<>();
+    public static final String INPUT_FILENAME = "input.txt";
+    public static final String OUTPUT_FILENAME = "output.txt";
 
-        FileOperation fileOperation = new FileOperation();
-        fileOperation.fileToDeque(deque, "inputText.txt");
+    public static void main(String[] args) throws FileNotFoundException, InterruptedException {
+        Deque<String> deque = new ConcurrentLinkedDeque<>();
+        PrintWriter pw = new PrintWriter(OUTPUT_FILENAME);
+
+        FileOperation fileOperation = new FileOperation(pw);
+        fileOperation.fileToDeque(deque, INPUT_FILENAME);
 
         Map<String, Operation> operationByName = new HashMap<>();
         operationByName.put("lowercase", new ToLowerCase());
@@ -25,14 +29,17 @@ public class Main {
         //TODO remark this using config.props file, as was is done in calculator project
 
         OperationProvider operationProvider = new OperationProvider(operationByName);
-        PrintWriter pw = new PrintWriter("outputText.txt");
 
         Thread[] handlers = new Thread[5];
 
         for (int i = 0; i < handlers.length; i++) {
-            Thread th = new Thread(new TextHandler(operationProvider, deque, pw));
+            Thread th = new Thread(new TextHandler(operationProvider, deque, fileOperation));
             handlers[i] = th;
             th.start();
+        }
+
+        for (Thread th : handlers) {
+            th.join();
         }
         pw.close();
     }
