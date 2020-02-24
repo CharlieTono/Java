@@ -1,6 +1,8 @@
-package com.company;
+package com.company.handler;
 
-import java.util.Deque;
+import com.company.service.FileOperation;
+
+import java.util.concurrent.BlockingDeque;
 
 public class TextHandler implements Runnable {
 
@@ -10,11 +12,11 @@ public class TextHandler implements Runnable {
 
     private OperationProvider op;
 
-    private Deque<String> lines;
+    private BlockingDeque<String> lines;
 
     private final FileOperation fileOperation;
 
-    public TextHandler(OperationProvider op, Deque lines, FileOperation fileOperation) {
+    public TextHandler(OperationProvider op, BlockingDeque lines, FileOperation fileOperation) {
         this.op = op;
         this.lines = lines;
         this.fileOperation = fileOperation;
@@ -23,7 +25,7 @@ public class TextHandler implements Runnable {
     @Override
     public void run() {
         while (true) {
-            String line = lines.pollLast();
+            String line = lines.pollFirst();
             if (lines == null || line == null) {
                 return;
             } else {

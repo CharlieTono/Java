@@ -1,4 +1,4 @@
-package com.company;
+package com.company.service;
 
 import java.io.*;
 import java.util.*;
@@ -6,9 +6,11 @@ import java.util.*;
 public class FileOperation {
 
     private PrintWriter pw;
+    private BufferedReader br;
 
-    public FileOperation(PrintWriter pw) {
+    public FileOperation(PrintWriter pw, BufferedReader br) {
         this.pw = pw;
+        this.br = br;
     }
 
     public void fileToDeque(Collection<String> collection, String inputFilename) {
@@ -23,10 +25,13 @@ public class FileOperation {
         }
     }
 
-
     public void printLine(String result) {
         synchronized (this) {
             pw.println(result);
         }
+    }
+
+    public String readLine() throws IOException {
+        return br.readLine();
     }
 }

@@ -1,6 +1,6 @@
-package com.company.operation;
+package com.company.handler.operation;
 
-import com.company.Operation;
+import com.company.handler.Operation;
 
 public class ToUpperCase implements Operation {
 
@@ -8,8 +8,7 @@ public class ToUpperCase implements Operation {
 
     @Override
     public String operate(String word) {
-        word = word.toUpperCase();
-        return word;
+        return word.toUpperCase();
     }
 
     @Override

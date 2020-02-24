@@ -1,6 +1,6 @@
-package com.company.operation;
+package com.company.handler.operation;
 
-import com.company.Operation;
+import com.company.handler.Operation;
 
 public class ToLowerCase implements Operation {
 
@@ -8,8 +8,7 @@ public class ToLowerCase implements Operation {
 
     @Override
     public String operate(String word) {
-        word = word.toLowerCase();
-        return word;
+        return word.toLowerCase();
     }
 
     @Override
