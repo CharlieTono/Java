@@ -27,7 +27,6 @@ public class OperationManager {
     }
 
     public Operation get(char operation) {
-
         return operationBySymbol.get(operation);
     }
 }
