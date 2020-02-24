@@ -1,7 +1,10 @@
 package com.company;
 
-import com.company.operation.ToLowerCase;
-import com.company.operation.ToUpperCase;
+import com.company.handler.Operation;
+import com.company.handler.OperationProvider;
+import com.company.handler.TextHandler;
+import com.company.handler.operation.ToLowerCase;
+import com.company.handler.operation.ToUpperCase;
 
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
