@@ -9,6 +9,7 @@ public class TextHandler implements Runnable {
     private static final String DELIMITER = "#";
     static final String WRONG_OPERATION_TYPE = "Incorrect operation type";
     static final String WRONG_TEXT_TYPE = "Incorrect text type";
+    private volatile static boolean isAlive = true;
 
     private OperationProvider op;
 
@@ -24,8 +25,17 @@ public class TextHandler implements Runnable {
 
     @Override
     public void run() {
-        while (true) {
-            String line = lines.pollFirst();
+        while (isAlive) {
+            String line;
+            try {
+                line = lines.takeFirst();
+            } catch (InterruptedException e) {
+                return;
+            }
+            if (line.equals("exit")) {
+                isAlive = false;
+                return;
+            }
             if (lines == null || line == null) {
                 return;
             } else {
