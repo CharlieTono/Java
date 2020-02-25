@@ -1,7 +1,6 @@
 package com.company;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 public class Book {
 
@@ -13,27 +12,56 @@ public class Book {
 
     public boolean isBookContain(String text) {
         int startIndex = 0;
-        int counter = 0;
-        List<String> currentSplit = new ArrayList<>();
-        return isBookContainRecursive(currentSplit, text, startIndex, counter);
+        Deque<String> currentSplit = new ArrayDeque<>();
+        return isBookContainRecursive(currentSplit, text, startIndex);
     }
 
-    private boolean isBookContainRecursive(List<String> currentSplit, String text, int index, int counter) {
+    private boolean isBookContainRecursive(Deque<String> currentSplit, String text, int index) {
+//
+//        if (text.length() == 0 && index == book.size()) {
+//            return true;
+//        } else if (text.length() != 0 && index == book.size()) {
+//            String oldText = currentSplit.removeLast();
+//            oldText = oldText+text;
+//            return isBookContainRecursive(currentSplit, oldText, index - 1);
+//        }
+//
+//        for (int i = 0; i < text.length(); i++) {
+//            String newText = text.substring(0, i + 1);
+//            if (book.get(index).equals(newText) || book.get(index).equals(text)) {
+//                currentSplit.addLast(newText);
+//                newText = text.substring(i + 1);
+//                return isBookContainRecursive(currentSplit, newText, index + 1);
+//            }
+//        }
+//        return false;
 
-        if (counter == book.size()) {
+        if (text.length() == 0 && index == book.size()) {
+            return true;
+        } else if (text.length() != 0 && index == book.size()) {
+            String oldText = currentSplit.removeLast();
+           oldText = oldText+text;
+            return isBookContainRecursive(currentSplit, oldText, index - 1);
+        } else if (book.get(index).equals(text)) {
+            currentSplit.addLast(text);
+            index++;
             return true;
         }
-        String newText = text.substring(index, index + 1);
 
-        for (int i = 0; i < book.size(); i++) {
-            if (!book.get(counter).equals(newText)) {
-                newText = newText + text.charAt(index + 1);
-                index++;
-            } else {
-                currentSplit.add(newText);
-                return isBookContainRecursive(currentSplit, text, index + 1, counter + 1);
+        for (int i = 0; i < text.length(); i++) {
+//            if (book.get(index).equals(text)) {
+//                currentSplit.addLast(text);
+//                index++;
+//                return true;
+//            }
+            String newText = text.substring(0, i + 1);
+            if (book.get(index).equals(newText)) {
+                currentSplit.addLast(newText);
+                newText = text.substring(i + 1);
+                return isBookContainRecursive(currentSplit, newText, index + 1);
             }
         }
         return false;
+
     }
 }

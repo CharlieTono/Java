@@ -38,15 +38,50 @@ public class BookTest {
     }
 
     @Test
-    public void testIsBookContainRecursive_NonEqualsWithSameBook_false() {
+    public void testIsBookContainRecursive_EqualsWithSameWord_true() {
         List<String> dictionary = new ArrayList<>();
         String word01 = "mu";
-        String word02 = "mum";
+        dictionary.add(word01);
+        Book ourBook = new Book(dictionary);
+        String text = "mumu";
+        assertTrue(ourBook.isBookContain(text));
+    }
+
+    @Test
+    public void testIsBookContainRecursive_NonEqualsWithSameWord_false() {
+        List<String> dictionary = new ArrayList<>();
+        String word01 = "mu";
+        String word02 = "mu";
         dictionary.add(word01);
         dictionary.add(word02);
         Book ourBook = new Book(dictionary);
         String text = "mumum";
+        assertFalse(ourBook.isBookContain(text));
+    }
+
+    @Test
+    public void testIsBookContainRecursive_EqualsWithDifferentWords_true() {
+        List<String> dictionary = new ArrayList<>();
+        String word01 = "mu";
+        String word02 = "tex";
+        String word03 = "call";
+        dictionary.add(word01);
+        dictionary.add(word02);
+        dictionary.add(word03);
+        Book ourBook = new Book(dictionary);
+        String text = "texcall";
         assertTrue(ourBook.isBookContain(text));
     }
 
+    @Test
+    public void testIsBookContainRecursive_NonEqualsWithDifferentWords_false() {
+        List<String> dictionary = new ArrayList<>();
+        String word01 = "mu";
+        String word02 = "tex";
+        dictionary.add(word01);
+        dictionary.add(word02);
+        Book ourBook = new Book(dictionary);
+        String text = "mucall";
+        assertFalse(ourBook.isBookContain(text));
+    }
 }
