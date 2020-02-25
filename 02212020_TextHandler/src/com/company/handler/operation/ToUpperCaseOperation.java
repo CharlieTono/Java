@@ -2,7 +2,7 @@ package com.company.handler.operation;
 
 import com.company.handler.Operation;
 
-public class ToUpperCase implements Operation {
+public class ToUpperCaseOperation implements Operation {
 
     private static final String NAME = "uppercase";
 

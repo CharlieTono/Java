@@ -2,7 +2,7 @@ package com.company.handler.operation;
 
 import com.company.handler.Operation;
 
-public class ToLowerCase implements Operation {
+public class ToLowerCaseOperation implements Operation {
 
     private static final String NAME = "lowercase";
 

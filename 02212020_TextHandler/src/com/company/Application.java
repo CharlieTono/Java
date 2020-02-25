@@ -1,16 +1,13 @@
 package com.company;
 
-import com.company.handler.Operation;
 import com.company.handler.OperationProvider;
 import com.company.handler.TextHandler;
-import com.company.handler.operation.ToLowerCase;
-import com.company.handler.operation.ToUpperCase;
 import com.company.producer.TextProducer;
 import com.company.service.FileOperation;
+import com.company.service.PropertiesService;
 
 import java.io.*;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.List;
 import java.util.concurrent.BlockingDeque;
 import java.util.concurrent.LinkedBlockingDeque;
 
@@ -25,15 +22,17 @@ public class Application {
         BufferedReader br = new BufferedReader(new FileReader(INPUT_FILENAME));
 
         FileOperation fileOperation = new FileOperation(pw, br);
- //       fileOperation.fileToDeque(deque, INPUT_FILENAME);
+//        fileOperation.fileToDeque(deque, INPUT_FILENAME);
+//
+//        Map<String, Operation> operationByName = new HashMap<>();
+//        operationByName.put("lowercase", new ToLowerCase());
+//        operationByName.put("uppercase", new ToUpperCase());
 
-        Map<String, Operation> operationByName = new HashMap<>();
-        operationByName.put("lowercase", new ToLowerCase());
-        operationByName.put("uppercase", new ToUpperCase());
+        PropertiesService ps = new PropertiesService("config/config.props");
+        List<String> operationPaths = ps.getOperationPaths();
 
-        //TODO remark this using config.props file, as was is done in calculator project
-
-        OperationProvider operationProvider = new OperationProvider(operationByName);
+        OperationProvider operationProvider = new OperationProvider(operationPaths);
+        operationProvider.load();
 
         Thread[] producers = new Thread[3];
         for (int i = 0; i < producers.length; i++) {
