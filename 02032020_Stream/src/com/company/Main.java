@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
+import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
@@ -30,7 +31,12 @@ public class Main {
         System.out.println(IntStream.generate(() -> 100).limit(100).filter(n -> n % 2 != 0).noneMatch(n -> n % 2 == 0));
         System.out.println(IntStream.iterate(0, n -> n + 1).limit(100).filter(n -> n % 2 != 0).noneMatch(n -> n % 2 == 0));
         System.out.println(IntStream.generate(() -> 100).limit(101).allMatch(val -> val >= 100));
-        
+
+        List<String> dictionary = Arrays.asList("first", "second", "third");
+        String text = "My first task was to find second and third words in the text, but second word was missed";
+        List<String> foundedWords = foundedWords(dictionary, text);
+        System.out.println(foundedWords.toString());
+
     }
 
     public static Stream<String> trickyFilter(List<String> ourList) {
@@ -43,6 +49,11 @@ public class Main {
         return strings.
                 stream().
                 mapToInt(value -> value.length());
+    }
+
+    public static List<String> foundedWords(List<String> dictionary, String text) {
+        String[] textAsList = text.split(" ");
+        return Arrays.stream(textAsList).filter(word -> dictionary.contains(word)).distinct().sorted().collect(Collectors.toList());
     }
 
 }
