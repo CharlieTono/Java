@@ -1,9 +1,6 @@
 package com.company;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
@@ -36,6 +33,11 @@ public class Main {
         String text = "My first task was to find second and third words in the text, but second word was missed";
         List<String> foundedWords = foundedWords(dictionary, text);
         System.out.println(foundedWords.toString());
+
+        Censor censor = new Censor(dictionary);
+        List<String> foundWords = censor.findBadWords(text);
+        System.out.println(foundWords);
+
 
     }
 
