@@ -1,8 +1,6 @@
 package com.company;
 
-import java.util.ArrayDeque;
-import java.util.Deque;
-import java.util.List;
+import java.util.*;
 
 public class Exchange {
 
@@ -13,39 +11,38 @@ public class Exchange {
     }
 
     public int moneyExchange(int sumOfMoney) {
-        Deque<Integer> counters = new ArrayDeque<>();
-        moneyExchangeRecursion(ourCoins, sumOfMoney, sumOfMoney, 0, counters);
-        int result = counters.getFirst();
-        for (Integer counter : counters) {
-            if (result > counter) {
-                result = counter;
-            }
-        }
+        Deque<Integer> coinsResult = new ArrayDeque<>();
+        moneyExchangeRecursion(ourCoins, sumOfMoney, coinsResult, 0);
+        int result = coinsResult.size();
         return result;
     }
 
-    private boolean moneyExchangeRecursion(List<Integer> coins, int sum, int sumUnchanged, int counter, Deque<Integer> counters) {
+    private boolean moneyExchangeRecursion(List<Integer> coins, int sum, Deque<Integer> coinsResult, int index) {
 
         if (sum == 0) {
-            counters.addLast(counter);
             return true;
         }
 
-        for (int i = 0; i < coins.size(); i++) {
-            if (coins.get(i) <= sum) {
-                counter = counter + (sum / coins.get(i));
-                sum = sum % coins.get(i);
-                Boolean isFull = moneyExchangeRecursion(coins, sum, sumUnchanged, counter, counters);
+        for (int i = index; i < coins.size(); i++) {
+            if (sum % coins.get(i) == 0) {
+                while (sum != 0) {
+                    sum = sum - coins.get(i);
+                    coinsResult.addLast(coins.get(i));
+                }
+                return true;
+            }
+            if (sum >= coins.get(i)) {
+                sum = sum - coins.get(i);
+                coinsResult.addLast(coins.get(i));
+                Boolean isFull = moneyExchangeRecursion(coins, sum, coinsResult, index + 1);
                 if (isFull) {
-                    if (counters.size() != coins.size()) {
-                        coins.remove(0);
-                        moneyExchangeRecursion(coins, sumUnchanged, sumUnchanged, 0, counters);
-                    }
                     return true;
+                } else {
+                    int numberToRemove = coinsResult.removeFirst();
+                    sum = sum + numberToRemove;
                 }
             }
         }
-        counters.addLast(0);
         return false;
     }
 }
