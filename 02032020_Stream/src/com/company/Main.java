@@ -3,6 +3,7 @@ package com.company;
 import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
+import java.util.stream.LongStream;
 import java.util.stream.Stream;
 
 public class Main {
@@ -37,8 +38,6 @@ public class Main {
         Censor censor = new Censor(dictionary);
         List<String> foundWords = censor.findBadWords(text);
         System.out.println(foundWords);
-
-
     }
 
     public static Stream<String> trickyFilter(List<String> ourList) {
@@ -56,6 +55,14 @@ public class Main {
     public static List<String> foundedWords(List<String> dictionary, String text) {
         String[] textAsList = text.split(" ");
         return Arrays.stream(textAsList).filter(word -> dictionary.contains(word)).distinct().sorted().collect(Collectors.toList());
+    }
+
+    public static boolean isPrime(int number) {
+        return IntStream.rangeClosed(2, (int) Math.sqrt(number)).noneMatch(num -> num % number == 0);
+    }
+
+    public static long factorial(int number) {
+        return LongStream.rangeClosed(1, number).reduce((currentResult, currentNumber) -> currentResult * currentNumber).orElse(0);
     }
 
 }
