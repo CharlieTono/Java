@@ -38,6 +38,13 @@ public class Main {
         Censor censor = new Censor(dictionary);
         List<String> foundWords = censor.findBadWords(text);
         System.out.println(foundWords);
+
+        IntStream stream01 = IntStream.rangeClosed(1, 50);
+        IntStream stream02 = IntStream.rangeClosed(50, 100);
+        Stream newStream = createStream(stream01, stream02);
+        System.out.println(newStream.collect(Collectors.toList()));
+        System.out.println(countSum(1,4));
+
     }
 
     public static Stream<String> trickyFilter(List<String> ourList) {
@@ -63,6 +70,14 @@ public class Main {
 
     public static long factorial(int number) {
         return LongStream.rangeClosed(1, number).reduce((currentResult, currentNumber) -> currentResult * currentNumber).orElse(0);
+    }
+
+    public static Stream createStream(IntStream first, IntStream second) {
+        return IntStream.concat(first, second).filter(n -> n % 3 == 0 && n % 5 == 0).distinct().sorted().boxed();
+    }
+
+    public static int countSum (int a, int b) {
+        return IntStream.rangeClosed(a, b).sum();
     }
 
 }
