@@ -73,7 +73,7 @@ public class Main {
     }
 
     public static Stream createStream(IntStream first, IntStream second) {
-        return IntStream.concat(first, second).filter(n -> n % 3 == 0 && n % 5 == 0).distinct().sorted().boxed();
+        return IntStream.concat(first, second).filter(n -> n % 3 == 0 && n % 5 == 0).distinct().sorted().skip(2).boxed();
     }
 
     public static int countSum (int a, int b) {
