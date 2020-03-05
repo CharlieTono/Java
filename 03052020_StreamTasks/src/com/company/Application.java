@@ -1,6 +1,7 @@
 package com.company;
 
 import java.util.Arrays;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class Application {
@@ -31,5 +32,11 @@ public class Application {
 
         System.out.println(res);
         
+        long res02 = accountStream.filter(acc -> acc.getBalance() > 0)
+                .flatMap(account -> account.getTransactions().stream())
+                .filter(transaction -> transaction.getState() == State.CANCELED)
+                .collect(Collectors.reducing(0L, Transaction:: getSum, (currentResult, currentElt) -> currentElt+currentResult));
+
+        System.out.println(res02);
     }
 }
