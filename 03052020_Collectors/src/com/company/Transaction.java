@@ -4,7 +4,7 @@ public class Transaction {
 
     private String uuid;
     private long sum;
-    private int accId;
+    private long accId;
 
     public Transaction(String uuid, long sum, int accId) {
         this.uuid = uuid;
@@ -20,7 +20,7 @@ public class Transaction {
         return sum;
     }
 
-    public int getAccId() {
+    public long getAccId() {
         return accId;
     }
 }

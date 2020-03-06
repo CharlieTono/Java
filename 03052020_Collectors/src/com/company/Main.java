@@ -1,5 +1,7 @@
 package com.company;
 
+import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -21,13 +23,23 @@ public class Main {
         System.out.println(resultMap.get(true));
 
         Transaction tr01 = new Transaction("111-AA", 10000, 1212);
-        Transaction tr02 = new Transaction("111-AB", 20000, 1122);
-        Transaction tr03 = new Transaction("111-BA", 30000, 2211);
-        Transaction tr04 = new Transaction("111-BB", 40000, 2121);
+        Transaction tr02 = new Transaction("111-AA", 20000, 1122);
+        Transaction tr03 = new Transaction("111-AA", 30000, 1122);
+        Transaction tr04 = new Transaction("111-AA", 40000, 1212);
 
         Stream<Transaction> transactionStream = Stream.of(tr01, tr02, tr03, tr04);
-        long resultQty = transactionStream.collect(Collectors.counting());
-        System.out.println(resultQty);
+        Map resultQty = transactionStream.collect(Collectors.groupingBy(Transaction::getUuid, Collectors.summingLong(Transaction::getSum)));
+        System.out.println(resultQty.get("111-AA"));
+
+        Account acc01 = new Account(-2000, false);
+        Account acc02 = new Account(-20000, false);
+        Account acc03 = new Account(-5000, false);
+        Account acc04 = new Account(-1000, false);
+
+        Stream<Account> bankStream = Stream.of(acc01, acc02, acc03, acc04);
+
+        bankStream.filter(acc -> acc.getBalance() < -2000).forEach(account -> account.setLocked(true));
+        System.out.println(acc02);
 
     }
 }
