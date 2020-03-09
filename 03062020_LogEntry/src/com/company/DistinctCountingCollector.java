@@ -9,20 +9,20 @@ import java.util.function.Function;
 import java.util.function.Supplier;
 import java.util.stream.Collector;
 
-public class DistinctCountingCollector implements Collector<LogEntry, HashSet<String>, Integer> {
+public class DistinctCountingCollector<T> implements Collector<T, HashSet<T>, Integer> {
 
     @Override
-    public Supplier<HashSet<String>> supplier() {
+    public Supplier<HashSet<T>> supplier() {
         return HashSet::new;
     }
 
     @Override
-    public BiConsumer<HashSet<String>, LogEntry> accumulator() {
-        return (innerCollection, logEntry) -> innerCollection.add(logEntry.getUserName());
+    public BiConsumer<HashSet<T>, T> accumulator() {
+        return HashSet::add;
     }
 
     @Override
-    public BinaryOperator<HashSet<String>> combiner() {
+    public BinaryOperator<HashSet<T>> combiner() {
         return (innerCollection01, innerCollection02) -> {
             innerCollection01.addAll(innerCollection02);
             return innerCollection01;
@@ -30,7 +30,7 @@ public class DistinctCountingCollector implements Collector<LogEntry, HashSet<St
     }
 
     @Override
-    public Function<HashSet<String>, Integer> finisher() {
+    public Function<HashSet<T>, Integer> finisher() {
         return HashSet::size;
     }
 

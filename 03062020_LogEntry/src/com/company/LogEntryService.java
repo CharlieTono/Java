@@ -4,8 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static java.util.stream.Collectors.counting;
-import static java.util.stream.Collectors.groupingBy;
+import static java.util.stream.Collectors.*;
 
 public class LogEntryService {
 
@@ -25,6 +24,7 @@ public class LogEntryService {
     }
 
     public Map<String, Integer> usersByUrl() {
-        return qtyUser = logEntry.stream().collect(groupingBy(LogEntry::getUrl, new DistinctCountingCollector()));
+        return qtyUser = logEntry.stream()
+                .collect(groupingBy(LogEntry::getUrl, mapping(LogEntry::getUserName, new DistinctCountingCollector<>())));
     }
 }
