@@ -24,5 +24,14 @@ public class Main {
         System.out.println(todayAndTomorrow.get(ChronoUnit.DAYS));
 
         System.out.println(today.getDayOfWeek());
+
+        //BD
+        DateTimeFormatter euFormatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
+        DateTimeFormatter usFormatter = DateTimeFormatter.ofPattern("MM.dd.yy");
+        LocalDate bd = LocalDate.parse("22.11.1990", euFormatter);
+        System.out.println(bd.getDayOfWeek());
+        System.out.println(bd.getDayOfYear());
+        System.out.println(bd.format(usFormatter));
+
     }
 }
