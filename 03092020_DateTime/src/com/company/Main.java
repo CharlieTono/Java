@@ -56,7 +56,7 @@ public class Main {
 
         System.out.println("******");
         LocalDateTime dayStart = LocalDate.now().atStartOfDay();
-        LocalDateTime dayStart2 = LocalDate.now().atTime(10,0);
+        LocalDateTime dayStart2 = LocalDate.now().atTime(10, 0);
         LocalDateTime.parse("2020-03-10T11:00:00");
 
         System.out.println("******");
@@ -83,15 +83,40 @@ public class Main {
             System.out.println(vladivostokTime);
         }
 
-        
+        if (moscowTime.isBefore(vladivostokTime)) {
+            System.out.println(moscowTime + " comes before " + vladivostokTime);
+        } else {
+            System.out.println(vladivostokTime + " comes before " + moscowTime);
+        }
 
+        System.out.println("**A**");
+        ZonedDateTime spbTimeStart = ZonedDateTime.of(LocalDate.now().atTime(9, 0), ZoneId.of("Europe/Moscow"));
+        ZonedDateTime spbTimeFinish = ZonedDateTime.of(LocalDate.now().atTime(18, 0), ZoneId.of("Europe/Moscow"));
+        ZonedDateTime nyTimeStart = ZonedDateTime.of(LocalDate.now().atTime(8, 0), ZoneId.of("America/New_York"));
+        ZonedDateTime nyTimeFinish = ZonedDateTime.of(LocalDate.now().atTime(17, 0), ZoneId.of("America/New_York"));
 
+        int counter = 0;
+        while (!spbTimeStart.equals(spbTimeFinish)) {
+            ZonedDateTime nyComparingTime = spbTimeStart.withZoneSameInstant(ZoneId.of("America/New_York"));
+            spbTimeStart = spbTimeStart.plusHours(1);
+            if (nyComparingTime.isEqual(nyTimeStart) || nyComparingTime.isAfter(nyTimeStart) && nyComparingTime.isBefore(nyTimeFinish)) {
+                counter++;
+            }
+        }
+        System.out.println("Total qty of hours for meeting time for colleagues from NY and Moscow is " + counter);
 
+        System.out.println("**B**");
+        ZonedDateTime londonTimeStart = ZonedDateTime.of(LocalDate.now().atTime(8, 30), ZoneId.of("Europe/London"));
+        ZonedDateTime londonTimeFinish = ZonedDateTime.of(LocalDate.now().atTime(17, 0), ZoneId.of("Europe/London"));
 
-
-
-
-
-
+        int counters = 0;
+        while (!londonTimeStart.equals(londonTimeFinish)) {
+            ZonedDateTime nyComparingTime = londonTimeStart.withZoneSameInstant(ZoneId.of("America/New_York"));
+            londonTimeStart = londonTimeStart.plusMinutes(30);
+            if (nyComparingTime.isEqual(nyTimeStart) || nyComparingTime.isAfter(nyTimeStart) && nyComparingTime.isBefore(nyTimeFinish)) {
+                counters++;
+            }
+        }
+        System.out.println("Total qty of hours for meeting time for colleagues from NY and London is " + counters/2);
     }
 }
