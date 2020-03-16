@@ -7,7 +7,7 @@ import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
 
-public class Main {
+public class Server {
 
     static final int PORT = 2000; //number of the port (till 65500 ~ 2^16)
 
