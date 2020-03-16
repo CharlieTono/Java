@@ -21,7 +21,8 @@ public class Server {
 
         String line;
         while ((line = br.readLine()) != null) { //till the end of the data
-            pw.println(line + "hello");
+            pw.println(line + " hello");
+            pw.flush();
         }
 
         socket.close(); //close connection
