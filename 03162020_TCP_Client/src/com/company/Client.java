@@ -23,6 +23,7 @@ public class Client {
         String line;
         while ((line = consoleReader.readLine()) != null && !line.equals("exit")) {
             sender.println(line);
+            sender.flush();
             System.out.println("from the server " + br.readLine());
         }
         socket.close();
