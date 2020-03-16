@@ -14,13 +14,7 @@ public class Text {
         this.number = number;
     }
 
-    public String getText() {
-        return text;
-    }
-
-    public int getNumber() {
-        return number;
-    }
+    public Text(){}
 
     public String cutText() {
         String[] array = text.split(" ");
@@ -33,4 +27,26 @@ public class Text {
         }
         return result;
     }
+
+    /**
+     * crop the text so that it contains no more than k symbols.
+     * If the last symbols in the end don`t compose a word, than remove them up to the prev word.
+     *
+     * @param text String to crop
+     * @param k    the text length limit
+     * @return cropped text according to the rule
+     */
+
+    public String crop(String text, int k) {
+        int length = text.length();
+        if (length <= k) {
+            return text;
+        }
+
+        String res = text.substring(0, k + 1);
+        int lastSpaceIndex = res.lastIndexOf(" ");
+        res = lastSpaceIndex < 0 ? "" : res.substring(0, lastSpaceIndex);
+        return res;
+    }
+
 }
