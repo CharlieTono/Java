@@ -17,14 +17,14 @@ public class Client {
 
         BufferedReader consoleReader = new BufferedReader(new InputStreamReader(System.in));
 
-        PrintWriter sender = new PrintWriter(socket.getOutputStream());
-        BufferedReader br = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+        PrintWriter socketOutPut = new PrintWriter(socket.getOutputStream());
+        BufferedReader socketInput = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 
         String line;
         while ((line = consoleReader.readLine()) != null && !line.equals("exit")) {
-            sender.println(line);
-            sender.flush();
-            System.out.println("from the server " + br.readLine());
+            socketOutPut.println(line);
+            socketOutPut.flush();
+            System.out.println("from the server " + socketInput.readLine());
         }
         socket.close();
     }
