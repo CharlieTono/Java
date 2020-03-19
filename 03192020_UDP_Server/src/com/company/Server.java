@@ -4,7 +4,7 @@ import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 
-public class Main {
+public class Server {
 
     static final int INCOMING_DATAGRAM_SIZE = 1024;
     static final int PORT = 3000;
@@ -30,5 +30,4 @@ public class Main {
             socket.send(outgoingPacket);
         }
     }
-
 }
