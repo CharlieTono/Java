@@ -19,5 +19,7 @@ public class Client {
             Runnable task = new ThreadClient(OUTER_SERVER_HOST, OUTER_SERVER_PORT, MESSAGE);
             executorService.execute(task);
         }
+
+        executorService.shutdown();
     }
 }
