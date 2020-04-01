@@ -3,7 +3,7 @@ package com.company;
 public class OuterServer {
 
     private static final int OUTER_SERVER_PORT_TCP = 2900;
-    private static final int OUTER_SERVER_PORT_UDP = 3700;
+    private static final int OUTER_SERVER_PORT_UDP = 3800;
 
     public static void main(String[] args) {
 
