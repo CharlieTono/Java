@@ -2,12 +2,14 @@ package com.company;
 
 import java.io.*;
 import java.net.Socket;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class ThreadClient implements Runnable {
 
     private int outerServerPort;
     private String outerServerHost;
     private String message;
+    private static AtomicInteger counter = new AtomicInteger();
 
     public ThreadClient(String outerServerHost, int outerServerPort, String message) {
         this.outerServerPort = outerServerPort;
@@ -25,7 +27,8 @@ public class ThreadClient implements Runnable {
 
             streamOut.println(message);
             String line = streamIn.readLine();
-            System.out.println("Answer from server: " + line);
+            System.out.println("Answer from the server: " + line);
+            //System.out.println(counter.incrementAndGet());
 
             socket.close();
         } catch (IOException e) {
