@@ -13,19 +13,19 @@ public class HandlerInfo {
     public HandlerInfo() {
     }
 
-    public String getHost() {
+    public synchronized String getHost() {
         return host;
     }
 
-    public int getPort() {
+    public synchronized int getPort() {
         return port;
     }
 
-    public void setHost(String host) {
+    public synchronized void setHost(String host) {
         this.host = host;
     }
 
-    public void setPort(int port) {
+    public synchronized void setPort(int port) {
         this.port = port;
     }
 }

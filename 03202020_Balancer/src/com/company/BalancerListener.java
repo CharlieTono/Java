@@ -24,6 +24,7 @@ public class BalancerListener extends Thread {
             serverSocket = new DatagramSocket(outerServerUdpPort);
         } catch (SocketException e) {
             e.printStackTrace();
+            return;
         }
         byte[] incomingData = new byte[DATAGRAM_SIZE];
         DatagramPacket incomingPacket = new DatagramPacket(incomingData, DATAGRAM_SIZE);
@@ -40,7 +41,7 @@ public class BalancerListener extends Thread {
         }
     }
 
-    private void updateHandler(String handlerInfoResult) {
+    void updateHandler(String handlerInfoResult) {
         String[] parts = handlerInfoResult.split(DELIMITER);
         String host = parts[0];
         int port = Integer.parseInt(parts[1]);

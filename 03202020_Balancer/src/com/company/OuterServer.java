@@ -2,8 +2,8 @@ package com.company;
 
 public class OuterServer {
 
-    private static final int OUTER_SERVER_PORT_TCP = 2000;
-    private static final int OUTER_SERVER_PORT_UDP = 3000;
+    private static final int OUTER_SERVER_PORT_TCP = 2900;
+    private static final int OUTER_SERVER_PORT_UDP = 3700;
 
     public static void main(String[] args) {
 

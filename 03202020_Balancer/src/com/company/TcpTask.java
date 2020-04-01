@@ -10,7 +10,7 @@ public class TcpTask implements Runnable {
 
     private static final String NO_HANDLER = "No handler available";
     private Socket clientSocket;
-    HandlerInfo handlerInfo;
+    private HandlerInfo handlerInfo;
 
     public TcpTask(Socket clientSocket, HandlerInfo handlerInfo) {
         this.clientSocket = clientSocket;
@@ -33,14 +33,17 @@ public class TcpTask implements Runnable {
             }
 
             Socket handlerSocket = new Socket(host, port);
+
             BufferedReader fromHandler = new BufferedReader(new InputStreamReader(handlerSocket.getInputStream()));
             PrintStream toHandler = new PrintStream(handlerSocket.getOutputStream());
+
             String lineFromClient = fromClient.readLine();
             toHandler.println(lineFromClient);
+
             String lineFromHandler = fromHandler.readLine();
             handlerSocket.close();
             toClient.println(lineFromHandler);
-            toClient.println();
+            toClient.close();
 
         } catch (IOException e) {
             e.printStackTrace();
