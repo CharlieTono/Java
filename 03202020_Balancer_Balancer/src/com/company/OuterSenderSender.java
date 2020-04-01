@@ -1,15 +1,15 @@
 package com.company;
 
 import com.company.handler.HandlerPriorityQueue;
+import com.company.handler.HandlerServer;
 
 import java.io.IOException;
 import java.net.*;
 
-public class OuterSenderSender extends Thread {
+public class OuterSenderSender implements Runnable {
 
-    private static final int OUTER_SERVER_PORT = 2000;
+    private static final int OUTER_SERVER_PORT = 3800;
     private static final String OUTER_HOST = "localhost";
-    private static final int DATA_SIZE = 1024;
     private HandlerPriorityQueue servers;
 
     public OuterSenderSender(HandlerPriorityQueue servers) {
@@ -22,14 +22,18 @@ public class OuterSenderSender extends Thread {
             InetAddress address = InetAddress.getByName(OUTER_HOST);
             DatagramSocket socket = new DatagramSocket();
 
+            HandlerServer handlerServer = servers.getOptimal();
+
+            if (handlerServer == null) {
+                return;
+            }
+
             byte[] dataOut = servers.getOptimal().toString().getBytes();
 
-            while (true) {
-                DatagramPacket packetOut = new DatagramPacket(dataOut, dataOut.length, address, OUTER_SERVER_PORT);
-                socket.send(packetOut);
-                Thread.sleep(1000);
-            }
-        } catch (IOException | InterruptedException e) {
+            DatagramPacket packetOut = new DatagramPacket(dataOut, dataOut.length, address, OUTER_SERVER_PORT);
+            socket.send(packetOut);
+
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }

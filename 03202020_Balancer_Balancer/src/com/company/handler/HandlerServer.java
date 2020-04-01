@@ -25,7 +25,7 @@ public class HandlerServer implements Comparable<HandlerServer> {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof HandlerServer)) return false;
+        if (o == null || getClass() != o.getClass()) return false;
         HandlerServer that = (HandlerServer) o;
         return port == that.port &&
                 Objects.equals(ip, that.ip);
@@ -54,6 +54,6 @@ public class HandlerServer implements Comparable<HandlerServer> {
 
     @Override
     public String toString() {
-        return ip+":"+port;
+        return ip + ":" + port;
     }
 }

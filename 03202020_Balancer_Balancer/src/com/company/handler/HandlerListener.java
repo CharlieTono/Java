@@ -3,13 +3,12 @@ package com.company.handler;
 import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
-import java.net.SocketException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 public class HandlerListener extends Thread {
 
-    private static final int BALANCER_UPD_PORT = 3000;
+    private static final int BALANCER_UPD_PORT = 3700;
     private static final int DATAGRAM_SIZE = 1024;
     private static final int THREADS_NUMBER = 10;
 
@@ -30,11 +29,8 @@ public class HandlerListener extends Thread {
                 byte[] dataFromHandler = new byte[DATAGRAM_SIZE];
                 DatagramPacket packetFromHandler = new DatagramPacket(dataFromHandler, DATAGRAM_SIZE);
                 serverSocket.receive(packetFromHandler);
-
-                executorService.execute(new Thread(new HandlerDataReceiver(packetFromHandler, servers)));
+                executorService.execute(new HandlerDataReceiver(packetFromHandler, servers));
             }
-        } catch (SocketException e) {
-            e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         }
