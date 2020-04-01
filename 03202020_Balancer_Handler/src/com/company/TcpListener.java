@@ -10,7 +10,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 public class TcpListener extends Thread {
 
     private int handlerTcpPort;
-    private AtomicInteger tasksNum;
+    AtomicInteger tasksNum;
 
     public TcpListener(int handlerTcpPort, AtomicInteger tasksNum) {
         this.handlerTcpPort = handlerTcpPort;
@@ -21,13 +21,13 @@ public class TcpListener extends Thread {
     public void run() {
         try {
             ServerSocket server = new ServerSocket(handlerTcpPort);
-            ExecutorService executorService = Executors.newFixedThreadPool(10);
+            ExecutorService executorService = Executors.newCachedThreadPool();
 
             while (true) {
                 Socket socketIn = server.accept();
                 Runnable taskHandler = new TaskHandler(socketIn, tasksNum);
-                executorService.execute(taskHandler);
                 tasksNum.incrementAndGet();
+                executorService.execute(taskHandler);
             }
         } catch (IOException e) {
             e.printStackTrace();

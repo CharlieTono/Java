@@ -32,6 +32,7 @@ public class UdpSender implements Runnable {
                     balancerUdpPort
             );
             socket.send(packetOut);
+            socket.close();
         } catch (IOException e) {
             e.printStackTrace();
         }

@@ -7,7 +7,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 public class TaskHandler implements Runnable {
 
-    Socket socketIn;
+    private Socket socketIn;
     private AtomicInteger tasksNum;
 
     public TaskHandler(Socket socketIn, AtomicInteger tasksNum) {
@@ -21,14 +21,15 @@ public class TaskHandler implements Runnable {
             BufferedReader fromOuterServer = new BufferedReader(new InputStreamReader(socketIn.getInputStream()));
             PrintStream toOuterServer = new PrintStream(socketIn.getOutputStream());
             String line = fromOuterServer.readLine();
-            line = line.toLowerCase();
-            TimeUnit.MICROSECONDS.sleep(20);
+            line = line.toUpperCase();
+            TimeUnit.MILLISECONDS.sleep(20);
             toOuterServer.println(line);
             socketIn.close();
         } catch (IOException | InterruptedException e) {
             e.printStackTrace();
         } finally {
             tasksNum.decrementAndGet();
+            System.out.println(tasksNum);
         }
     }
 }
