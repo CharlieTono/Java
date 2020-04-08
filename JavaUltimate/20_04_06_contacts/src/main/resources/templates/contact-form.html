@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <title>Contact</title>
+</head>
+<body>
+<div class="row">
+    <ul class="collection with-header">
+        <div>
+            <li class="collection-header">
+                <h3><a href="/contacts">Contact Form</a></h3>
+            </li>
+            <li class="collection-item">
+                <div>
+                    <form action="#" th:action="@{/contact}" th:object="${contact}" method="post">
+                        <input type="hidden" th:field="*{id}"/>
+                        <p>Name: <input type="text" th:field="*{name}"/></p>
+                        <p>Last Name: <input type="text" th:field="*{lastName}"/></p>
+                        <p>Age: <input type="text" th:field="*{age}"/></p>
+                        <p>
+                            <input type="submit" value="Submit" class="col s12 waves-effect waves-light btn green darken-1"/>
+                            <a href="/" class="col s12 waves-effect waves-light btn grey darken-1">Cancel</a>
+                        </p>
+                    </form>
+                </div>
+            </li>
+        </div>
+    </ul>
+</div>
+</body>
+</html>
