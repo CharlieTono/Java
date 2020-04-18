@@ -5,82 +5,84 @@ import com.telran.person.model.Person;
 import com.telran.person.persistence.IPersonRepository;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
+import javax.persistence.EntityNotFoundException;
+import java.time.LocalDate;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class PersonService {
 
+    private static final String PERSON_NOT_FOUND = "Person not found";
     final IPersonRepository personRepository;
 
     public PersonService(IPersonRepository personRepository) {
         this.personRepository = personRepository;
     }
 
-    public void addPerson(PersonDto personDto) {
-        Person person = new Person(personDto.firstName, personDto.lastName, personDto.age);
+    public void add(PersonDto personDto) {
+        Person person = new Person(personDto.firstName, personDto.lastName, personDto.birthday);
         personRepository.save(person);
     }
 
-    public void removePerson(PersonDto personDto) {
-        Person person = new Person(personDto.firstName, personDto.lastName, personDto.age);
-        personRepository.delete(person);
+    public void edit(PersonDto personDto) {
+        Person person = personRepository.findById(personDto.id).orElseThrow(() -> new EntityNotFoundException(PERSON_NOT_FOUND));
+
+        person.setName(personDto.firstName);
+        person.setLastName(personDto.lastName);
+        person.setBirthday(personDto.birthday);
+
+        personRepository.save(person);
     }
 
-    public List<PersonDto> getAll() {
-        Iterable<Person> persons = personRepository.findAll();
-        List<PersonDto> personsOut = new ArrayList<>();
+    public PersonDto getById(int id) {
+        Person person = personRepository.findById(id).orElseThrow(() -> new EntityNotFoundException(PERSON_NOT_FOUND));
+        return new PersonDto(id, person.getName(), person.getLastName(), person.getBirthday());
+    }
 
-        for (Person person : persons) {
-            personsOut.add(
-                    new PersonDto(person.getId(),
-                            person.getName(),
-                            person.getLastName(),
-                            person.getAge()));
-        }
-        return personsOut;
+    public void removeById(int id) {
+        personRepository.deleteById(id);
+    }
+
+
+    public List<PersonDto> getAll() {
+        List<Person> persons = personRepository.findAll();
+
+        return persons.stream()
+                .map(person -> new PersonDto(person.getId(),
+                        person.getName(),
+                        person.getLastName(),
+                        person.getBirthday()))
+                .collect(Collectors.toList());
+
     }
 
     public List<PersonDto> getAllByName(String name) {
-        Iterable<Person> persons = personRepository.findByName(name);
-        List<PersonDto> personsOut = new ArrayList<>();
+        List<Person> persons = personRepository.findByName(name);
 
-        for (Person person : persons) {
-            personsOut.add(
-                    new PersonDto(person.getId(),
-                            person.getName(),
-                            person.getLastName(),
-                            person.getAge()));
-        }
-        return personsOut;
+        return persons.stream()
+                .map(person -> new PersonDto(person.getId(),
+                        person.getName(),
+                        person.getLastName(),
+                        person.getBirthday()))
+                .collect(Collectors.toList());
+
     }
 
-    public List<PersonDto> getByAge(int age) {
-        Iterable<Person> persons = personRepository.findByAgeGreaterThan(age);
-        List<PersonDto> personsOut = new ArrayList<>();
 
-        for (Person person : persons) {
-            personsOut.add(
-                    new PersonDto(person.getId(),
-                            person.getName(),
-                            person.getLastName(),
-                            person.getAge()));
-        }
-        return personsOut;
+    public List<PersonDto> getAllConstrainedByAge(int min, int max) {
+
+        LocalDate bdMax = LocalDate.now().minusYears(min);
+        LocalDate bdMin = LocalDate.now().minusYears(max);
+
+        List<Person> persons = personRepository.findByBirthdayBetween(bdMin, bdMax);
+
+        return persons.stream()
+                .map(person -> new PersonDto(person.getId(),
+                        person.getName(),
+                        person.getLastName(),
+                        person.getBirthday()))
+                .collect(Collectors.toList());
+
     }
-
-    public List<PersonDto> getByTwoAges(int ageFirst, int ageSecond) {
-        Iterable<Person> persons = personRepository.findByAgeGreaterThanAndAgeLessThanEqual(ageFirst, ageSecond);
-        List<PersonDto> personsOut = new ArrayList<>();
-
-        for (Person person : persons) {
-            personsOut.add(
-                    new PersonDto(person.getId(),
-                            person.getName(),
-                            person.getLastName(),
-                            person.getAge()));
-        }
-        return personsOut;
-    }
-
 }

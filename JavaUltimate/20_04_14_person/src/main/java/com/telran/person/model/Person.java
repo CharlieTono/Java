@@ -1,6 +1,7 @@
 package com.telran.person.model;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 
 @Entity
 public class Person {
@@ -11,17 +12,17 @@ public class Person {
 
     private String name;
     private String lastName;
-    private int age;
+    private LocalDate birthday;
 
     public Person() {
     }
 
     public Person(String name,
                   String lastName,
-                  int age) {
+                  LocalDate birthday) {
         this.name = name;
         this.lastName = lastName;
-        this.age = age;
+        this.birthday = birthday;
     }
 
     public int getId() {
@@ -36,7 +37,19 @@ public class Person {
         return lastName;
     }
 
-    public int getAge() {
-        return age;
+    public LocalDate getBirthday() {
+        return birthday;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    public void setBirthday(LocalDate birthday) {
+        this.birthday = birthday;
     }
 }

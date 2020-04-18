@@ -2,12 +2,15 @@ package com.telran.person.controller;
 
 import com.telran.person.dto.PersonDto;
 import com.telran.person.service.PersonService;
-import org.springframework.stereotype.Controller;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+import javax.validation.constraints.Min;
 import java.util.List;
 
-@Controller
+@RestController
+@Validated
 public class PersonController {
 
     PersonService personService;
@@ -17,35 +20,40 @@ public class PersonController {
     }
 
     @PostMapping("/person")
-    @ResponseBody
-    public void newPerson(@RequestBody PersonDto personDto) {
-        personService.addPerson(personDto);
+    public void create(@RequestBody @Valid PersonDto personDto) {
+        personService.add(personDto);
+    }
+
+    @PutMapping("/person")
+    public void edit(@RequestBody @Valid PersonDto personDto) {
+        personService.edit(personDto);
+    }
+
+    @GetMapping("/person/{id}")
+    public PersonDto getById(@PathVariable @Min(1) int id) {
+        return personService.getById(id);
+    }
+
+    @DeleteMapping("/person/{id}")
+    public void removeById(@PathVariable int id) {
+        personService.removeById(id);
+    }
+
+    @GetMapping("/person/name/{name}")
+    public List<PersonDto> getAllByName(@PathVariable String name) {
+        return personService.getAllByName(name);
     }
 
     @GetMapping("/person")
-    @ResponseBody
-    public List<PersonDto> getAllPersons(@RequestParam(required = false) String name) {
-        if (name != null && !name.equals(""))
-            return personService.getAllByName(name);
-
+    public List<PersonDto> getAll() {
         return personService.getAll();
     }
 
     @GetMapping("/person/age")
-    @ResponseBody
-    public List<PersonDto> getAllPersonsWithAgeGreaterThan(@RequestParam(required = false) int age) {
-        if (age > 0)
-            return personService.getByAge(age);
+    public List<PersonDto> getAllFilteredByAge(@RequestParam(required = false, defaultValue = "0") int min,
+                                               @RequestParam(required = false, defaultValue = "" + Integer.MAX_VALUE) int max) {
 
-        return personService.getAll();
+        return personService.getAllConstrainedByAge(min, max);
     }
 
-    @GetMapping("/person/ages")
-    @ResponseBody
-    public List<PersonDto> getAllPersonsWithAgeGreaterThanAndLessThan(@RequestParam(required = false) int ageFirst, int ageSecond) {
-        if (ageFirst > 0 && ageSecond > 0)
-            return personService.getByTwoAges(ageFirst, ageSecond);
-
-        return personService.getAll();
-    }
 }
