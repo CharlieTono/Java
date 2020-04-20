@@ -6,6 +6,7 @@ import com.telran.person.validation.annotation.FullName;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.Size;
 import java.time.LocalDate;
+import java.util.List;
 
 @FullName(10)
 public class PersonDto {
@@ -13,7 +14,10 @@ public class PersonDto {
     public PersonDto() {
     }
 
-    public PersonDto(int id, String firstName, String lastName, LocalDate birthday) {
+    public PersonDto(int id,
+                     String firstName,
+                     String lastName,
+                     LocalDate birthday) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -32,13 +36,6 @@ public class PersonDto {
     @JsonFormat(pattern = "yyyy.MM.dd")
     public LocalDate birthday;
 
-    @Override
-    public String toString() {
-        return "PersonDto{" +
-                "id=" + id +
-                ", firstName='" + firstName + '\'' +
-                ", lastName='" + lastName + '\'' +
-                ", birthday=" + birthday +
-                '}';
-    }
+    public List<NumberDto> numbers;
+
 }
