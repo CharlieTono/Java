@@ -1,5 +1,10 @@
 package com.telran.person.dto;
 
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
+
+@AllArgsConstructor
+@NoArgsConstructor
 public class NumberDto {
     public int id;
 
@@ -7,9 +12,4 @@ public class NumberDto {
 
     public int personId;
 
-    public NumberDto(int id, String number, int personId) {
-        this.id = id;
-        this.number = number;
-        this.personId = personId;
-    }
 }

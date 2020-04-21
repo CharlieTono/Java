@@ -1,6 +1,8 @@
 package com.telran.person.controller;
 
+import com.telran.person.dto.NumberDto;
 import com.telran.person.dto.PersonDto;
+import com.telran.person.service.NumberService;
 import com.telran.person.service.PersonService;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.validation.annotation.Validated;
@@ -15,7 +17,6 @@ import java.util.List;
 @Validated
 public class PersonController {
 
-
     private static final long EARLIEST_BIRTHDAY = 1000;
     PersonService personService;
 
@@ -28,18 +29,15 @@ public class PersonController {
         personService.add(personDto);
     }
 
-    // nothing changes
     @PutMapping("/person")
     public void edit(@RequestBody @Valid PersonDto personDto) {
         personService.edit(personDto);
     }
 
-    // ready
     @GetMapping("/person/{id}")
     public PersonDto getById(@PathVariable @Min(1) int id) {
         return personService.getById(id);
     }
-
 
     @DeleteMapping("/person/{id}")
     public void removeById(@PathVariable int id) {
@@ -76,5 +74,14 @@ public class PersonController {
         return personService.getAllConstrainedByBirthdays(after, before);
     }
 
-    //TODO add the endpoint removing all persons with the lastnames beginning with a pattern
+    @GetMapping("/person/remove/{pattern}")
+    public List<PersonDto> removeAllByPattern(@PathVariable String pattern) {
+        return personService.removeAllWithLastnameStartingPattern(pattern);
+    }
+
+    @GetMapping("/person/{id}/number")
+    public List<NumberDto> geNumberByPersonId (@PathVariable int id) {
+        return personService.getNumbersByPersonId(id);
+    }
+
 }
