@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.Size;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 @FullName(20)
@@ -33,6 +34,6 @@ public class PersonDto {
     @JsonFormat(pattern = "yyyy.MM.dd")
     public LocalDate birthday;
 
-    public List<NumberDto> numbers;
+    public List<NumberDto> numbers = new ArrayList<>();
 
 }
