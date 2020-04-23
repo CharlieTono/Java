@@ -19,8 +19,14 @@ public class NumberController {
         this.numberService = numberService;
     }
 
-    @PostMapping("/number")
-    public void create(@RequestBody NumberDto numberDto) {
+    @GetMapping("/person/{personId}/number")
+    public List<NumberDto> getNumberByPersonId(@PathVariable int personId) {
+        return numberService.getByPersonId(personId);
+    }
+
+    @PostMapping("/person/{personId}/number")
+    public void create(@RequestBody NumberDto numberDto, @PathVariable int personId) {
+        numberDto.personId = personId;
         numberService.add(numberDto);
     }
 
@@ -38,4 +44,5 @@ public class NumberController {
     public void removeById(@PathVariable int id) {
         numberService.removeById(id);
     }
+
 }

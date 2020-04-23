@@ -1,8 +1,6 @@
 package com.telran.person.controller;
 
-import com.telran.person.dto.NumberDto;
 import com.telran.person.dto.PersonDto;
-import com.telran.person.service.NumberService;
 import com.telran.person.service.PersonService;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.validation.annotation.Validated;
@@ -75,13 +73,8 @@ public class PersonController {
     }
 
     @GetMapping("/person/remove/{pattern}")
-    public List<PersonDto> removeAllByPattern(@PathVariable String pattern) {
-        return personService.removeAllWithLastnameStartingPattern(pattern);
-    }
-
-    @GetMapping("/person/{id}/number")
-    public List<NumberDto> geNumberByPersonId (@PathVariable int id) {
-        return personService.getNumbersByPersonId(id);
+    public void removeAllByPattern(@PathVariable String pattern) {
+        personService.removeAllWithLastnameStartingPattern(pattern);
     }
 
 }

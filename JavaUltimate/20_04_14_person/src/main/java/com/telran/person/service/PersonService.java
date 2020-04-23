@@ -1,6 +1,5 @@
 package com.telran.person.service;
 
-import com.telran.person.dto.NumberDto;
 import com.telran.person.dto.PersonDto;
 import com.telran.person.mapper.NumberMapper;
 import com.telran.person.mapper.PersonMapper;
@@ -93,7 +92,6 @@ public class PersonService {
 
     public List<PersonDto> getAllConstrainedByBirthdays(LocalDate after, LocalDate before) {
         List<Person> persons = personRepository.findByBirthdayBetweenCustom(after, before);
-
         return persons.stream()
                 .map(personMapper::mapPersonToDto)
                 .collect(Collectors.toList());
@@ -101,21 +99,8 @@ public class PersonService {
     }
 
     @Transactional
-    public List<PersonDto> removeAllWithLastnameStartingPattern(String pattern) {
+    public void removeAllWithLastnameStartingPattern(String pattern) {
         personRepository.removeWithLastnameStarting(pattern);
-        List<Person> persons = personRepository.findAll();
-
-        return persons.stream()
-                .map(personMapper::mapPersonToDto)
-                .collect(Collectors.toList());
     }
 
-
-    public List<NumberDto> getNumbersByPersonId(int id) {
-        Person person = personRepository.findById(id).orElseThrow(() -> new EntityNotFoundException(PERSON_NOT_FOUND));
-
-        return person.getNumbers().stream()
-                .map(numberMapper::mapNumberToDto)
-                .collect(Collectors.toList());
-    }
 }

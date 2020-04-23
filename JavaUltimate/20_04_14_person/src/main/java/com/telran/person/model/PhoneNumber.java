@@ -25,8 +25,6 @@ public class PhoneNumber {
     @OnDelete(action = OnDeleteAction.CASCADE)
     Person person;
 
-    //public PhoneNumber() {}
-
     public PhoneNumber(String number, Person person) {
         this.number = number;
         this.person = person;

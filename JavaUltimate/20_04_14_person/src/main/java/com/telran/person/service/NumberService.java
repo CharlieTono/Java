@@ -9,6 +9,8 @@ import com.telran.person.persistence.IPersonRepository;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityNotFoundException;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class NumberService {
@@ -48,4 +50,9 @@ public class NumberService {
         numberRepository.deleteById(id);
     }
 
+    public List<NumberDto> getByPersonId(int personId) {
+        return numberRepository.findByPersonId(personId).stream()
+                .map(numberMapper::mapNumberToDto)
+                .collect(Collectors.toList());
+    }
 }
