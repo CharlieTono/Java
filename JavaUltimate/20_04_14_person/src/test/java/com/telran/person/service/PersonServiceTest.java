@@ -90,14 +90,68 @@ class PersonServiceTest {
     @Test
     public void testGetAll_personWithNumber_Person() {
         LocalDate bd = LocalDate.now().minusYears(25);
-        PersonDto personIn = new PersonDto(1, "A", "B", bd);
+        PersonDto personIn = new PersonDto(0, "A", "B", bd);
 
         personIn.numbers = Arrays.asList(new NumberDto(0, "111111", 0));
 
         personService.add(personIn);
-        List<Person> persons = personRepository.findAll();
+        verify(personRepository, times(1)).save(any());
+        personService.getAll();
+        verify(personRepository, times(1)).findAll();
 
-        assertEquals(1, persons.size());
     }
 
+    @Test
+    public void testGetById_personWithNumber_Person() {
+        LocalDate bd = LocalDate.now().minusYears(25);
+        PersonDto personIn = new PersonDto(1, "A", "B", bd);
+
+        personIn.numbers = Arrays.asList(new NumberDto(1, "111111", 1));
+
+        personService.add(personIn);
+        verify(personRepository, times(1)).save(any());
+        personService.getById(0);
+
+        verify(personRepository, times(1)).findById(argThat(
+                id -> id.intValue() == personIn.id));
+    }
+
+    @Captor
+    ArgumentCaptor<Person> personCaptor02;
+
+    @Test
+    public void testRemoveById_personWithNumber_EmptyList() {
+        LocalDate bd = LocalDate.now().minusYears(25);
+        PersonDto personIn = new PersonDto(0, "A", "B", bd);
+
+        personIn.numbers = Arrays.asList(new NumberDto(0, "111111", 0));
+
+        personService.add(personIn);
+        verify(personRepository).save(personCaptor02.capture());
+
+        personService.removeById(personIn.id);
+        verify(personRepository).deleteById(personCaptor02.capture().getId());
+
+        List<Person> capturedPersons = personCaptor02.getAllValues();
+        assertEquals(0, capturedPersons.size());
+    }
+
+    @Test
+    public void testEdit_personWithNumber_UpdatedPerson() {
+        LocalDate bd = LocalDate.now().minusYears(25);
+        PersonDto personIn = new PersonDto(0, "A", "B", bd);
+        PersonDto personNew = new PersonDto(0, "B", "C", bd);
+
+        personIn.numbers = Arrays.asList(new NumberDto(0, "111111", 0));
+
+        personService.add(personIn);
+        verify(personRepository, times(1)).save(any());
+        personService.edit(personNew);
+        verify(personRepository).save(argThat(person ->
+
+                person.getLastName().equals(personNew.lastName)
+                        && person.getName().equals(personNew.firstName)
+                        && bd.equals(person.getBirthday())
+        ));
+    }
 }
