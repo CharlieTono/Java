@@ -87,4 +87,17 @@ class PersonServiceTest {
 
     }
 
+    @Test
+    public void testGetAll_personWithNumber_Person() {
+        LocalDate bd = LocalDate.now().minusYears(25);
+        PersonDto personIn = new PersonDto(1, "A", "B", bd);
+
+        personIn.numbers = Arrays.asList(new NumberDto(0, "111111", 0));
+
+        personService.add(personIn);
+        List<Person> persons = personRepository.findAll();
+
+        assertEquals(1, persons.size());
+    }
+
 }
