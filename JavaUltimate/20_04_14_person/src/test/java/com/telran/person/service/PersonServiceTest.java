@@ -9,21 +9,18 @@ import com.telran.person.persistence.INumberRepository;
 import com.telran.person.persistence.IPersonRepository;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.ArgumentCaptor;
-import org.mockito.Captor;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
+import org.mockito.*;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.argThat;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 class PersonServiceTest {
@@ -33,11 +30,11 @@ class PersonServiceTest {
     @Mock
     INumberRepository numberRepository;
 
-    @Mock
-    PersonMapper personMapper;
+    @Spy
+    PersonMapper personMapper = new PersonMapper();
 
-    @Mock
-    NumberMapper numberMapper;
+    @Spy
+    NumberMapper numberMapper = new NumberMapper();
 
     @InjectMocks
     PersonService personService;
@@ -88,30 +85,49 @@ class PersonServiceTest {
     }
 
     @Test
-    public void testGetAll_personWithNumber_Person() {
-        LocalDate bd = LocalDate.now().minusYears(25);
-        PersonDto personIn = new PersonDto(0, "A", "B", bd);
+    public void testGetAll_noPersonFound_EmptyList() {
+        when(personRepository.findAll()).thenReturn(new ArrayList<>());
+        List<PersonDto> personFound = personService.getAll();
+        assertEquals(0, personFound.size());
+    }
 
-        personIn.numbers = Arrays.asList(new NumberDto(0, "111111", 0));
+    @Test
+    public void testGetAll_twoPersonFound_ReturnsListWithTwoPerson() {
+        LocalDate bd01 = LocalDate.now().minusYears(25);
+        LocalDate bd02 = LocalDate.now().minusYears(28);
 
-        personService.add(personIn);
-        verify(personRepository, times(1)).save(any());
-        personService.getAll();
-        verify(personRepository, times(1)).findAll();
+        Person one = new Person("A", "B", bd01);
+        Person two = new Person("B", "A", bd02);
+
+        List<Person> personsFromDb = Arrays.asList(one, two);
+
+        when(personRepository.findAll()).thenReturn(personsFromDb);
+
+        List<PersonDto> personsFound = personService.getAll();
+        assertEquals(2, personsFound.size());
+
+        verify(personMapper, times(1)).mapPersonToDto(one);
+        verify(personMapper, times(1)).mapPersonToDto(two);
 
     }
 
     @Test
     public void testGetById_personWithNumber_Person() {
         LocalDate bd = LocalDate.now().minusYears(25);
-        PersonDto personIn = new PersonDto(1, "A", "B", bd);
-
+        PersonDto personIn = new PersonDto(1, "A", "B", LocalDate.now().minusYears(25));
         personIn.numbers = Arrays.asList(new NumberDto(1, "111111", 1));
 
-        personService.add(personIn);
-        verify(personRepository, times(1)).save(any());
-        personService.getById(0);
+        Person personFromDB = new Person("A", "B", bd);
 
+        when(personRepository.findById(personIn.id)).thenReturn(java.util.Optional.of(personFromDB));
+
+        PersonDto personFounded = personService.getById(personIn.id);
+
+        assertEquals(personIn.firstName, personFounded.firstName);
+        assertEquals(personIn.lastName, personFounded.lastName);
+        assertEquals(personIn.birthday, personFounded.birthday);
+
+        verify(personMapper, times(1)).mapPersonToDto(personFromDB);
         verify(personRepository, times(1)).findById(argThat(
                 id -> id.intValue() == personIn.id));
     }
@@ -122,36 +138,43 @@ class PersonServiceTest {
     @Test
     public void testRemoveById_personWithNumber_EmptyList() {
         LocalDate bd = LocalDate.now().minusYears(25);
-        PersonDto personIn = new PersonDto(0, "A", "B", bd);
-
-        personIn.numbers = Arrays.asList(new NumberDto(0, "111111", 0));
-
-        personService.add(personIn);
-        verify(personRepository).save(personCaptor02.capture());
+        PersonDto personIn = new PersonDto(1, "A", "B", bd);
+        personIn.numbers = Arrays.asList(new NumberDto(1, "111111", 1));
 
         personService.removeById(personIn.id);
-        verify(personRepository).deleteById(personCaptor02.capture().getId());
 
+        List<PersonDto> allPersons = personService.getAll();
+        verify(personRepository, times(1)).deleteById(personIn.id);
+        assertEquals(0, allPersons.size());
+
+        //the same with captor
         List<Person> capturedPersons = personCaptor02.getAllValues();
         assertEquals(0, capturedPersons.size());
+
     }
 
     @Test
     public void testEdit_personWithNumber_UpdatedPerson() {
         LocalDate bd = LocalDate.now().minusYears(25);
-        PersonDto personIn = new PersonDto(0, "A", "B", bd);
-        PersonDto personNew = new PersonDto(0, "B", "C", bd);
+        PersonDto personOld = new PersonDto(1, "A", "B", bd);
+        PersonDto personNew = new PersonDto(1, "B", "C", bd);
 
-        personIn.numbers = Arrays.asList(new NumberDto(0, "111111", 0));
+        personOld.numbers = Arrays.asList(new NumberDto(1, "111111", 1));
 
-        personService.add(personIn);
-        verify(personRepository, times(1)).save(any());
+        Person personFromDB = new Person("B", "C", bd);
+        when(personRepository.findById(personNew.id)).thenReturn(java.util.Optional.of(personFromDB));
+
         personService.edit(personNew);
-        verify(personRepository).save(argThat(person ->
+        PersonDto personFounded = personService.getById(personOld.id);
 
-                person.getLastName().equals(personNew.lastName)
-                        && person.getName().equals(personNew.firstName)
-                        && bd.equals(person.getBirthday())
-        ));
+        verify(personMapper, times(1)).mapPersonToDto(personFromDB);
+        verify(personRepository, times(1)).save(any());
+        verify(personRepository, times(2)).findById(argThat(
+                id -> id.intValue() == personOld.id));
+
+        assertEquals(personNew.firstName, personFounded.firstName);
+        assertEquals(personNew.lastName, personFounded.lastName);
+        assertEquals(personNew.birthday, personFounded.birthday);
+
     }
 }

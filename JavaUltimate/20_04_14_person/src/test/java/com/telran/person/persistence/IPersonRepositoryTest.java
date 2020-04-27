@@ -1,5 +1,6 @@
 package com.telran.person.persistence;
 
+import com.telran.person.dto.PersonDto;
 import com.telran.person.model.Person;
 import com.telran.person.model.PhoneNumber;
 import org.junit.jupiter.api.Test;
@@ -8,6 +9,7 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -111,6 +113,11 @@ class IPersonRepositoryTest {
         assertEquals("AA", foundPersonsFromDB.get(0).getName());
         assertEquals("BB", foundPersonsFromDB.get(0).getLastName());
         assertEquals(bd, foundPersonsFromDB.get(0).getBirthday());
+    }
+
+    public void testFindAll_noPersonExists_emptyList() {
+        List<Person> foundPersons = iPersonRepository.findAll();
+        assertEquals(0, foundPersons.size());
     }
 
 }
