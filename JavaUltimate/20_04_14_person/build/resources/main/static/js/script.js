@@ -11,3 +11,13 @@ function fullName(name, lastName) {
 }
 
 console.log(fullName(name, lastName));
+
+let sum = function (x, y) {
+    return x + y;
+}
+
+let anotherFunc = sum;
+anotherFunc(2,5);
+
+
+

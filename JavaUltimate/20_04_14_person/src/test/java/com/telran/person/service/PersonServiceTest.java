@@ -7,6 +7,7 @@ import com.telran.person.mapper.PersonMapper;
 import com.telran.person.model.Person;
 import com.telran.person.persistence.INumberRepository;
 import com.telran.person.persistence.IPersonRepository;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.*;
@@ -24,20 +25,34 @@ import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 class PersonServiceTest {
-    @Mock
+   // @Mock
     IPersonRepository personRepository;
 
-    @Mock
+   // @Mock
     INumberRepository numberRepository;
 
-    @Spy
+   // @Spy
     PersonMapper personMapper = new PersonMapper();
 
-    @Spy
+   // @Spy
     NumberMapper numberMapper = new NumberMapper();
 
-    @InjectMocks
+   // @InjectMocks
     PersonService personService;
+
+    @BeforeEach
+    public void init() {
+        personRepository = mock(IPersonRepository.class);
+        numberRepository = mock(INumberRepository.class);
+        personMapper = spy(new PersonMapper());
+        numberMapper = spy(new NumberMapper());
+
+        personService = new PersonService(
+                personRepository,
+                numberRepository,
+                personMapper,
+                numberMapper);
+    }
 
     @Test
     public void testAdd_personWithoutNumbers_passesToRepo() {
