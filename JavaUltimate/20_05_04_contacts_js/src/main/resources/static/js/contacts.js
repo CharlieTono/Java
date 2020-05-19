@@ -2,9 +2,8 @@
 document.addEventListener("DOMContentLoaded", function main() {
     const contactFormDom = document.getElementById("contact-form");
     const contactWrapperDom = document.getElementById("contact-wrapper");
-    const contactListDom = document.getElementById("contact-list");
 
-    const contactService = new ContactService(contactWrapperDom, contactFormDom, contactListDom);
+    const contactService = new ContactService(contactWrapperDom, contactFormDom);
     const contactFormListener = new ContactFormListener(contactService);
     const contactWrapperListener = new ContactWrapperListener(contactService);
 
@@ -22,7 +21,7 @@ class ContactFormListener {
 
     handleEvent(event) {
         const action = event.target.dataset.action;
-        if (action !== undefined && action !== "")
+        if (action !== undefined)
             this[action](event);//this.add()//this["add"]()}
     }
 
@@ -82,21 +81,20 @@ class ContactWrapperListener {
         this.contactService.switchToEditForm(contactDom.contact);
     }
 
-    showContact(event) {
+    toggleContact(event) {
         event.preventDefault();
         const contactDom = event.target.closest("li.collection-item");
-        const contactId = contactDom.contact.id;
-        this.contactService.showContact(contactId);
+        this.contactService.toggleContactDom(contactDom);
     }
 }
 
 //like a service in Java
 class ContactService {
 
-    constructor(contactWrapperDom, contactFormDom, contactListDom) {
+    constructor(contactWrapperDom, contactFormDom) {
         this.contactWrapperDom = contactWrapperDom;
-        this.contactListDom = contactListDom;
         this.contactFormDom = contactFormDom;
+
         this.addButtonDom = contactFormDom.querySelector('[data-action="addContact"]');
         this.editButtonDom = contactFormDom.querySelector('[data-action="editContact"]');
         this.cancelButtonDom = contactFormDom.querySelector('[data-action="cancelEditing"]');
@@ -117,6 +115,7 @@ class ContactService {
             this._reInit();
             this.clearForm();
         }
+
     }
 
     //sends data an existing contact to the server and updates the list of contacts
@@ -136,6 +135,7 @@ class ContactService {
     }
 
     //sends a request to the server to remove the contact and update the list of contacts
+    //TODO implement
     async removeById(id) {
         const response = await fetch(`/contact/${id}`, {
             method: 'DELETE',
@@ -143,18 +143,6 @@ class ContactService {
 
         if (response.ok) {
             this._reInit();
-        }
-    }
-
-    async showContact(id) {
-        const response = await fetch(`/contact/${id}`, {
-            method: 'GET',
-        })
-        const contact = await response.json();
-
-        if (response.ok) {
-            this._reInit();
-            this._detailedViewContactHeader(contact);
         }
     }
 
@@ -182,6 +170,11 @@ class ContactService {
         this.contactFormDom.elements.name.value = "";
         this.contactFormDom.elements.lastName.value = "";
         this.contactFormDom.elements.age.value = "";
+    }
+
+    toggleContactDom(contactDom) {
+        const contactDataDom = contactDom.querySelector(".contact-data");
+        contactDataDom.classList.toggle("hide");
     }
 
     async _reInit() {
@@ -214,53 +207,35 @@ class ContactService {
         contactDom.contact = contact;
         contactDom.innerHTML =
             `<div>
-                <span class="first-content">      
-                    <a href="">
-                    <i data-action="showContact" ${contact.id} >${contact.name} ${contact.lastName}</i>
-                    </a>
-                </span>
+                <a href="" >
+                    <span data-action="toggleContact">${contact.name} ${contact.lastName}</span>
+                </a>
                 <span class="secondary-content">
                     <a href="">
                     <i data-action="editContact" class="material-icons teal-text text-darken-1">create</i></a>
                     <a href="">
-                    <i data-action="removeContact" class="material-icons  deep-orange-text text-darken-1">delete</i></a>
+                        <i data-action="removeContact" class="material-icons  deep-orange-text text-darken-1">delete</i></a>
                 </span>
+                
+                ${this._renderContactData(contact)}
             </div>`;
         return contactDom;
     }
 
-    _detailedViewContactHeader(contact) {
-
-        this.contactListDom.innerHTML = "";
-        const collectionHeader = document.createElement("li");
-        collectionHeader.className = "collection-header";
-        collectionHeader.innerHTML = "<h4>Contact</h4>";
-
-        this.contactListDom.append(collectionHeader);
-        const contactDom = this._detailedViewContact(contact);
-        this.contactListDom.append(contactDom);
-
-    }
-
-    _detailedViewContact(contact) {
-        const contactDom = document.createElement("li");
-        contactDom.className = "collection-item";
-        contactDom.contact = contact;
-        contactDom.innerHTML =
-            `<div>
-                <li class="collection-item">
-                    <div>Name<span class="secondary-content blue-text text-darken-1">${contact.name}</span>
-                    </div>
-                </li>
-                <li class="collection-item">
-                    <div>Last Name<span class="secondary-content blue-text text-darken-1">${contact.lastName}</span>
-                    </div>
-                </li>
-                <li class="collection-item">
-                    <div>Age<span class="secondary-content blue-text text-darken-1">${contact.age}</span>
-                    </div>
-                </li>
-              </div>`
-        return contactDom;
+    _renderContactData(contact) {
+        return `<ul class="collection contact-data hide">
+                    <li class="collection-item">
+                        <div>Name<span class="secondary-content blue-text text-darken-1" >${contact.name}</span>
+                        </div>
+                    </li>
+                    <li class="collection-item">
+                        <div>Last Name<span class="secondary-content blue-text text-darken-1">${contact.lastName}</span>
+                        </div>
+                    </li>
+                    <li class="collection-item">
+                        <div>Age<span class="secondary-content blue-text text-darken-1">${contact.age}</span>
+                        </div>
+                    </li>
+                </ul>`
     }
 }

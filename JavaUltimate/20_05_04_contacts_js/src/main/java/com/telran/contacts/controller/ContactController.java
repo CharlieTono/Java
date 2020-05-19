@@ -35,34 +35,20 @@ public class ContactController {
         contactService.edit(contact);
     }
 
-    @GetMapping("/")
-    public String home() {
-        return "forward:/contacts";
-    }
-
-    @GetMapping("/contact/{id}")
-    @ResponseBody
-    public Contact getContact(@PathVariable int id) {
-        return contactService.get(id);
-    }
-
-    @GetMapping("/contacts")
-    public String getContacts(Model model) {
-        List<Contact> contacts = contactService.getAll();
-        model.addAttribute("contacts", contacts);
-        return "contacts";
-    }
-
-    @GetMapping("/contact/edit/{id}")
-    public String editContact(@PathVariable int id, Model model) {
-        Contact contact = contactService.get(id);
-        model.addAttribute("contact", contact);
-        return "contact-form";
-    }
-
     @DeleteMapping("/contact/{id}")
     @ResponseBody
     public void removeContact(@PathVariable int id) {
         contactService.remove(id);
     }
+
+    @GetMapping("/")
+    public String home() {
+        return "forward:/contacts";
+    }
+
+    @GetMapping("/contacts")
+    public String getContacts() {
+        return "contacts";
+    }
+
 }
