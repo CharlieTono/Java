@@ -23,10 +23,9 @@ export class ContactService {
     Object.assign(contactToEdit, contact);
   }
 
-  delete(contact: Contact): Observable<Contact[]> {
-    const indexToDelete = CONTACTS.findIndex(index => index.id === contact.id);
+  delete(contact: Contact) {
+    const indexToDelete = CONTACTS.findIndex(value => value.id === contact.id);
     CONTACTS.splice(indexToDelete, 1);
-    return of(CONTACTS);
   }
 
 }

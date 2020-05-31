@@ -1,7 +1,8 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {Contact} from '../model/contact';
 import {ContactService} from '../service/contact.service';
-import {THIS_EXPR} from '@angular/compiler/src/output/output_ast';
+import {ContactEventService} from '../service/contact-event.service';
+import {Subscription} from 'rxjs';
 
 @Component({
   selector: 'app-contact-form',
@@ -10,23 +11,27 @@ import {THIS_EXPR} from '@angular/compiler/src/output/output_ast';
 })
 export class ContactFormComponent implements OnInit {
 
-  @Input()
-  set contactToEdit(value: Contact) {
-    this.contact = value;
-    this.isAddingState = false;
-  }
-
   contact: Contact;
 
   isAddingState: boolean;
-  private contactService: ContactService;
+  editContactsSubs: Subscription;
 
-  constructor(contactService: ContactService) {
-    this.contactService = contactService;
+  constructor(private contactService: ContactService, private contactEventService: ContactEventService) {
   }
 
   ngOnInit(): void {
     this.clearForm();
+    this.editContactsSubs = this.contactEventService.subscribeEditContact((value => this.onEditContact(value)));
+  }
+
+  // tslint:disable-next-line:use-lifecycle-interface
+  ngOnDestroy(): void {
+    this.editContactsSubs.unsubscribe();
+  }
+
+  onEditContact(value: Contact) {
+    this.contact = value;
+    this.isAddingState = false;
   }
 
   onClickAdd() {
