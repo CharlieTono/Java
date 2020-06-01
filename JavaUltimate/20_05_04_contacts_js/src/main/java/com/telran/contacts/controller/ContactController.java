@@ -19,49 +19,54 @@ public class ContactController {
 
     @GetMapping("/contact")
     @ResponseBody
+    @CrossOrigin()
     public List<Contact> contactForm() {
         return contactService.getAll();
     }
 
     @PostMapping("/contact")
     @ResponseBody
+    @CrossOrigin()
     public void addContact(@RequestBody Contact contact) {
         contactService.add(contact);
     }
 
     @PutMapping("/contact")
     @ResponseBody
+    @CrossOrigin()
     public void editContact(@RequestBody Contact contact) {
         contactService.edit(contact);
     }
 
-    @GetMapping("/")
-    public String home() {
-        return "forward:/contacts";
-    }
+//    @GetMapping("/")
+//    public String home() {
+//        return "forward:/contacts";
+//    }
 
     @GetMapping("/contact/{id}")
     @ResponseBody
+    @CrossOrigin()
     public Contact getContact(@PathVariable int id) {
         return contactService.get(id);
     }
 
-    @GetMapping("/contacts")
-    public String getContacts(Model model) {
-        List<Contact> contacts = contactService.getAll();
-        model.addAttribute("contacts", contacts);
-        return "contacts";
-    }
+//    @GetMapping("/contacts")
+//    public String getContacts(Model model) {
+//        List<Contact> contacts = contactService.getAll();
+//        model.addAttribute("contacts", contacts);
+//        return "contacts";
+//    }
 
-    @GetMapping("/contact/edit/{id}")
-    public String editContact(@PathVariable int id, Model model) {
-        Contact contact = contactService.get(id);
-        model.addAttribute("contact", contact);
-        return "contact-form";
-    }
+//    @GetMapping("/contact/edit/{id}")
+//    public String editContact(@PathVariable int id, Model model) {
+//        Contact contact = contactService.get(id);
+//        model.addAttribute("contact", contact);
+//        return "contact-form";
+//    }
 
     @DeleteMapping("/contact/{id}")
     @ResponseBody
+    @CrossOrigin()
     public void removeContact(@PathVariable int id) {
         contactService.remove(id);
     }
