@@ -30,7 +30,7 @@ export class ContactFormComponent implements OnInit {
   }
 
   onEditContact(value: Contact) {
-    this.contact = value;
+    Object.assign(this.contact, value);
     this.isAddingState = false;
   }
 
